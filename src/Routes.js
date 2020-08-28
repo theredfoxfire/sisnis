@@ -23,9 +23,11 @@ export default class Routes extends Component {
           <Route path="/class">
             <ClassScreen />
           </Route>
-          <Route path="/class-form">
-            <ClassFormScreen />
-          </Route>
+          <Route
+            exact
+            path="/class-form/:id"
+            component={ClassFormScreen}
+          />
           <Route path="/student">
             <StudentScreen />
           </Route>

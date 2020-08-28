@@ -12,46 +12,46 @@ import {
 import {
   Link
 } from "react-router-dom";
-import { storageActions, getAllState } from '../store/Store.js';
+import { storeActions, getAllState } from '../store/Store.js';
 const Header = (props) =>
 {
-  let storeData = getAllState();
+  let {activeItem} = getAllState();
   return (  <Grid.Column width={3}>
     <Menu fluid vertical tabular>
-    <Link to="/home" onClick={() => storageActions.setActiveItem("home")}>
+    <Link to="/home" onClick={() => storeActions.setActiveItem("home")}>
       <Menu.Item
         name='home'
-        active={storeData.activeItem === 'home'}
+        active={activeItem === 'home'}
       />
     </Link>
-    <Link to="/class" onClick={() => storageActions.setActiveItem("class")}>
+    <Link to="/class" onClick={() => storeActions.setActiveItem("class")}>
       <Menu.Item
         name='kelas'
-        active={storeData.activeItem === 'class'}
+        active={activeItem === 'class'}
       />
     </Link>
-    <Link to="/student" onClick={() => storageActions.setActiveItem("student")}>
+    <Link to="/student" onClick={() => storeActions.setActiveItem("student")}>
       <Menu.Item
         name='siswa'
-        active={storeData.activeItem === 'student'}
+        active={activeItem === 'student'}
       />
     </Link>
-    <Link to="/teacher" onClick={() => storageActions.setActiveItem("teacher")}>
+    <Link to="/teacher" onClick={() => storeActions.setActiveItem("teacher")}>
       <Menu.Item
         name='guru'
-        active={storeData.activeItem === 'teacher'}
+        active={activeItem === 'teacher'}
       />
     </Link>
-    <Link to="/subject" onClick={() => storageActions.setActiveItem("subject")}>
+    <Link to="/subject" onClick={() => storeActions.setActiveItem("subject")}>
       <Menu.Item
         name='mata pelajaran'
-        active={storeData.activeItem === 'subject'}
+        active={activeItem === 'subject'}
       />
     </Link>
-    <Link to="/users" onClick={() => storageActions.setActiveItem("users")}>
+    <Link to="/users" onClick={() => storeActions.setActiveItem("users")}>
       <Menu.Item
         name='users'
-        active={storeData.activeItem === 'users'}
+        active={activeItem === 'users'}
       />
     </Link>
     </Menu>
