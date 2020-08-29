@@ -1,9 +1,8 @@
 import React from 'react';
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react';
 import {
   Link
 } from "react-router-dom";
-import styled from 'styled-components';
 
 const Auth = () => (
   <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>

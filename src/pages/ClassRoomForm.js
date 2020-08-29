@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {
-  Container,
   Grid,
   Segment,
   Form,
@@ -12,7 +11,7 @@ import Loader from '../uikit/Loader'
 import {
   Link
 } from "react-router-dom";
-import {getClassRoomByID, postClassRoom} from './api-data/classRoom'
+import {getClassRoomByID, postClassRoom, putClassRoom} from './api-data/classRoom'
 import { getAllState, storeActions } from '../store/Store.js';
 
 export default class ClassRoomForm extends Component {
@@ -27,6 +26,7 @@ export default class ClassRoomForm extends Component {
     let {selectedClassRoom} = getAllState();
     let {name} = this.state;
     let nameValue = name || selectedClassRoom.name;
+    let classID = this.props.match.params.id;
     return (
       <div>
       <Header />
@@ -37,12 +37,17 @@ export default class ClassRoomForm extends Component {
         <Form size='large'>
           <Segment stacked>
             <h4>Nama kelas:</h4>
-            <Form.Input defaultValue={nameValue} fluid placeholder='Nama Kelas' onChange={(e) => this.setState({name: e.value})} />
-            <Link to="/class">
-            <Button color='teal' size='small' onClick={() => this._handleSubmit()}>
-               Simpan
-            </Button>
-          </Link>
+          <Form.Input defaultValue={nameValue} fluid placeholder='Nama Kelas' onChange={(e) => this.setState({name: e.target.value})} />
+            <Link to={"/class"}>
+              <Button color='olive' size='small'>
+                 Back
+              </Button>
+            </Link>
+            <Link to={name !== "" ? "/class" : `/class-form/${classID}`}>
+              <Button color='teal' size='small' disabled={name === ""} onClick={() => name !== "" && this._handleSubmit()}>
+                 Simpan
+              </Button>
+            </Link>
           </Segment>
         </Form>
         </Grid.Column>
@@ -51,15 +56,19 @@ export default class ClassRoomForm extends Component {
       </div>
     )
   }
+
   componentDidMount() {
     let classID = this.props.match.params.id;
-    storeActions.setIsLoading(true);
     storeActions.setIsError(false);
-    getClassRoomByID(classID);
+    if (classID > 0) {
+      getClassRoomByID(classID);
+      storeActions.setIsLoading(true);
+    }
   }
 
   _handleSubmit = () => {
     let {name} = this.state;
-    postClassRoom(name);
+    let classID = this.props.match.params.id;
+    classID > 0 ? putClassRoom(name, classID) : postClassRoom(name);
   }
 }

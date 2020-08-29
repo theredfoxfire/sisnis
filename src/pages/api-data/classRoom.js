@@ -32,11 +32,38 @@ export function postClassRoom(name) {
     name: name,
   })
   .then(function (response) {
-    console.log(response);
     storeActions.setIsLoading(false);
+    getClassRoomList();
   })
   .catch(function (error) {
     storeActions.setIsLoading(false);
     storeActions.setIsError(true);
   });
+}
+
+export function putClassRoom(name, id) {
+  axios.put(`/api/class-room/update/${id}`, {
+    name: name,
+  })
+  .then(function (response) {
+    storeActions.setIsLoading(false);
+    getClassRoomList();
+  })
+  .catch(function (error) {
+    storeActions.setIsLoading(false);
+    storeActions.setIsError(true);
+  });
+}
+
+
+export function deletClass(id) {
+  axios.delete(`/api/class-room/delete/${id}`)
+    .then(res => {
+      storeActions.setIsLoading(false);
+      getClassRoomList();
+    }).catch(function (error) {
+      console.log(error);
+      storeActions.setIsLoading(false);
+      storeActions.setIsError(true);
+    });
 }

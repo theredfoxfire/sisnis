@@ -1,5 +1,5 @@
 import React from 'react';
-import { storeActions, getAllState } from '../store/Store.js';
+import { getAllState } from '../store/Store.js';
 import styled from 'styled-components';
 const StyledDiv = styled("div")`
   color: palevioletred;

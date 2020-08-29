@@ -1,13 +1,6 @@
 import React, { Component } from 'react'
 import {
-  Container,
-  Divider,
-  Dropdown,
   Grid,
-  Image,
-  List,
-  Menu,
-  Segment,
 } from 'semantic-ui-react'
 import Header from '../uikit/Header'
 import Menus from '../uikit/Menus'

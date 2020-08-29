@@ -7,27 +7,36 @@ import {
   Button,
   Table,
   Icon,
+  Header, Modal
 } from 'semantic-ui-react'
-import Header from '../uikit/Header'
+import HeaderMenu from '../uikit/Header'
 import Menus from '../uikit/Menus'
 import Loader from '../uikit/Loader'
-import {getClassRoomList} from './api-data/classRoom'
+import {getClassRoomList, deletClass} from './api-data/classRoom'
 import {
   Link
 } from "react-router-dom";
 import { getAllState, storeActions } from '../store/Store.js';
 
 export default class ClassRoom extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalOpen: false,
+      selectedID: 0,
+    }
+  }
   render() {
     let {classRoomList} = getAllState();
+    let {isModalOpen} = this.state;
     return (
       <div>
-      <Header />
+      <HeaderMenu />
       <Grid style={{ marginTop: '2.4em' }}>
         <Menus />
         <Grid.Column stretched width={12}>
         <h1>Tabel Kelas</h1>
-        <Link to="/class-form">
+      <Link to="/class-form/0" onClick={() => storeActions.setSelectedClassRoom({})}>
           <Button color='green' size="small">
           <Icon name='plus' />
           Tambah Kelas
@@ -50,12 +59,15 @@ export default class ClassRoom extends Component {
                   <Table.Cell width="9">{item.name}</Table.Cell>
                   <Table.Cell>
                   <Link to={`/class-form/${item.id}`}>
-                  <Button color='green' basic onClick={() => storeActions.setSelectedClassRoomID(item.id)}>
+                  <Button color='green' basic onClick={() => {
+                      storeActions.setSelectedClassRoomID(item.id);
+                      storeActions.setSelectedClassRoom({});
+                    }}>
                     <Icon name='pencil' />
                     Edit
                   </Button>
                   </Link>
-                  <Button color='red' basic>
+                  <Button color='red' basic onClick={() => this.setState({isModalOpen: true, selectedID: item.id})}>
                     <Icon name='trash' />
                     Hapus
                   </Button>
@@ -68,6 +80,27 @@ export default class ClassRoom extends Component {
         <Loader />
         </Grid.Column>
       </Grid>
+      <Modal
+      closeIcon
+      open={isModalOpen}
+      onClose={() => this.setState({isModalOpen: false})}
+      onOpen={() => this.setState({isModalOpen: true})}
+    >
+      <Header icon='trash' content='Hapus Data Kelas' />
+      <Modal.Content>
+        <p>
+          Apakah Anda yakin ingin menghapus data ini?
+        </p>
+      </Modal.Content>
+      <Modal.Actions>
+        <Button color='red' onClick={() => this.setState({isModalOpen: false})}>
+          <Icon name='remove' /> Tidak
+        </Button>
+        <Button color='green' onClick={() => this._onDeleteItem()}>
+          <Icon name='checkmark' /> Ya
+        </Button>
+      </Modal.Actions>
+    </Modal>
       </div>
     )
   }
@@ -76,6 +109,13 @@ export default class ClassRoom extends Component {
     storeActions.setIsLoading(true);
     storeActions.setIsError(false);
     getClassRoomList();
+  }
+
+  _onDeleteItem = () => {
+    let {selectedID} = this.state;
+    this.setState({isModalOpen: false});
+    storeActions.setIsLoading(true);
+    deletClass(selectedID);
   }
 
 }

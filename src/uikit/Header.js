@@ -1,13 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
   Container,
-  Divider,
-  Dropdown,
-  Grid,
   Image,
-  List,
   Menu,
-  Segment,
 } from 'semantic-ui-react'
 const Menus = () => <Menu fixed='top' inverted>
 <Container>
