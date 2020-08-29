@@ -1,12 +1,12 @@
 import axios from 'axios-proxy-fix';
 import { storeActions } from '../../store/Store.js';
 
-export function getClassRoomList() {
-  axios.get(`/api/class-room/get-all`)
+export function getStudentList() {
+  axios.get(`/api/student/get-all`)
     .then(res => {
-      const classRoomList = res.data.classRooms;
+      const students = res.data.students;
       storeActions.setIsLoading(false);
-      storeActions.setClassRoomList(classRoomList );
+      storeActions.setStudentList(students);
     }).catch(function (error) {
       console.log(error);
       storeActions.setIsLoading(false);
@@ -14,12 +14,12 @@ export function getClassRoomList() {
     });
 }
 
-export function getClassRoomByID(id) {
-  axios.get(`/api/class-room/get/${id}`)
+export function getStudentByID(id) {
+  axios.get(`/api/student/get/${id}`)
     .then(res => {
-      const selectedClassRoom = res.data.classRoom;
+      const selectedStudent = res.data.student;
       storeActions.setIsLoading(false);
-      storeActions.setSelectedClassRoom(selectedClassRoom);
+      storeActions.setSelectedStudent(selectedStudent);
     }).catch(function (error) {
       console.log(error);
       storeActions.setIsLoading(false);
@@ -27,13 +27,13 @@ export function getClassRoomByID(id) {
     });
 }
 
-export function postClassRoom(name) {
-  axios.post('/api/class-room/add', {
-    name: name,
+export function postStudent(formData) {
+  axios.post('/api/student/add', {
+    ...formData
   })
   .then(function (response) {
     storeActions.setIsLoading(false);
-    getClassRoomList();
+    getStudentList();
   })
   .catch(function (error) {
     storeActions.setIsLoading(false);
@@ -41,13 +41,13 @@ export function postClassRoom(name) {
   });
 }
 
-export function putClassRoom(name, id) {
-  axios.put(`/api/class-room/update/${id}`, {
-    name: name,
+export function putStudent(formData, id) {
+  axios.put(`/api/student/update/${id}`, {
+    ...formData,
   })
   .then(function (response) {
     storeActions.setIsLoading(false);
-    getClassRoomList();
+    getStudentList();
   })
   .catch(function (error) {
     storeActions.setIsLoading(false);
@@ -56,11 +56,11 @@ export function putClassRoom(name, id) {
 }
 
 
-export function deleteClass(id) {
-  axios.delete(`/api/class-room/delete/${id}`)
+export function deleteStudent(id) {
+  axios.delete(`/api/student/delete/${id}`)
     .then(res => {
       storeActions.setIsLoading(false);
-      getClassRoomList();
+      getStudentList();
     }).catch(function (error) {
       console.log(error);
       storeActions.setIsLoading(false);

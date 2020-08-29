@@ -7,12 +7,12 @@ import {
   Button,
   Table,
   Icon,
-  Header, Modal
+  Header, Modal,
 } from 'semantic-ui-react'
-import HeaderMenu from '../uikit/Header'
-import Menus from '../uikit/Menus'
-import Loader from '../uikit/Loader'
-import {getClassRoomList, deletClass} from './api-data/classRoom'
+import HeaderMenu from '../uikit/Header';
+import Menus from '../uikit/Menus';
+import Loader from '../uikit/Loader';
+import {getClassRoomList, deleteClass} from './api-data/classRoom'
 import {
   Link
 } from "react-router-dom";
@@ -81,11 +81,11 @@ export default class ClassRoom extends Component {
         </Grid.Column>
       </Grid>
       <Modal
-      closeIcon
-      open={isModalOpen}
-      onClose={() => this.setState({isModalOpen: false})}
-      onOpen={() => this.setState({isModalOpen: true})}
-    >
+        closeIcon
+        open={isModalOpen}
+        onClose={() => this.setState({isModalOpen: false})}
+        onOpen={() => this.setState({isModalOpen: true})}
+      >
       <Header icon='trash' content='Hapus Data Kelas' />
       <Modal.Content>
         <p>
@@ -115,7 +115,7 @@ export default class ClassRoom extends Component {
     let {selectedID} = this.state;
     this.setState({isModalOpen: false});
     storeActions.setIsLoading(true);
-    deletClass(selectedID);
+    deleteClass(selectedID);
   }
 
 }

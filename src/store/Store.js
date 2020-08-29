@@ -5,6 +5,8 @@ let initialState = {
   isError: false,
   selectedClassRoom: {},
   selectedClassRoomID: 0,
+  studentList: [],
+  selectedStudent: {},
 };
 
 let stateContainer = {state: initialState};
@@ -22,6 +24,9 @@ export const storeActions = {
   setClassRoomList: async (classRoomList) => {
     await stateContainer.setState({classRoomList: classRoomList});
   },
+  setStudentList: async (studentList) => {
+    await stateContainer.setState({studentList: studentList});
+  },
   setIsLoading: async (isLoading) => {
     await stateContainer.setState({isLoading: isLoading});
   },
@@ -33,5 +38,8 @@ export const storeActions = {
   },
   setSelectedClassRoom: async (selectedClassRoom) => {
     await stateContainer.setState({selectedClassRoom: selectedClassRoom});
+  },
+  setSelectedStudent: async (selectedStudent) => {
+    await stateContainer.setState({selectedStudent: selectedStudent});
   },
 };
