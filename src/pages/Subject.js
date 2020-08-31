@@ -1,29 +1,46 @@
 import React, { Component } from 'react'
 import {
-  Container,
   Grid,
-  Segment,
-  Form,
   Button,
   Table,
   Icon,
+  Header, Modal,
 } from 'semantic-ui-react'
-import Header from '../uikit/Header'
-import Menus from '../uikit/Menus'
+import HeaderMenu from '../uikit/Header';
+import Menus from '../uikit/Menus';
+import Loader from '../uikit/Loader';
 import {
   Link
 } from "react-router-dom";
+import { getAllState, storeActions } from '../store/Store.js';
+import {getSubjectList, deleteSubject} from './api-data/subject';
 
-export default class Teacher extends Component {
+const initialState = {
+  selectedSubject: {
+    serial: '',
+    name: '',
+  },
+};
+
+export default class Subject extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalOpen: false,
+      selectedID: 0,
+    }
+  }
   render() {
+    let {subjectList} = getAllState();
+    let {isModalOpen} = this.state;
     return (
       <div>
-      <Header />
+      <HeaderMenu />
       <Grid style={{ marginTop: '2.4em' }}>
         <Menus />
         <Grid.Column stretched width={12}>
         <h1>Tabel Mata Pelajaran</h1>
-        <Link to="/subject-form">
+      <Link to="/subject-form/0" onClick={() => storeActions.setSelectedSubject(initialState.selectedSubject)}>
           <Button color='green' size="small">
           <Icon name='plus' />
           Tambah Mata Pelajaran
@@ -40,63 +57,69 @@ export default class Teacher extends Component {
           </Table.Header>
 
           <Table.Body>
-            <Table.Row>
-              <Table.Cell>1</Table.Cell>
-              <Table.Cell width="3">JRS212</Table.Cell>
-              <Table.Cell width="6">Jurus Tanpa Bayangan</Table.Cell>
-              <Table.Cell>
-              <Link to="/subject-form">
-              <Button color='green' basic>
-                <Icon name='pencil' />
-                Edit
-              </Button>
-              </Link>
-              <Button color='red' basic>
-                <Icon name='trash' />
-                Hapus
-              </Button>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>2</Table.Cell>
-                <Table.Cell width="3">JRS212</Table.Cell>
-                <Table.Cell width="6">Jurus Tanpa Bayangan</Table.Cell>
-              <Table.Cell>
-              <Link to="/subject-form">
-              <Button color='green' basic>
-                <Icon name='pencil' />
-                Edit
-              </Button>
-              </Link>
-              <Button color='red' basic>
-                <Icon name='trash' />
-                Hapus
-              </Button>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>3</Table.Cell>
-                <Table.Cell width="3">JRS212</Table.Cell>
-                <Table.Cell width="6">Jurus Tanpa Bayangan</Table.Cell>
-              <Table.Cell>
-              <Link to="/subject-form">
-              <Button color='green' basic>
-                <Icon name='pencil' />
-                Edit
-              </Button>
-              </Link>
-              <Button color='red' basic>
-                <Icon name='trash' />
-                Hapus
-              </Button>
-              </Table.Cell>
-            </Table.Row>
+            {subjectList.map((item, key) => {
+              return (
+                <Table.Row key={key}>
+                  <Table.Cell>{key + 1}</Table.Cell>
+                <Table.Cell width="3">{item.serial}</Table.Cell>
+              <Table.Cell width="6">{item.name}</Table.Cell>
+                  <Table.Cell>
+                  <Link to={`/subject-form/${item.id}`}>
+                  <Button color='green' basic onClick={() => {
+                      storeActions.setSelectedSubject(initialState.selectedSubject);
+                    }}>
+                    <Icon name='pencil' />
+                    Edit
+                  </Button>
+                  </Link>
+                  <Button color='red' basic onClick={() => this.setState({isModalOpen: true, selectedID: item.id})}>
+                    <Icon name='trash' />
+                    Hapus
+                  </Button>
+                  </Table.Cell>
+                </Table.Row>
+              )
+            })}
           </Table.Body>
         </Table>
+        <Loader />
         </Grid.Column>
       </Grid>
+      <Modal
+        closeIcon
+        open={isModalOpen}
+        onClose={() => this.setState({isModalOpen: false})}
+        onOpen={() => this.setState({isModalOpen: true})}
+      >
+      <Header icon='trash' content='Hapus Data Mata Pelajaran' />
+      <Modal.Content>
+        <p>
+          Apakah Anda yakin ingin menghapus data ini?
+        </p>
+      </Modal.Content>
+      <Modal.Actions>
+        <Button color='red' onClick={() => this.setState({isModalOpen: false})}>
+          <Icon name='remove' /> Tidak
+        </Button>
+        <Button color='green' onClick={() => this._onDeleteItem()}>
+          <Icon name='checkmark' /> Ya
+        </Button>
+      </Modal.Actions>
+    </Modal>
       </div>
     )
   }
 
+  componentDidMount() {
+    storeActions.setIsLoading(true);
+    storeActions.setIsError(false);
+    getSubjectList();
+  }
+
+  _onDeleteItem = () => {
+    let {selectedID} = this.state;
+    this.setState({isModalOpen: false});
+    storeActions.setIsLoading(true);
+    deleteSubject(selectedID);
+  }
 }
