@@ -3,10 +3,12 @@ let initialState = {
   classRoomList: [],
   isLoading: false,
   isError: false,
-  selectedClassRoom: {},
+  selectedClassRoom: {name: ''},
   selectedClassRoomID: 0,
   studentList: [],
-  selectedStudent: {},
+  selectedStudent: {serial: '', name: ''},
+  teacherList: [],
+  selectedTeacher: {serial: '', name: ''},
 };
 
 let stateContainer = {state: initialState};
@@ -27,6 +29,9 @@ export const storeActions = {
   setStudentList: async (studentList) => {
     await stateContainer.setState({studentList: studentList});
   },
+  setTeacherList: async (teacherList) => {
+    await stateContainer.setState({teacherList: teacherList});
+  },
   setIsLoading: async (isLoading) => {
     await stateContainer.setState({isLoading: isLoading});
   },
@@ -41,5 +46,8 @@ export const storeActions = {
   },
   setSelectedStudent: async (selectedStudent) => {
     await stateContainer.setState({selectedStudent: selectedStudent});
+  },
+  setSelectedTeacher: async (selectedTeacher) => {
+    await stateContainer.setState({selectedTeacher: selectedTeacher});
   },
 };

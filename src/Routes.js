@@ -39,9 +39,11 @@ export default class Routes extends Component {
           <Route path="/teacher">
             <TeacherScreen />
           </Route>
-          <Route path="/teacher-form">
-            <TeacherFormScreen />
-          </Route>
+          <Route
+            exact
+            path="/teacher-form/:id"
+            component={TeacherFormScreen}
+          />
           <Route path="/subject">
             <SubjectScreen />
           </Route>

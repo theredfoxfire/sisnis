@@ -18,6 +18,10 @@ import {
 } from "react-router-dom";
 import { getAllState, storeActions } from '../store/Store.js';
 
+const initialState = {
+  selectedClassRoom: {name: ""}
+};
+
 export default class ClassRoom extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +40,7 @@ export default class ClassRoom extends Component {
         <Menus />
         <Grid.Column stretched width={12}>
         <h1>Tabel Kelas</h1>
-      <Link to="/class-form/0" onClick={() => storeActions.setSelectedClassRoom({})}>
+        <Link to="/class-form/0" onClick={() => storeActions.setSelectedClassRoom(initialState.selectedClassRoom)}>
           <Button color='green' size="small">
           <Icon name='plus' />
           Tambah Kelas
@@ -61,7 +65,7 @@ export default class ClassRoom extends Component {
                   <Link to={`/class-form/${item.id}`}>
                   <Button color='green' basic onClick={() => {
                       storeActions.setSelectedClassRoomID(item.id);
-                      storeActions.setSelectedClassRoom({});
+                      storeActions.setSelectedClassRoom(initialState.selectedClassRoom);
                     }}>
                     <Icon name='pencil' />
                     Edit

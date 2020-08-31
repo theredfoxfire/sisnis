@@ -18,6 +18,13 @@ import {
 import { getAllState, storeActions } from '../store/Store.js';
 import {getStudentList, deleteStudent} from './api-data/student';
 
+const initialState = {
+  selectedStudent: {
+    serial: '',
+    name: '',
+  },
+};
+
 export default class Student extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +43,7 @@ export default class Student extends Component {
         <Menus />
         <Grid.Column stretched width={12}>
         <h1>Tabel Siswa</h1>
-        <Link to="/student-form/0" onClick={() => storeActions.setSelectedStudent({})}>
+      <Link to="/student-form/0" onClick={() => storeActions.setSelectedStudent(initialState.selectedStudent)}>
           <Button color='green' size="small">
           <Icon name='plus' />
           Tambah Siswa
@@ -56,13 +63,13 @@ export default class Student extends Component {
             {studentList.map((item, key) => {
               return (
                 <Table.Row key={key}>
-                  <Table.Cell>1</Table.Cell>
+                  <Table.Cell>{key + 1}</Table.Cell>
                 <Table.Cell width="3">{item.serial}</Table.Cell>
               <Table.Cell width="6">{item.name}</Table.Cell>
                   <Table.Cell>
                   <Link to={`/student-form/${item.id}`}>
                   <Button color='green' basic onClick={() => {
-                      storeActions.setSelectedStudent({});
+                      storeActions.setSelectedStudent(initialState.selectedStudent);
                     }}>
                     <Icon name='pencil' />
                     Edit
