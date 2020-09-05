@@ -1,8 +1,9 @@
 import axios from 'axios-proxy-fix';
 import { storeActions } from '../../store/Store.js';
+import {baseURL} from './config';
 
 export function getClassRoomList() {
-  axios.get(`/api/class-room/get-all`)
+  axios.get(`${baseURL}/api/class-room/get-all`)
     .then(res => {
       const classRoomList = res.data.classRooms;
       storeActions.setIsLoading(false);
@@ -15,7 +16,7 @@ export function getClassRoomList() {
 }
 
 export function getClassRoomByID(id) {
-  axios.get(`/api/class-room/get/${id}`)
+  axios.get(`${baseURL}/api/class-room/get/${id}`)
     .then(res => {
       const selectedClassRoom = res.data.classRoom;
       storeActions.setIsLoading(false);
@@ -28,7 +29,7 @@ export function getClassRoomByID(id) {
 }
 
 export function postClassRoom(name) {
-  axios.post('/api/class-room/add', {
+  axios.post(`${baseURL}/api/class-room/add`, {
     name: name,
   })
   .then(function (response) {
@@ -42,7 +43,7 @@ export function postClassRoom(name) {
 }
 
 export function putClassRoom(name, id) {
-  axios.put(`/api/class-room/update/${id}`, {
+  axios.put(`${baseURL}/api/class-room/update/${id}`, {
     name: name,
   })
   .then(function (response) {
@@ -57,7 +58,7 @@ export function putClassRoom(name, id) {
 
 
 export function deleteClass(id) {
-  axios.delete(`/api/class-room/delete/${id}`)
+  axios.delete(`${baseURL}/api/class-room/delete/${id}`)
     .then(res => {
       storeActions.setIsLoading(false);
       getClassRoomList();
