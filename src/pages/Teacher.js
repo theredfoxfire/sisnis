@@ -5,10 +5,7 @@ import {
   Table,
   Icon,
   Header, Modal,
-} from 'semantic-ui-react'
-import HeaderMenu from '../uikit/Header';
-import Menus from '../uikit/Menus';
-import Loader from '../uikit/Loader';
+} from 'semantic-ui-react';
 import {
   Link
 } from "react-router-dom";
@@ -35,9 +32,6 @@ export default class Teacher extends Component {
     let {isModalOpen} = this.state;
     return (
       <div>
-      <HeaderMenu />
-      <Grid style={{ marginTop: '2.4em' }}>
-        <Menus />
         <Grid.Column stretched width={12}>
         <h1>Tabel Guru</h1>
       <Link to="/teacher-form/0" onClick={() => storeActions.setSelectedTeacher(initialState.selectedTeacher)}>
@@ -82,9 +76,7 @@ export default class Teacher extends Component {
             })}
           </Table.Body>
         </Table>
-        <Loader />
         </Grid.Column>
-      </Grid>
       <Modal
         closeIcon
         open={isModalOpen}

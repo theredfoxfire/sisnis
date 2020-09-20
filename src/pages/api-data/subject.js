@@ -1,8 +1,7 @@
-import axios from 'axios-proxy-fix';
 import { storeActions } from '../../store/Store.js';
-import {baseURL} from './config';
+import {axiosWorker} from './config';
 export function getSubjectList() {
-  axios.get(`${baseURL}/api/subject/get-all`)
+  axiosWorker.get(`api/subject/get-all`)
     .then(res => {
       const subjects = res.data.subjects;
       storeActions.setIsLoading(false);
@@ -15,7 +14,7 @@ export function getSubjectList() {
 }
 
 export function getSubjectByID(id) {
-  axios.get(`${baseURL}/api/subject/get/${id}`)
+  axiosWorker.get(`api/subject/get/${id}`)
     .then(res => {
       const selectedSubject = res.data.subject;
       storeActions.setIsLoading(false);
@@ -28,7 +27,7 @@ export function getSubjectByID(id) {
 }
 
 export function postSubject(formData) {
-  axios.post(`${baseURL}/api/subject/add`, {
+  axiosWorker.post(`api/subject/add`, {
     ...formData
   })
   .then(function (response) {
@@ -42,7 +41,7 @@ export function postSubject(formData) {
 }
 
 export function putSubject(formData, id) {
-  axios.put(`${baseURL}/api/subject/update/${id}`, {
+  axiosWorker.put(`api/subject/update/${id}`, {
     ...formData,
   })
   .then(function (response) {
@@ -57,7 +56,7 @@ export function putSubject(formData, id) {
 
 
 export function deleteSubject(id) {
-  axios.delete(`${baseURL}/api/subject/delete/${id}`)
+  axiosWorker.delete(`api/subject/delete/${id}`)
     .then(res => {
       storeActions.setIsLoading(false);
       getSubjectList();

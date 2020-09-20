@@ -1,8 +1,7 @@
-import axios from 'axios-proxy-fix';
 import { storeActions } from '../../store/Store.js';
-import {baseURL} from './config';
+import {axiosWorker} from './config';
 export function getTeacherList() {
-  axios.get(`${baseURL}/api/teacher/get-all`)
+  axiosWorker.get(`api/teacher/get-all`)
     .then(res => {
       const teachers = res.data.teachers;
       storeActions.setIsLoading(false);
@@ -15,7 +14,7 @@ export function getTeacherList() {
 }
 
 export function getTeacherByID(id) {
-  axios.get(`${baseURL}/api/teacher/get/${id}`)
+  axiosWorker.get(`api/teacher/get/${id}`)
     .then(res => {
       const selectedTeacher = res.data.teacher;
       storeActions.setIsLoading(false);
@@ -28,7 +27,7 @@ export function getTeacherByID(id) {
 }
 
 export function postTeacher(formData) {
-  axios.post(`${baseURL}/api/teacher/add`, {
+  axiosWorker.post(`api/teacher/add`, {
     ...formData
   })
   .then(function (response) {
@@ -42,7 +41,7 @@ export function postTeacher(formData) {
 }
 
 export function putTeacher(formData, id) {
-  axios.put(`${baseURL}/api/teacher/update/${id}`, {
+  axiosWorker.put(`api/teacher/update/${id}`, {
     ...formData,
   })
   .then(function (response) {
@@ -57,7 +56,7 @@ export function putTeacher(formData, id) {
 
 
 export function deleteTeacher(id) {
-  axios.delete(`${baseURL}/api/teacher/delete/${id}`)
+  axiosWorker.delete(`api/teacher/delete/${id}`)
     .then(res => {
       storeActions.setIsLoading(false);
       getTeacherList();

@@ -4,10 +4,7 @@ import {
   Segment,
   Form,
   Button,
-} from 'semantic-ui-react'
-import Header from '../uikit/Header'
-import Menus from '../uikit/Menus'
-import Loader from '../uikit/Loader';
+} from 'semantic-ui-react';
 import {
   Link
 } from "react-router-dom";
@@ -31,9 +28,6 @@ export default class StudentForm extends Component {
     let studentID = this.props.match.params.id;
     return (
       <div>
-      <Header />
-      <Grid style={{ marginTop: '2.4em' }}>
-        <Menus />
         <Grid.Column stretched width={12}>
         <h1>Form Siswa</h1>
         <Form size='large'>
@@ -55,8 +49,6 @@ export default class StudentForm extends Component {
           </Segment>
         </Form>
         </Grid.Column>
-        <Loader />
-      </Grid>
       </div>
     )
   }
