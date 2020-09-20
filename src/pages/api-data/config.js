@@ -1,6 +1,6 @@
 import axios from 'axios-proxy-fix';
-//export const baseURL = "http://202.154.178.186:3200";
-// export const baseURL = "http://localhost/nilai-sekolah-be";
+//note prod baseURL = "http://202.154.178.186:3200";
+//note dev baseURL = "http://localhost/nilai-sekolah-be";
 import { getAllState } from '../../store/Store.js';
 let { auth } = getAllState();
 

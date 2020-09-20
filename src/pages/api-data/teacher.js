@@ -54,7 +54,6 @@ export function putTeacher(formData, id) {
   });
 }
 
-
 export function deleteTeacher(id) {
   axiosWorker.delete(`api/teacher/delete/${id}`)
     .then(res => {
