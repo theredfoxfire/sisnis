@@ -8,7 +8,7 @@ import {
 import {
   Link
 } from "react-router-dom";
-import {getClassRoomByID, postClassRoom, putClassRoom} from './api-data/classRoom'
+import {getClassRoomByID, postClassRoom, putClassRoom} from './api-data/classRoom';
 import { getAllState, storeActions } from '../store/Store.js';
 
 export default class ClassRoomForm extends Component {

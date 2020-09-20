@@ -11,6 +11,7 @@ let initialState = {
   selectedTeacher: {serial: '', name: ''},
   subjectList: [],
   selectedSubject: {serial: '', name: ''},
+  auth: JSON.parse(localStorage.getItem('storedAuth')) || {},
 };
 
 let stateContainer = {state: initialState};
@@ -57,5 +58,9 @@ export const storeActions = {
   },
   setSelectedSubject: async (selectedSubject) => {
     await stateContainer.setState({selectedSubject: selectedSubject});
+  },
+  setAuth: async (auth) => {
+    localStorage.setItem('storedAuth', JSON.stringify({token: auth}));
+    await stateContainer.setState({auth: {token: auth}});
   },
 };

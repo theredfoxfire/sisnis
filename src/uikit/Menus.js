@@ -48,6 +48,12 @@ const Header = (props) =>
         active={activeItem === 'users'}
       />
     </Link>
+    <Link to="/" >
+      <Menu.Item
+        name='logout'
+        active={activeItem === 'auth'}
+      />
+    </Link>
     </Menu>
   </Grid.Column>)};
 

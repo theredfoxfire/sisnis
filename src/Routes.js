@@ -9,10 +9,12 @@ import {
   ClassScreen, ClassFormScreen, StudentScreen, StudentFormScreen,
   TeacherScreen, TeacherFormScreen, SubjectScreen, SubjectFormScreen,
 } from './pages';
+import { getAllState } from './store/Store.js';
 import HeaderMenu from './uikit/Header';
 import Menus from './uikit/Menus';
 import Loader from './uikit/Loader';
 import styled from 'styled-components';
+let { auth } = getAllState();
 const StyledDiv = styled("div")`
   display: flex;
   flex-direction: row;
@@ -34,8 +36,7 @@ export default class Routes extends Component {
         <HeaderMenu />
       <StyledDiv>
         <div>
-
-          <Menus />
+          {auth.token && <Menus />}
         </div>
         <RightBox>
             <Loader />
