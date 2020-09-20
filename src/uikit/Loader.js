@@ -10,7 +10,7 @@ const StyledDiv = styled("div")`
 const Loader = () => {
   let {isLoading, isError} = getAllState();
   return (<div>
-    {isLoading ? <StyledDiv>Loading..</StyledDiv> : <StyledDiv />}
+    {isLoading ? <StyledDiv>Loading...</StyledDiv> : <StyledDiv />}
     {isError ? <StyledDiv>Gagal menampilkan data!</StyledDiv> : <StyledDiv />}
   </div>);
 };
