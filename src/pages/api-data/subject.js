@@ -1,5 +1,5 @@
 import { storeActions } from '../../store/Store.js';
-import {axiosWorker} from './config';
+import {axiosWorker, errorHandler} from './config';
 export function getSubjectList() {
   axiosWorker.get(`api/subject/get-all`)
     .then(res => {
@@ -7,7 +7,7 @@ export function getSubjectList() {
       storeActions.setIsLoading(false);
       storeActions.setSubjectList(subjects);
     }).catch(function (error) {
-      console.log(error);
+      errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);
     });
@@ -20,7 +20,7 @@ export function getSubjectByID(id) {
       storeActions.setIsLoading(false);
       storeActions.setSelectedSubject(selectedSubject);
     }).catch(function (error) {
-      console.log(error);
+      errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);
     });
@@ -61,7 +61,7 @@ export function deleteSubject(id) {
       storeActions.setIsLoading(false);
       getSubjectList();
     }).catch(function (error) {
-      console.log(error);
+      errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);
     });

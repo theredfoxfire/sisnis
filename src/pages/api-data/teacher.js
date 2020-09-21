@@ -1,5 +1,5 @@
 import { storeActions } from '../../store/Store.js';
-import {axiosWorker} from './config';
+import {axiosWorker, errorHandler} from './config';
 export function getTeacherList() {
   axiosWorker.get(`api/teacher/get-all`)
     .then(res => {
@@ -7,7 +7,7 @@ export function getTeacherList() {
       storeActions.setIsLoading(false);
       storeActions.setTeacherList(teachers);
     }).catch(function (error) {
-      console.log(error);
+      errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);
     });
@@ -20,7 +20,7 @@ export function getTeacherByID(id) {
       storeActions.setIsLoading(false);
       storeActions.setSelectedTeacher(selectedTeacher);
     }).catch(function (error) {
-      console.log(error);
+      errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);
     });
@@ -60,7 +60,7 @@ export function deleteTeacher(id) {
       storeActions.setIsLoading(false);
       getTeacherList();
     }).catch(function (error) {
-      console.log(error);
+      errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);
     });

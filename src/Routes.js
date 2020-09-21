@@ -22,9 +22,13 @@ const StyledDiv = styled("div")`
   padding-top: 70px;
 `;
 const RightBox = styled("div")`
-  width: 100%;
+  width: 80%;
   padding-left: 20px;
   padding-right: 10px;
+  padding-bottom: 15px;
+`;
+const LeftBox = styled("div")`
+  width: 20%;
   padding-bottom: 15px;
 `;
 

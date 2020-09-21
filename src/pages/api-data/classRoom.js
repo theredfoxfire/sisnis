@@ -21,7 +21,7 @@ export function getClassRoomByID(id) {
       storeActions.setIsLoading(false);
       storeActions.setSelectedClassRoom(selectedClassRoom);
     }).catch(function (error) {
-      console.log(error);
+      errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);
     });
@@ -62,7 +62,7 @@ export function deleteClass(id) {
       storeActions.setIsLoading(false);
       getClassRoomList();
     }).catch(function (error) {
-      console.log(error);
+      errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);
     });
