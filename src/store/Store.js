@@ -3,6 +3,8 @@ let initialState = {
   classRoomList: [],
   isLoading: false,
   isError: false,
+  isModalOpen: false,
+  isShowReject: false,
   selectedClassRoom: {name: ''},
   selectedClassRoomID: 0,
   studentList: [],
@@ -12,6 +14,11 @@ let initialState = {
   subjectList: [],
   selectedSubject: {serial: '', name: ''},
   auth: JSON.parse(localStorage.getItem('storedAuth')) || {},
+  errorMessage: "Gagal menampilkan data!",
+  confirmAction: () => {},
+  closeModalAction: false,
+  dialogTitle: "Sesi Anda habis",
+  dialogMessage: "Sesi Anda sudah berkahir, silahkan login ulang!",
 };
 
 let stateContainer = {state: initialState};
@@ -58,6 +65,18 @@ export const storeActions = {
   },
   setSelectedSubject: async (selectedSubject) => {
     await stateContainer.setState({selectedSubject: selectedSubject});
+  },
+  setErrorMessage: async (errorMessage) => {
+    await stateContainer.setState({errorMessage: errorMessage});
+  },
+  setModalStatus: async (status) => {
+    await stateContainer.setState({isModalOpen: status});
+  },
+  setModalConfirmAction: async (confirmAction) => {
+    await stateContainer.setState({confirmAction: confirmAction});
+  },
+  setCloseModalAction: async (closeAction) => {
+    await stateContainer.setState({closeModalAction: closeAction});
   },
   setAuth: async (auth) => {
     localStorage.setItem('storedAuth', JSON.stringify({token: auth}));

@@ -1,5 +1,6 @@
 import { storeActions } from '../../store/Store.js';
 import {axiosWorker} from './config';
+import {AUTH_FAILED_MESSAGE} from '../../Constants';
 
 export function postLogin(formData) {
   axiosWorker.post(`api/login_check`, {
@@ -12,6 +13,7 @@ export function postLogin(formData) {
   })
   .catch(function (error) {
     storeActions.setIsLoading(false);
+    storeActions.setErrorMessage(AUTH_FAILED_MESSAGE);
     storeActions.setIsError(true);
   });
 }

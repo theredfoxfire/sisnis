@@ -1,5 +1,5 @@
 import { storeActions } from '../../store/Store.js';
-import {axiosWorker} from './config';
+import {axiosWorker, errorHandler} from './config';
 
 export function getClassRoomList() {
   axiosWorker.get(`api/class-room/get-all`)
@@ -8,7 +8,7 @@ export function getClassRoomList() {
       storeActions.setIsLoading(false);
       storeActions.setClassRoomList(classRoomList );
     }).catch(function (error) {
-      console.log(error);
+      errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);
     });

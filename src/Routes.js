@@ -13,6 +13,7 @@ import { getAllState } from './store/Store.js';
 import HeaderMenu from './uikit/Header';
 import Menus from './uikit/Menus';
 import Loader from './uikit/Loader';
+import ModalBox from './uikit/Modal';
 import styled from 'styled-components';
 let { auth } = getAllState();
 const StyledDiv = styled("div")`
@@ -85,8 +86,7 @@ export default class Routes extends Component {
           </Switch>
         </RightBox>
       </StyledDiv>
-
-
+      <ModalBox />
       </div>
     </Router>
   )}

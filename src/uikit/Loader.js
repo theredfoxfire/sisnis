@@ -8,10 +8,10 @@ const StyledDiv = styled("div")`
   height: 10px;
 `;
 const Loader = () => {
-  let {isLoading, isError} = getAllState();
+  let {isLoading, isError, errorMessage} = getAllState();
   return (<div>
     {isLoading ? <StyledDiv>Loading...</StyledDiv> : <StyledDiv />}
-    {isError ? <StyledDiv>Gagal menampilkan data!</StyledDiv> : <StyledDiv />}
+    {isError ? <StyledDiv>{errorMessage}</StyledDiv> : <StyledDiv />}
   </div>);
 };
 
