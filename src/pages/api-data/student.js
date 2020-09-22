@@ -54,6 +54,19 @@ export function putStudent(formData, id) {
   });
 }
 
+export function setStudentClass(formData) {
+  return axiosWorker.put(`api/student/add/cllass-room/${formData.student}`, {
+    classRoomId: formData.classID,
+  })
+  .then(function (response) {
+    storeActions.setIsLoading(false);
+  })
+  .catch(function (error) {
+    storeActions.setIsLoading(false);
+    storeActions.setIsError(true);
+  });
+}
+
 
 export function deleteStudent(id) {
   axiosWorker.delete(`api/student/delete/${id}`)

@@ -67,3 +67,14 @@ export function deleteClass(id) {
       storeActions.setIsError(true);
     });
 }
+
+export function deleteStudentClass(id) {
+  return axiosWorker.delete(`api/student/delete/class/${id}`)
+    .then(res => {
+      storeActions.setIsLoading(false);
+    }).catch(function (error) {
+      errorHandler(error);
+      storeActions.setIsLoading(false);
+      storeActions.setIsError(true);
+    });
+}

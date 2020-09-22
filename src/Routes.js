@@ -6,8 +6,8 @@ import {
 } from "react-router-dom";
 import {
   AuthScreen, HomeScreen, UsersScreen,
-  ClassScreen, ClassFormScreen, StudentScreen, StudentFormScreen,
-  TeacherScreen, TeacherFormScreen, SubjectScreen, SubjectFormScreen,
+  ClassScreen, ClassDetailScreen, ClassFormScreen, StudentScreen, StudentFormScreen,
+  TeacherScreen, TeacherFormScreen, SubjectScreen, SubjectFormScreen, ClassAddStudentScreen,
 } from './pages';
 import { getAllState } from './store/Store.js';
 import HeaderMenu from './uikit/Header';
@@ -22,13 +22,9 @@ const StyledDiv = styled("div")`
   padding-top: 70px;
 `;
 const RightBox = styled("div")`
-  width: 80%;
+  width: 100%;
   padding-left: 20px;
   padding-right: 10px;
-  padding-bottom: 15px;
-`;
-const LeftBox = styled("div")`
-  width: 20%;
   padding-bottom: 15px;
 `;
 
@@ -56,6 +52,16 @@ export default class Routes extends Component {
               exact
               path="/class-form/:id"
               component={ClassFormScreen}
+            />
+            <Route
+              exact
+              path="/class-detail/:id"
+              component={ClassDetailScreen}
+            />
+            <Route
+              exact
+              path="/class-add-students/:id"
+              component={ClassAddStudentScreen}
             />
             <Route path="/student">
               <StudentScreen />

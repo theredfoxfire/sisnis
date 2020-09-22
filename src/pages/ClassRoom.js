@@ -51,7 +51,7 @@ export default class ClassRoom extends Component {
               return (
                 <Table.Row key={key}>
                   <Table.Cell>{key+1}</Table.Cell>
-                  <Table.Cell width="9">{item.name}</Table.Cell>
+                  <Table.Cell width="9"><Link to={`/class-detail/${item.id}`}>{item.name}</Link></Table.Cell>
                   <Table.Cell>
                   <Link to={`/class-form/${item.id}`}>
                   <Button color='green' basic onClick={() => {

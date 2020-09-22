@@ -5,7 +5,7 @@ let initialState = {
   isError: false,
   isModalOpen: false,
   isShowReject: false,
-  selectedClassRoom: {name: ''},
+  selectedClassRoom: {name: '', students: []},
   selectedClassRoomID: 0,
   studentList: [],
   selectedStudent: {serial: '', name: ''},
@@ -77,6 +77,12 @@ export const storeActions = {
   },
   setCloseModalAction: async (closeAction) => {
     await stateContainer.setState({closeModalAction: closeAction});
+  },
+  setDialogTitle: async (dialogTitle) => {
+    await stateContainer.setState({dialogTitle: dialogTitle});
+  },
+  setDialogMessage: async (dialogMessage) => {
+    await stateContainer.setState({dialogMessage: dialogMessage});
   },
   setAuth: async (auth) => {
     localStorage.setItem('storedAuth', JSON.stringify({token: auth}));

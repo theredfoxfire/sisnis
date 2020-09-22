@@ -5,7 +5,6 @@ import {
   Menu,
 } from 'semantic-ui-react';
 const Menus = () =>
-<div>
 <Menu fixed='top' inverted>
 <Container>
   <Menu.Item as='a' header>
@@ -14,5 +13,4 @@ const Menus = () =>
   </Menu.Item>
 </Container>
 </Menu>
-</div>
 export default Menus;
