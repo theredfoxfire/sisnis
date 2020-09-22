@@ -5,27 +5,27 @@ import {
   Table,
   Icon,
 } from 'semantic-ui-react';
-import {getClassRoomByID, deleteStudentClass} from './api-data/classRoom'
+import {getTeacherByID} from './api-data/teacher';
 import {
   Link
 } from "react-router-dom";
 import { getAllState, storeActions } from '../store/Store.js';
 
-export default class ClassDetail extends Component {
+export default class TeacherDetail extends Component {
 
   render() {
-    let {selectedClassRoom} = getAllState();
-    let classID = this.props.match.params.id;
+    let {selectedTeacher} = getAllState();
+    let teacherID = this.props.match.params.id;
     return (
       <div>
         <Grid.Column stretched width={12}>
-        <h1>Detail Kelas: {selectedClassRoom.name}</h1>
+        <h1>Detail Guru: {selectedTeacher.name}</h1>
 
-        <h3>Daftar Siswa di kelas ini:</h3>
-      <Link to={`/class-add-students/${classID}`}>
+      <h3>Daftar Pelajaran untuk guru ini:</h3>
+    <Link to={`/teacher-add-subject/${teacherID}`}>
           <Button color='green' size="small">
             <Icon name='plus' />
-            Tambah Siswa Lagi
+          Tambah Pelajaran Lagi
           </Button>
         </Link>
         <Table celled selectable>
@@ -37,8 +37,8 @@ export default class ClassDetail extends Component {
             </Table.Row>
           </Table.Header>
 
-          <Table.Body>
-            {selectedClassRoom.students.map((item, key) => {
+          {/* <Table.Body>
+            {selectedTeacher.subjects.map((item, key) => {
               return (
                 <Table.Row key={key}>
                   <Table.Cell>{key+1}</Table.Cell>
@@ -52,33 +52,33 @@ export default class ClassDetail extends Component {
                 </Table.Row>
               )
             })}
-          </Table.Body>
+          </Table.Body> */}
         </Table>
-        {selectedClassRoom.students.length < 1 && <h4>Data kosong.</h4> }
+        {/* {selectedTeacher.students.length < 1 && <h4>Data kosong.</h4> } */}
       </Grid.Column>
       </div>
     )
   }
 
   componentDidMount() {
-    let classID = this.props.match.params.id;
+    let teacherID = this.props.match.params.id;
     storeActions.setIsError(false);
-    if (classID > 0) {
-      getClassRoomByID(classID);
+    if (teacherID > 0) {
+      getTeacherByID(teacherID);
       storeActions.setIsLoading(true);
     }
   }
 
   _handleDelete = (studentID) => {
-    let classID = this.props.match.params.id;
+    let teacherID = this.props.match.params.id;
     storeActions.setModalStatus(true);
     storeActions.setDialogTitle("Hapus data");
     storeActions.setDialogMessage("Anda yakin akan menghapus data ini?");
-    storeActions.setModalConfirmAction(() => {
-      deleteStudentClass(studentID).then(() => {
-        getClassRoomByID(classID);
-        storeActions.setModalStatus(false);
-      });
-    });
+    // storeActions.setModalConfirmAction(() => {
+    //   deleteStudentClass(studentID).then(() => {
+    //     getTeacherByID(teacherID);
+    //     storeActions.setModalStatus(false);
+    //   });
+    // });
   }
 }

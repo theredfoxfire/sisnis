@@ -56,7 +56,7 @@ export default class Teacher extends Component {
                 <Table.Row key={key}>
                   <Table.Cell>{key + 1}</Table.Cell>
                 <Table.Cell width="3">{item.serial}</Table.Cell>
-              <Table.Cell width="6">{item.name}</Table.Cell>
+              <Table.Cell width="6"><Link to={`/teacher-detail/${item.id}`}>{item.name}</Link></Table.Cell>
                   <Table.Cell>
                   <Link to={`/teacher-form/${item.id}`}>
                   <Button color='green' basic onClick={() => {
