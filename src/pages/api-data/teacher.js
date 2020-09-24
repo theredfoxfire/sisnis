@@ -65,3 +65,29 @@ export function deleteTeacher(id) {
       storeActions.setIsError(true);
     });
 }
+
+export function setTeacherClass(formData) {
+  return axiosWorker.put(`api/teacher/add/class-room/${formData.teacherID}`, {
+    classRoomId: formData.classRoom,
+    subjectId: formData.subject,
+  })
+  .then(function (response) {
+    storeActions.setIsLoading(false);
+  })
+  .catch(function (error) {
+    storeActions.setIsLoading(false);
+    storeActions.setIsError(true);
+  });
+}
+
+export function deleteTeacherClass(classToSubjectId) {
+  return axiosWorker.delete(`api/teacher/delete/class/${classToSubjectId}`)
+    .then(res => {
+      storeActions.setIsLoading(false);
+    }).catch(function (error) {
+      errorHandler(error);
+      storeActions.setIsLoading(false);
+      storeActions.setErrorMessage("Gagal mengahpus data!");
+      storeActions.setIsError(true);
+    });
+}

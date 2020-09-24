@@ -37,7 +37,7 @@ export default class ClassAddStudent extends Component {
     return (
       <div>
         <Grid.Column stretched width={12}>
-        <h1>Form Tamah Siswa ke dalam Kelas</h1>
+        <h1>Form Tambah Siswa ke dalam Kelas</h1>
         <Form size='large'>
           <Segment stacked>
             <h4>Pilih Siswa:</h4>

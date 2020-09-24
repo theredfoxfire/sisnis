@@ -8,7 +8,7 @@ import {
   AuthScreen, HomeScreen, UsersScreen,
   ClassScreen, ClassDetailScreen, ClassFormScreen, StudentScreen, StudentFormScreen,
   TeacherScreen, TeacherFormScreen, SubjectScreen, SubjectFormScreen, ClassAddStudentScreen,
-  TeacherDetailScreen,
+  TeacherDetailScreen, TeacherAddSubjectScreen,
 } from './pages';
 import { getAllState } from './store/Store.js';
 import HeaderMenu from './uikit/Header';
@@ -84,6 +84,11 @@ export default class Routes extends Component {
               exact
               path="/teacher-detail/:id"
               component={TeacherDetailScreen}
+            />
+            <Route
+              exact
+              path="/teacher-add-subject/:id"
+              component={TeacherAddSubjectScreen}
             />
             <Route path="/subject">
               <SubjectScreen />

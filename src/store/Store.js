@@ -10,7 +10,7 @@ let initialState = {
   studentList: [],
   selectedStudent: {serial: '', name: ''},
   teacherList: [],
-  selectedTeacher: {serial: '', name: ''},
+  selectedTeacher: {serial: '', name: '', classToSubjects: []},
   subjectList: [],
   selectedSubject: {serial: '', name: ''},
   auth: JSON.parse(localStorage.getItem('storedAuth')) || {},

@@ -55,7 +55,7 @@ export function putStudent(formData, id) {
 }
 
 export function setStudentClass(formData) {
-  return axiosWorker.put(`api/student/add/cllass-room/${formData.student}`, {
+  return axiosWorker.put(`api/student/add/class-room/${formData.student}`, {
     classRoomId: formData.classID,
   })
   .then(function (response) {

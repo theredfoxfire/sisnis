@@ -5,7 +5,7 @@ import {
   Table,
   Icon,
 } from 'semantic-ui-react';
-import {getTeacherByID} from './api-data/teacher';
+import {getTeacherByID, deleteTeacherClass} from './api-data/teacher';
 import {
   Link
 } from "react-router-dom";
@@ -22,7 +22,7 @@ export default class TeacherDetail extends Component {
         <h1>Detail Guru: {selectedTeacher.name}</h1>
 
       <h3>Daftar Pelajaran untuk guru ini:</h3>
-    <Link to={`/teacher-add-subject/${teacherID}`}>
+        <Link to={`/teacher-add-subject/${teacherID}`}>
           <Button color='green' size="small">
             <Icon name='plus' />
           Tambah Pelajaran Lagi
@@ -37,14 +37,14 @@ export default class TeacherDetail extends Component {
             </Table.Row>
           </Table.Header>
 
-          {/* <Table.Body>
-            {selectedTeacher.subjects.map((item, key) => {
+          <Table.Body>
+            {selectedTeacher.classToSubjects.map((item, key) => {
               return (
                 <Table.Row key={key}>
                   <Table.Cell>{key+1}</Table.Cell>
-                  <Table.Cell width="9">{item.name}</Table.Cell>
+                  <Table.Cell width="9">{item.subject.name} - {item.classRoom.name}</Table.Cell>
                   <Table.Cell>
-                  <Button color='red' basic onClick={() => this._handleDelete(item.id)}>
+                  <Button color='red' basic onClick={() => this._handleDelete(item.classToSubjectId)}>
                     <Icon name='trash' />
                     Hapus
                   </Button>
@@ -52,9 +52,9 @@ export default class TeacherDetail extends Component {
                 </Table.Row>
               )
             })}
-          </Table.Body> */}
+          </Table.Body>
         </Table>
-        {/* {selectedTeacher.students.length < 1 && <h4>Data kosong.</h4> } */}
+        {selectedTeacher.classToSubjects.length < 1 && <h4>Data kosong.</h4> }
       </Grid.Column>
       </div>
     )
@@ -69,16 +69,18 @@ export default class TeacherDetail extends Component {
     }
   }
 
-  _handleDelete = (studentID) => {
+  _handleDelete = (classToSubjectId) => {
     let teacherID = this.props.match.params.id;
+    let {isError} = getAllState();
     storeActions.setModalStatus(true);
     storeActions.setDialogTitle("Hapus data");
     storeActions.setDialogMessage("Anda yakin akan menghapus data ini?");
-    // storeActions.setModalConfirmAction(() => {
-    //   deleteStudentClass(studentID).then(() => {
-    //     getTeacherByID(teacherID);
-    //     storeActions.setModalStatus(false);
-    //   });
-    // });
+    storeActions.setModalConfirmAction(() => {
+      deleteTeacherClass(classToSubjectId).then(() => {
+        isError && storeActions.setIsError(false);
+        getTeacherByID(teacherID);
+        storeActions.setModalStatus(false);
+      });
+    });
   }
 }
