@@ -19,6 +19,8 @@ let initialState = {
   closeModalAction: false,
   dialogTitle: "Sesi Anda habis",
   dialogMessage: "Sesi Anda sudah berkahir, silahkan login ulang!",
+  teacherSubject: {id: '', name: '', className: '', exams: []},
+  selectedExam: {id: '', name: ''},
 };
 
 let stateContainer = {state: initialState};
@@ -83,6 +85,9 @@ export const storeActions = {
   },
   setDialogMessage: async (dialogMessage) => {
     await stateContainer.setState({dialogMessage: dialogMessage});
+  },
+  setTeacherSubject: async (teacherSubject) => {
+    await stateContainer.setState({teacherSubject: teacherSubject});
   },
   setAuth: async (auth) => {
     localStorage.setItem('storedAuth', JSON.stringify({token: auth}));
