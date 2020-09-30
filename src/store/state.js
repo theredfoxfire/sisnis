@@ -1,0 +1,28 @@
+let initialState = {
+  activeItem: "home",
+  classRoomList: [],
+  isLoading: false,
+  isError: false,
+  isModalOpen: false,
+  isShowReject: false,
+  selectedClassRoom: {name: '', students: []},
+  selectedClassRoomID: 0,
+  studentList: [],
+  selectedStudent: {serial: '', name: ''},
+  teacherList: [],
+  selectedTeacher: {serial: '', name: '', classToSubjects: []},
+  subjectList: [],
+  examTypeList: [],
+  selectedSubject: {serial: '', name: ''},
+  auth: JSON.parse(localStorage.getItem('storedAuth')) || {},
+  errorMessage: "Gagal menampilkan data!",
+  confirmAction: () => {},
+  closeModalAction: false,
+  dialogTitle: "Sesi Anda habis",
+  dialogMessage: "Sesi Anda sudah berkahir, silahkan login ulang!",
+  teacherSubject: {id: '', name: '', className: '', exams: []},
+  selectedExam: {id: '', name: ''},
+  selectedExamType: {id: '', name: '', scale: ''},
+};
+
+export default initialState;

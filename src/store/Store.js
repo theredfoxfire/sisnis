@@ -1,33 +1,14 @@
-let initialState = {
-  activeItem: "home",
-  classRoomList: [],
-  isLoading: false,
-  isError: false,
-  isModalOpen: false,
-  isShowReject: false,
-  selectedClassRoom: {name: '', students: []},
-  selectedClassRoomID: 0,
-  studentList: [],
-  selectedStudent: {serial: '', name: ''},
-  teacherList: [],
-  selectedTeacher: {serial: '', name: '', classToSubjects: []},
-  subjectList: [],
-  selectedSubject: {serial: '', name: ''},
-  auth: JSON.parse(localStorage.getItem('storedAuth')) || {},
-  errorMessage: "Gagal menampilkan data!",
-  confirmAction: () => {},
-  closeModalAction: false,
-  dialogTitle: "Sesi Anda habis",
-  dialogMessage: "Sesi Anda sudah berkahir, silahkan login ulang!",
-  teacherSubject: {id: '', name: '', className: '', exams: []},
-  selectedExam: {id: '', name: ''},
-};
-
+import React from "react";
+import initialState from './state';
 let stateContainer = {state: initialState};
 
 export const setStoreContainer = (setter) => {
   stateContainer = setter;
 };
+
+export const chainToView = (ViewComponent) => {
+  return (props) => <ViewComponent {...props} {...stateContainer.state} />;
+}
 
 export const getAllState = () => stateContainer.state;
 
@@ -88,6 +69,12 @@ export const storeActions = {
   },
   setTeacherSubject: async (teacherSubject) => {
     await stateContainer.setState({teacherSubject: teacherSubject});
+  },
+  setExamTypeList: async (examTypeList) => {
+    await stateContainer.setState({examTypeList: examTypeList});
+  },
+  setSelectedExamType: async (selectedExamType) => {
+    await stateContainer.setState({selectedExamType: selectedExamType});
   },
   setAuth: async (auth) => {
     localStorage.setItem('storedAuth', JSON.stringify({token: auth}));

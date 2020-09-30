@@ -40,7 +40,7 @@ export default class ClassAddStudent extends Component {
         <h1>Form Tambah Siswa ke dalam Kelas</h1>
         <Form size='large'>
           <Segment stacked>
-            <h4>Pilih Siswa:</h4>
+          <h4>Pilih Siswa:</h4>
           <DropdownSelect placeholder="Pilih siswa" onChange={(e, {value}) => this.setState({student: value})} multiple={false} options={studentsOptions} />
           <br/>
             <Link to={"/class"}>
