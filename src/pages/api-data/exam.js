@@ -17,7 +17,7 @@ export function getTeacherSubject($teacherSubject) {
 export function getExamByID(id) {
   axiosWorker.get(`api/exam/get/${id}`)
     .then(res => {
-      const selectedExam = res.data.classRoom;
+      const selectedExam = res.data.exam;
       storeActions.setIsLoading(false);
       storeActions.setSelectedExam(selectedExam);
     }).catch(function (error) {
@@ -39,6 +39,24 @@ export function postExam(formData) {
     getTeacherSubject(formData.teacherSubject);
   })
   .catch(function (error) {
+    errorHandler(error);
+    storeActions.setIsLoading(false);
+    storeActions.setIsError(true);
+  });
+}
+
+export function postStudentsPoint(formData) {
+  axiosWorker.post(`api/exam/point/add`, {
+    examId: formData.examID,
+    studentPoints: formData.studentPoints,
+  })
+  .then(function (response) {
+    storeActions.setIsLoading(false);
+    storeActions.setIsError(false);
+    getExamByID(formData.examID);
+  })
+  .catch(function (error) {
+    errorHandler(error);
     storeActions.setIsLoading(false);
     storeActions.setIsError(true);
   });

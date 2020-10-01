@@ -76,6 +76,9 @@ export const storeActions = {
   setSelectedExamType: async (selectedExamType) => {
     await stateContainer.setState({selectedExamType: selectedExamType});
   },
+  setSelectedExam: async (selectedExam) => {
+    await stateContainer.setState({selectedExam: selectedExam});
+  },
   setAuth: async (auth) => {
     localStorage.setItem('storedAuth', JSON.stringify({token: auth}));
     await stateContainer.setState({auth: {token: auth}});

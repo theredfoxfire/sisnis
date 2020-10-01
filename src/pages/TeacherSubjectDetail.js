@@ -10,6 +10,7 @@ import {
   Link
 } from "react-router-dom";
 import { getAllState, storeActions } from '../store/Store.js';
+import {getDateByStringJSON} from '../utils/dateHelper';
 
 export default class TeacherSubjectDetail extends Component {
 
@@ -33,6 +34,7 @@ export default class TeacherSubjectDetail extends Component {
             <Table.Row>
               <Table.HeaderCell>No</Table.HeaderCell>
               <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Tanggal Exam</Table.HeaderCell>
               <Table.HeaderCell>Actions</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
@@ -42,10 +44,13 @@ export default class TeacherSubjectDetail extends Component {
               return (
                 <Table.Row key={key}>
                   <Table.Cell>{key+1}</Table.Cell>
-                  <Table.Cell width="9">
+                  <Table.Cell width="5">
                     <Link to={`/teacher-subject-exam-detail/${item.id}`}>
                       {item.name}
                     </Link>
+                  </Table.Cell>
+                  <Table.Cell width="4">
+                    {getDateByStringJSON(item.date).dateIDN}
                   </Table.Cell>
                   <Table.Cell>
                   <Button color='red' basic onClick={() => this._handleDelete(item.id)}>

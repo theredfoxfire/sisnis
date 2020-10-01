@@ -21,7 +21,7 @@ let initialState = {
   dialogTitle: "Sesi Anda habis",
   dialogMessage: "Sesi Anda sudah berkahir, silahkan login ulang!",
   teacherSubject: {id: '', name: '', className: '', exams: []},
-  selectedExam: {id: '', name: ''},
+  selectedExam: {id: '', name: '', students: []},
   selectedExamType: {id: '', name: '', scale: ''},
 };
 
