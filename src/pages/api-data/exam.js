@@ -61,6 +61,22 @@ export function postStudentsPoint(formData) {
     storeActions.setIsError(true);
   });
 }
+export function putStudentsPoint(formData) {
+  axiosWorker.put(`api/exam/point/update`, {
+    examId: formData.examID,
+    studentPoints: formData.studentPoints,
+  })
+  .then(function (response) {
+    storeActions.setIsLoading(false);
+    storeActions.setIsError(false);
+    getExamByID(formData.examID);
+  })
+  .catch(function (error) {
+    errorHandler(error);
+    storeActions.setIsLoading(false);
+    storeActions.setIsError(true);
+  });
+}
 
 export function putExam(name, id) {
   axiosWorker.put(`api/exam/update/${id}`, {

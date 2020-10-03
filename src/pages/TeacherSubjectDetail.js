@@ -11,6 +11,16 @@ import {
 } from "react-router-dom";
 import { getAllState, storeActions } from '../store/Store.js';
 import {getDateByStringJSON} from '../utils/dateHelper';
+import styled from 'styled-components';
+
+const Row = styled("div")`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Label = styled("div")`
+  width: 120px;
+`;
 
 export default class TeacherSubjectDetail extends Component {
 
@@ -21,6 +31,10 @@ export default class TeacherSubjectDetail extends Component {
       <div>
         <Grid.Column stretched width={12}>
         <h1>Detail Matapelajaran: {teacherSubject.name}</h1>
+        <div>
+          <Row><Label>Kelas:</Label> <b>{teacherSubject.className}</b></Row>
+          <Row><Label>Guru:</Label> <b>{teacherSubject.teacherName}</b></Row>
+        </div>
 
       <h3>Daftar tugas/ulangan/ujian untuk matapelajaran ini:</h3>
         <Link to={`/teacher-add-subject-exam/0/${teacherSubjectID}`}>
@@ -64,6 +78,11 @@ export default class TeacherSubjectDetail extends Component {
           </Table.Body>
         </Table>
         {teacherSubject.exams.length < 1 && <h4>Data kosong.</h4> }
+        <Link to={`/teacher-detail/${teacherSubject.teacherId}`}>
+          <Button color='olive' size='small'>
+             Back
+          </Button>
+        </Link>
       </Grid.Column>
       </div>
     )

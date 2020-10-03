@@ -59,6 +59,11 @@ export default class TeacherDetail extends Component {
           </Table.Body>
         </Table>
         {selectedTeacher.classToSubjects.length < 1 && <h4>Data kosong.</h4> }
+        <Link to={`/teacher`}>
+          <Button color='olive' size='small'>
+             Back
+          </Button>
+        </Link>
       </Grid.Column>
       </div>
     )

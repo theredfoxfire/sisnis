@@ -4,9 +4,8 @@ import {
   Button,
   Table,
   Form,
-  Icon,
 } from 'semantic-ui-react';
-import {getExamByID, postStudentsPoint} from './api-data/exam';
+import {getExamByID, postStudentsPoint, putStudentsPoint} from './api-data/exam';
 import {
   Link
 } from "react-router-dom";
@@ -14,6 +13,16 @@ import { storeActions, chainToView } from '../store/Store.js';
 import initialState from '../store/state.js';
 import {isEqual} from '../utils/objectUtils';
 import {getDateByStringJSON} from '../utils/dateHelper';
+import styled from 'styled-components';
+
+const Row = styled("div")`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Label = styled("div")`
+  width: 120px;
+`;
 
 class TeacherExamDetail extends Component {
   constructor(props) {
@@ -26,18 +35,17 @@ class TeacherExamDetail extends Component {
   }
 
   render() {
-    let {selectedExam, studentPoints} = this.state;
-    let examID = this.props.match.params.id;
+    let {selectedExam} = this.state;
     return (
       <div>
         <Grid.Column stretched width={12}>
         <h1>Detail Exam: {selectedExam.name}</h1>
-        <p>
-          Kelas: <b>{selectedExam.classRoomName}</b><br />
-          Matapelajaran: <b>{selectedExam.subjectName}</b><br />
-          Guru: <b>{selectedExam.teacherName}</b><br />
-          Tanggal: <b>{getDateByStringJSON(selectedExam.date).dateIDN}</b>
-        </p>
+        <div>
+          <Row><Label>Kelas:</Label> <b>{selectedExam.classRoomName}</b></Row>
+          <Row><Label>Matapelajaran:</Label> <b>{selectedExam.subjectName}</b></Row>
+          <Row><Label>Guru:</Label> <b>{selectedExam.teacherName}</b></Row>
+          <Row><Label>Tanggal:</Label> <b>{getDateByStringJSON(selectedExam.date).dateIDN}</b></Row>
+        </div>
 
         <h3>Daftar Siswa:</h3>
         <Table celled selectable>
@@ -66,6 +74,7 @@ class TeacherExamDetail extends Component {
             })}
           </Table.Body>
         </Table>
+        {selectedExam.students.length < 1 && <h4>Data kosong.</h4> }
         <Link to={`/teacher-subject-detail/${selectedExam.teacherSubjectId}`}>
           <Button color='olive' size='small'>
              Back
@@ -74,7 +83,6 @@ class TeacherExamDetail extends Component {
         <Button color='teal' size='small' disabled={!this._validate()} onClick={() => this._validate() && this._handleSubmit()} >
            Simpan
         </Button>
-        {selectedExam.students.length < 1 && <h4>Data kosong.</h4> }
       </Grid.Column>
       </div>
     )
@@ -93,7 +101,12 @@ class TeacherExamDetail extends Component {
   componentDidUpdate(prevProps, prevState) {
     let {selectedExam} = this.props;
     if (!isEqual(prevProps.selectedExam, selectedExam)) {
-      this.setState({selectedExam});
+      let studentPointList = [];
+      selectedExam.examPoints.forEach((item, i) => {
+        studentPointList.push({id: item.id, point: item.point, key: i, pointId: item.pointId});
+      });
+
+      this.setState({selectedExam, studentPoints: studentPointList});
     }
   }
 
@@ -101,13 +114,13 @@ class TeacherExamDetail extends Component {
     let {studentPoints: pointList} = this.state;
 
     const itemVal = pointList.find((value) => value.id === item.studentId);
-    const point = {id: item.studentId, point: eValue, key};
+    const point = {id: item.studentId, point: eValue, key, pointId: itemVal.pointId};
     if (itemVal) {
       pointList[itemVal.key] = point;
     } else {
       pointList.push(point);
     }
-
+    console.log(pointList);
     this.setState({studentPoints: pointList});
   }
 
@@ -117,8 +130,13 @@ class TeacherExamDetail extends Component {
   }
 
   _handleSubmit = () => {
+    let examID = this.props.match.params.id;
     let {studentPoints, selectedExam} = this.state;
-    postStudentsPoint({examID: selectedExam.id, studentPoints})
+    if (examID > 0) {
+      putStudentsPoint({examID: selectedExam.id, studentPoints});
+    } else {
+      postStudentsPoint({examID: selectedExam.id, studentPoints});
+    }
   }
 
   _getCurrentPoint = (item) => {
