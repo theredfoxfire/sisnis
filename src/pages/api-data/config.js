@@ -6,7 +6,7 @@ import {UNAUTHORIZED_CODE, UNAUTHORIZED_MESSAGE} from '../../Constants';
 let { auth } = getAllState();
 
 export const axiosWorker = axios.create({
-  baseURL: 'http://202.154.178.186:3200',
+  baseURL: 'http://localhost/nilai-sekolah-be',
   timeout: 10000,
   headers: {'Authorization': `Bearer ${auth.token}`}
 });
@@ -21,3 +21,5 @@ export const errorHandler = (error) => {
     console.log(error.response);
   }
 }
+
+export const maxItems = "5";

@@ -10,7 +10,7 @@ import {
   Link
 } from "react-router-dom";
 import { getAllState, storeActions } from '../store/Store.js';
-import {getDateByStringJSON} from '../utils/dateHelper';
+import {getDateByStringJSON} from '../utils/dateUtils';
 import styled from 'styled-components';
 
 const Row = styled("div")`

@@ -1,11 +1,10 @@
 import { storeActions } from '../../store/Store.js';
-import {axiosWorker, errorHandler} from './config';
-export function getStudentList() {
-  axiosWorker.get(`api/student/get-all`)
+import {axiosWorker, errorHandler, maxItems} from './config';
+export function getStudentList(activePage) {
+  axiosWorker.get(`api/student/get-all?page=${activePage}&pageItems=${maxItems}`)
     .then(res => {
-      const students = res.data.students;
       storeActions.setIsLoading(false);
-      storeActions.setStudentList(students);
+      storeActions.setStudentList(res.data);
     }).catch(function (error) {
       errorHandler(error);
       storeActions.setIsLoading(false);

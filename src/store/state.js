@@ -7,7 +7,7 @@ let initialState = {
   isShowReject: false,
   selectedClassRoom: {name: '', students: []},
   selectedClassRoomID: 0,
-  studentList: [],
+  studentList: {students: [], totals: 0},
   selectedStudent: {serial: '', name: ''},
   teacherList: [],
   selectedTeacher: {serial: '', name: '', classToSubjects: []},

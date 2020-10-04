@@ -12,7 +12,7 @@ import {
 import { storeActions, chainToView } from '../store/Store.js';
 import initialState from '../store/state.js';
 import {isEqual} from '../utils/objectUtils';
-import {getDateByStringJSON} from '../utils/dateHelper';
+import {getDateByStringJSON} from '../utils/dateUtils';
 import styled from 'styled-components';
 
 const Row = styled("div")`
