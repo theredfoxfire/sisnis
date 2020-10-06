@@ -1,23 +1,14 @@
-let initialState = {
-  activeItem: "home",
-  classRoomList: [],
-  isLoading: false,
-  isError: false,
-  selectedClassRoom: {name: ''},
-  selectedClassRoomID: 0,
-  studentList: [],
-  selectedStudent: {serial: '', name: ''},
-  teacherList: [],
-  selectedTeacher: {serial: '', name: ''},
-  subjectList: [],
-  selectedSubject: {serial: '', name: ''},
-};
-
+import React from "react";
+import initialState from './state';
 let stateContainer = {state: initialState};
 
 export const setStoreContainer = (setter) => {
   stateContainer = setter;
 };
+
+export const chainToView = (ViewComponent) => {
+  return (props) => <ViewComponent {...props} {...stateContainer.state} />;
+}
 
 export const getAllState = () => stateContainer.state;
 
@@ -57,5 +48,39 @@ export const storeActions = {
   },
   setSelectedSubject: async (selectedSubject) => {
     await stateContainer.setState({selectedSubject: selectedSubject});
+  },
+  setErrorMessage: async (errorMessage) => {
+    await stateContainer.setState({errorMessage: errorMessage});
+  },
+  setModalStatus: async (status) => {
+    await stateContainer.setState({isModalOpen: status});
+  },
+  setModalConfirmAction: async (confirmAction) => {
+    await stateContainer.setState({confirmAction: confirmAction});
+  },
+  setCloseModalAction: async (closeAction) => {
+    await stateContainer.setState({closeModalAction: closeAction});
+  },
+  setDialogTitle: async (dialogTitle) => {
+    await stateContainer.setState({dialogTitle: dialogTitle});
+  },
+  setDialogMessage: async (dialogMessage) => {
+    await stateContainer.setState({dialogMessage: dialogMessage});
+  },
+  setTeacherSubject: async (teacherSubject) => {
+    await stateContainer.setState({teacherSubject: teacherSubject});
+  },
+  setExamTypeList: async (examTypeList) => {
+    await stateContainer.setState({examTypeList: examTypeList});
+  },
+  setSelectedExamType: async (selectedExamType) => {
+    await stateContainer.setState({selectedExamType: selectedExamType});
+  },
+  setSelectedExam: async (selectedExam) => {
+    await stateContainer.setState({selectedExam: selectedExam});
+  },
+  setAuth: async (auth) => {
+    localStorage.setItem('storedAuth', JSON.stringify({token: auth}));
+    await stateContainer.setState({auth: {token: auth}});
   },
 };

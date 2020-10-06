@@ -1,34 +1,32 @@
-import axios from 'axios-proxy-fix';
 import { storeActions } from '../../store/Store.js';
-
-export function getStudentList() {
-  axios.get(`/api/student/get-all`)
+import {axiosWorker, errorHandler, maxItems} from './config';
+export function getStudentList(activePage) {
+  axiosWorker.get(`api/student/get-all?page=${activePage}&pageItems=${maxItems}`)
     .then(res => {
-      const students = res.data.students;
       storeActions.setIsLoading(false);
-      storeActions.setStudentList(students);
+      storeActions.setStudentList(res.data);
     }).catch(function (error) {
-      console.log(error);
+      errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);
     });
 }
 
 export function getStudentByID(id) {
-  axios.get(`/api/student/get/${id}`)
+  axiosWorker.get(`api/student/get/${id}`)
     .then(res => {
       const selectedStudent = res.data.student;
       storeActions.setIsLoading(false);
       storeActions.setSelectedStudent(selectedStudent);
     }).catch(function (error) {
-      console.log(error);
+      errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);
     });
 }
 
 export function postStudent(formData) {
-  axios.post('/api/student/add', {
+  axiosWorker.post(`api/student/add`, {
     ...formData
   })
   .then(function (response) {
@@ -42,7 +40,7 @@ export function postStudent(formData) {
 }
 
 export function putStudent(formData, id) {
-  axios.put(`/api/student/update/${id}`, {
+  axiosWorker.put(`api/student/update/${id}`, {
     ...formData,
   })
   .then(function (response) {
@@ -55,14 +53,27 @@ export function putStudent(formData, id) {
   });
 }
 
+export function setStudentClass(formData) {
+  return axiosWorker.put(`api/student/add/class-room/${formData.student}`, {
+    classRoomId: formData.classID,
+  })
+  .then(function (response) {
+    storeActions.setIsLoading(false);
+  })
+  .catch(function (error) {
+    storeActions.setIsLoading(false);
+    storeActions.setIsError(true);
+  });
+}
+
 
 export function deleteStudent(id) {
-  axios.delete(`/api/student/delete/${id}`)
+  axiosWorker.delete(`api/student/delete/${id}`)
     .then(res => {
       storeActions.setIsLoading(false);
       getStudentList();
     }).catch(function (error) {
-      console.log(error);
+      errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);
     });

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   Grid,
   Menu,
@@ -42,10 +42,22 @@ const Header = (props) =>
         active={activeItem === 'subject'}
       />
     </Link>
+    <Link to="/exam-type" onClick={() => storeActions.setActiveItem("exam-type")}>
+      <Menu.Item
+        name='Jenis Exam'
+        active={activeItem === 'exam-type'}
+      />
+    </Link>
     <Link to="/users" onClick={() => storeActions.setActiveItem("users")}>
       <Menu.Item
         name='users'
         active={activeItem === 'users'}
+      />
+    </Link>
+    <Link to="/" >
+      <Menu.Item
+        name='logout'
+        active={activeItem === 'auth'}
       />
     </Link>
     </Menu>

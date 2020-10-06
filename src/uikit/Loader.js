@@ -5,12 +5,13 @@ const StyledDiv = styled("div")`
   color: palevioletred;
   text-align: center;
   font-weight: bold;
+  height: 10px;
 `;
 const Loader = () => {
-  let {isLoading, isError} = getAllState();
+  let {isLoading, isError, errorMessage} = getAllState();
   return (<div>
-    {isLoading && <StyledDiv>Loading..</StyledDiv>}
-    {isError && <StyledDiv>Gagal menampilkan data!</StyledDiv>}
+    {isLoading ? <StyledDiv>Loading...</StyledDiv> : <StyledDiv />}
+    {isError ? <StyledDiv>{errorMessage}</StyledDiv> : <StyledDiv />}
   </div>);
 };
 

@@ -1,11 +1,11 @@
 import { storeActions } from '../../store/Store.js';
 import {axiosWorker, errorHandler} from './config';
-export function getSubjectList() {
-  axiosWorker.get(`api/subject/get-all`)
+export function getExamTypeList() {
+  axiosWorker.get(`api/examType/get-all`)
     .then(res => {
-      const subjects = res.data.subjects;
+      const examTypes = res.data.examTypes;
       storeActions.setIsLoading(false);
-      storeActions.setSubjectList(subjects);
+      storeActions.setExamTypeList(examTypes);
     }).catch(function (error) {
       errorHandler(error);
       storeActions.setIsLoading(false);
@@ -13,12 +13,12 @@ export function getSubjectList() {
     });
 }
 
-export function getSubjectByID(id) {
-  axiosWorker.get(`api/subject/get/${id}`)
+export function getExamTypeByID(id) {
+  axiosWorker.get(`api/examType/get/${id}`)
     .then(res => {
-      const selectedSubject = res.data.subject;
+      const selectedExamType = res.data.examType;
       storeActions.setIsLoading(false);
-      storeActions.setSelectedSubject(selectedSubject);
+      storeActions.setSelectedExamType(selectedExamType);
     }).catch(function (error) {
       errorHandler(error);
       storeActions.setIsLoading(false);
@@ -26,13 +26,13 @@ export function getSubjectByID(id) {
     });
 }
 
-export function postSubject(formData) {
-  axiosWorker.post(`api/subject/add`, {
+export function postExamType(formData) {
+  axiosWorker.post(`api/examType/add`, {
     ...formData
   })
   .then(function (response) {
     storeActions.setIsLoading(false);
-    getSubjectList();
+    getExamTypeList();
   })
   .catch(function (error) {
     storeActions.setIsLoading(false);
@@ -40,13 +40,13 @@ export function postSubject(formData) {
   });
 }
 
-export function putSubject(formData, id) {
-  axiosWorker.put(`api/subject/update/${id}`, {
+export function putExamType(formData, id) {
+  axiosWorker.put(`api/examType/update/${id}`, {
     ...formData,
   })
   .then(function (response) {
     storeActions.setIsLoading(false);
-    getSubjectList();
+    getExamTypeList();
   })
   .catch(function (error) {
     storeActions.setIsLoading(false);
@@ -55,11 +55,11 @@ export function putSubject(formData, id) {
 }
 
 
-export function deleteSubject(id) {
-  axiosWorker.delete(`api/subject/delete/${id}`)
+export function deleteExamType(id) {
+  return axiosWorker.delete(`api/examType/delete/${id}`)
     .then(res => {
       storeActions.setIsLoading(false);
-      getSubjectList();
+      getExamTypeList();
     }).catch(function (error) {
       errorHandler(error);
       storeActions.setIsLoading(false);

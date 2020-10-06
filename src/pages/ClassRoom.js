@@ -5,10 +5,7 @@ import {
   Table,
   Icon,
   Header, Modal,
-} from 'semantic-ui-react'
-import HeaderMenu from '../uikit/Header';
-import Menus from '../uikit/Menus';
-import Loader from '../uikit/Loader';
+} from 'semantic-ui-react';
 import {getClassRoomList, deleteClass} from './api-data/classRoom'
 import {
   Link
@@ -32,9 +29,6 @@ export default class ClassRoom extends Component {
     let {isModalOpen} = this.state;
     return (
       <div>
-      <HeaderMenu />
-      <Grid style={{ marginTop: '2.4em' }}>
-        <Menus />
         <Grid.Column stretched width={12}>
         <h1>Tabel Kelas</h1>
         <Link to="/class-form/0" onClick={() => storeActions.setSelectedClassRoom(initialState.selectedClassRoom)}>
@@ -57,7 +51,7 @@ export default class ClassRoom extends Component {
               return (
                 <Table.Row key={key}>
                   <Table.Cell>{key+1}</Table.Cell>
-                  <Table.Cell width="9">{item.name}</Table.Cell>
+                  <Table.Cell width="9"><Link to={`/class-detail/${item.id}`}>{item.name}</Link></Table.Cell>
                   <Table.Cell>
                   <Link to={`/class-form/${item.id}`}>
                   <Button color='green' basic onClick={() => {
@@ -78,9 +72,8 @@ export default class ClassRoom extends Component {
             })}
           </Table.Body>
         </Table>
-        <Loader />
         </Grid.Column>
-      </Grid>
+
       <Modal
         closeIcon
         open={isModalOpen}
