@@ -9,7 +9,7 @@ import {getExamByID, postStudentsPoint, putStudentsPoint} from './api-data/exam'
 import {
   Link
 } from "react-router-dom";
-import { storeActions, chainToView } from '../store/Store.js';
+import { storeActions, chainToView, getAllState } from '../store/Store.js';
 import initialState from '../store/state.js';
 import {isEqual} from '../utils/objectUtils';
 import {getDateByStringJSON} from '../utils/dateUtils';
@@ -31,11 +31,14 @@ class TeacherExamDetail extends Component {
       selectedExam: {students: []},
       studentPoints: [],
       examPoints: [],
+      isEdit:false,
+      dialogMessage: '',
     }
   }
 
   render() {
-    let {selectedExam} = this.state;
+    let {selectedExam, dialogMessage} = this.state;
+    let {isLoading} = getAllState();
     return (
       <div>
         <Grid.Column stretched width={12}>
@@ -80,9 +83,10 @@ class TeacherExamDetail extends Component {
              Back
           </Button>
         </Link>
-        <Button color='teal' size='small' disabled={!this._validate()} onClick={() => this._validate() && this._handleSubmit()} >
-           Simpan
+        <Button color='teal' size='small' onClick={() => this._handleSubmit()} >
+           {isLoading ? "Menyimpan..." : "Simpan"}
         </Button>
+        {dialogMessage}
       </Grid.Column>
       </div>
     )
@@ -99,40 +103,38 @@ class TeacherExamDetail extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    let {selectedExam} = this.props;
+    let {selectedExam, dialogMessage} = this.props;
     if (!isEqual(prevProps.selectedExam, selectedExam)) {
       let studentPointList = [];
       selectedExam.examPoints.forEach((item, i) => {
         studentPointList.push({id: item.id, point: item.point, key: i, pointId: item.pointId});
       });
 
-      this.setState({selectedExam, studentPoints: studentPointList});
+      this.setState({selectedExam, studentPoints: studentPointList, isEdit: studentPointList.length > 0});
+    }
+    if (dialogMessage !== prevProps.dialogMessage) {
+      this.setState({dialogMessage: dialogMessage});
     }
   }
 
   _handleChangePoint = (eValue, item, key) => {
     let {studentPoints: pointList} = this.state;
-
     const itemVal = pointList.find((value) => value.id === item.studentId);
-    const point = {id: item.studentId, point: eValue, key, pointId: itemVal.pointId};
+
+    const point = {id: item.studentId, point: eValue, key, pointId: itemVal && itemVal.pointId  };
     if (itemVal) {
       pointList[itemVal.key] = point;
     } else {
       pointList.push(point);
     }
-    console.log(pointList);
     this.setState({studentPoints: pointList});
   }
 
-  _validate = () => {
-    let {studentPoints, selectedExam} = this.state;
-    return selectedExam.students.length === studentPoints.length
-  }
-
   _handleSubmit = () => {
-    let examID = this.props.match.params.id;
-    let {studentPoints, selectedExam} = this.state;
-    if (examID > 0) {
+    let {studentPoints, selectedExam, isEdit} = this.state;
+    storeActions.setDialogMessage("");
+    storeActions.setIsLoading(true);
+    if (isEdit) {
       putStudentsPoint({examID: selectedExam.id, studentPoints});
     } else {
       postStudentsPoint({examID: selectedExam.id, studentPoints});

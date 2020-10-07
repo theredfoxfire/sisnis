@@ -1,7 +1,7 @@
 import { storeActions } from '../../store/Store.js';
 import {axiosWorker, errorHandler, maxItems} from './config';
-export function getStudentList(activePage) {
-  axiosWorker.get(`api/student/get-all?page=${activePage}&pageItems=${maxItems}`)
+export function getStudentList(activePage=1, name="", haveClass="") {
+  axiosWorker.get(`api/student/get-all?page=${activePage}&pageItems=${maxItems}&haveClass=${haveClass}&name=${name}`)
     .then(res => {
       storeActions.setIsLoading(false);
       storeActions.setStudentList(res.data);

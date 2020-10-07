@@ -6,6 +6,7 @@ import {
   Icon,
   Header, Modal,
   Pagination,
+  Form,
 } from 'semantic-ui-react';
 import {
   Link
@@ -57,6 +58,8 @@ export default class Student extends Component {
           disabled={isLoading}
         />
         </Row>
+        <Form.Input placeholder='Filter nama'
+          onChange={(e) => this._handleFilter(e.target.value)} />
         <Table celled selectable>
           <Table.Header>
             <Table.Row>
@@ -138,5 +141,14 @@ export default class Student extends Component {
     this.setState({activePage: data.activePage});
     getStudentList(data.activePage);
     storeActions.setIsLoading(true);
+  }
+
+  _handleFilter = (val) => {
+    const {activePage} = this.state;
+    this.setState({name: val});
+
+    storeActions.setIsLoading(true);
+    storeActions.setIsError(false);
+    getStudentList(activePage, val, "");
   }
 }

@@ -53,12 +53,14 @@ export function postStudentsPoint(formData) {
   .then(function (response) {
     storeActions.setIsLoading(false);
     storeActions.setIsError(false);
+    storeActions.setDialogMessage("Data berhasil disimpan");
     getExamByID(formData.examID);
   })
   .catch(function (error) {
     errorHandler(error);
     storeActions.setIsLoading(false);
     storeActions.setIsError(true);
+    storeActions.setErrorMessage("Data gagal disimpan");
   });
 }
 export function putStudentsPoint(formData) {
@@ -70,10 +72,12 @@ export function putStudentsPoint(formData) {
     storeActions.setIsLoading(false);
     storeActions.setIsError(false);
     getExamByID(formData.examID);
+    storeActions.setDialogMessage("Data berhasil disimpan");
   })
   .catch(function (error) {
     errorHandler(error);
     storeActions.setIsLoading(false);
+    storeActions.setErrorMessage("Data gagal disimpan");
     storeActions.setIsError(true);
   });
 }

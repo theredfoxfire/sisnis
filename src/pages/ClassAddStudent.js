@@ -26,10 +26,10 @@ export default class ClassAddStudent extends Component {
     let {student} = this.state;
     let classID = this.props.match.params.id;
     let studentsOptions = [];
-    studentList.forEach((item, i) => {
+    studentList.students.forEach((item, i) => {
       studentsOptions.push({
         key: i,
-        text: item.name,
+        text: `No.Induk: ${item.serial}, Nama: ${item.name}`,
         value: item.id,
       });
     });
@@ -63,7 +63,7 @@ export default class ClassAddStudent extends Component {
   componentDidMount() {
     storeActions.setIsError(false);
     storeActions.setIsLoading(true);
-    getStudentList();
+    getStudentList(1, '', 'no');
   }
 
   _handleSubmit = () => {

@@ -1,12 +1,12 @@
 import axios from 'axios-proxy-fix';
-//note prod baseURL = "http://202.154.178.186:3200";
-//note dev baseURL = "http://localhost/nilai-sekolah-be";
+//note prod baseURL = "http://202.154.178.186:3200/public";
+//note dev baseURL = "http://localhost/nilai-sekolah-be/public";
 import { getAllState, storeActions } from '../../store/Store.js';
 import {UNAUTHORIZED_CODE, UNAUTHORIZED_MESSAGE} from '../../Constants';
 let { auth } = getAllState();
 
 export const axiosWorker = axios.create({
-  baseURL: 'http://localhost/nilai-sekolah-be',
+  baseURL: 'http://localhost/nilai-sekolah-be/public',
   timeout: 10000,
   headers: {'Authorization': `Bearer ${auth.token}`}
 });
@@ -15,6 +15,8 @@ export const errorHandler = (error) => {
   if (error.response.status === UNAUTHORIZED_CODE) {
     storeActions.setErrorMessage(UNAUTHORIZED_MESSAGE);
     storeActions.setModalStatus(true);
+    storeActions.setDialogTitle("Sesi Anda habis");
+    storeActions.setDialogMessage("Sesi Anda sudah berkahir, silahkan login ulang!");
     storeActions.setCloseModalAction(() => {storeActions.setModalStatus(false); window.location.replace("/");});
     storeActions.setModalConfirmAction(() => {storeActions.setModalStatus(false); window.location.replace("/");});
   } else {
@@ -22,4 +24,4 @@ export const errorHandler = (error) => {
   }
 }
 
-export const maxItems = "5";
+export const maxItems = "25";
