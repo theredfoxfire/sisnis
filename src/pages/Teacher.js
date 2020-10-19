@@ -11,13 +11,7 @@ import {
 } from "react-router-dom";
 import { getAllState, storeActions } from '../store/Store.js';
 import {getTeacherList, deleteTeacher} from './api-data/teacher';
-
-const initialState = {
-  selectedTeacher: {
-    serial: '',
-    name: '',
-  },
-};
+import initialState from '../store/state.js';
 
 export default class Teacher extends Component {
   constructor(props) {

@@ -11,13 +11,7 @@ import {
 } from "react-router-dom";
 import { getAllState, storeActions } from '../store/Store.js';
 import {getSubjectList, deleteSubject} from './api-data/subject';
-
-const initialState = {
-  selectedSubject: {
-    serial: '',
-    name: '',
-  },
-};
+import initialState from '../store/state.js';
 
 export default class Subject extends Component {
   constructor(props) {

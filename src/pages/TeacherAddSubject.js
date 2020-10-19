@@ -54,7 +54,7 @@ export default class TeacherAddSubject extends Component {
             <h4>Pilih Kelas:</h4>
           <DropdownSelect placeholder="Pilih Kelas" onChange={(e, {value}) => this.setState({classRoom: value})} multiple={false} options={classRoomOptions} />
           <br/>
-            <Link to={"/class"}>
+            <Link to={`/teacher-detail/${teacherID}`}>
               <Button color='olive' size='small'>
                  Back
               </Button>

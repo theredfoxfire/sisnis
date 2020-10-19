@@ -11,10 +11,7 @@ import {
   Link
 } from "react-router-dom";
 import { getAllState, storeActions } from '../store/Store.js';
-
-const initialState = {
-  selectedClassRoom: {name: ""}
-};
+import initialState from '../store/state.js';
 
 export default class ClassRoom extends Component {
   constructor(props) {

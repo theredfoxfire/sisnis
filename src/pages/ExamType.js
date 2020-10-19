@@ -10,13 +10,7 @@ import {
 } from "react-router-dom";
 import { getAllState, storeActions } from '../store/Store.js';
 import {getExamTypeList, deleteExamType} from './api-data/examType';
-
-const initialState = {
-  selectedExamType: {
-    scale: '',
-    name: '',
-  },
-};
+import initialState from '../store/state.js';
 
 export default class ExamType extends Component {
   render() {
