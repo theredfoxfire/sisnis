@@ -1,12 +1,12 @@
 import axios from 'axios-proxy-fix';
-//note prod baseURL = "http://202.154.178.186:3200/public";
+//note prod baseURL = "http://103.150.113.100:3200/public";
 //note dev baseURL = "http://localhost/nilai-sekolah-be/public";
 import { getAllState, storeActions } from '../../store/Store.js';
 import {UNAUTHORIZED_CODE, UNAUTHORIZED_MESSAGE} from '../../Constants';
 let { auth } = getAllState();
 
 export const axiosWorker = axios.create({
-  baseURL: 'http://localhost/nilai-sekolah-be/public',
+  baseURL: 'http://103.150.113.100:3200/public',
   timeout: 10000,
   headers: {'Authorization': `Bearer ${auth.token}`}
 });
