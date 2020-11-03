@@ -39,6 +39,7 @@ export default class ClassRoom extends Component {
             <Table.Row>
               <Table.HeaderCell>No</Table.HeaderCell>
               <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Walikelas</Table.HeaderCell>
               <Table.HeaderCell>Actions</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
@@ -49,6 +50,7 @@ export default class ClassRoom extends Component {
                 <Table.Row key={key}>
                   <Table.Cell>{key+1}</Table.Cell>
                   <Table.Cell width="9"><Link to={`/class-detail/${item.id}`}>{item.name}</Link></Table.Cell>
+                  <Table.Cell>{item.guardianName}</Table.Cell>
                   <Table.Cell>
                   <Link to={`/class-form/${item.id}`}>
                   <Button color='green' basic onClick={() => {
