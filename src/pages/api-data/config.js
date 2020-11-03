@@ -6,7 +6,7 @@ import {UNAUTHORIZED_CODE, UNAUTHORIZED_MESSAGE} from '../../Constants';
 let { auth } = getAllState();
 
 export const axiosWorker = axios.create({
-  baseURL: 'http://103.150.113.100:3200/public',
+  baseURL: 'http://localhost/nilai-sekolah-be/public',
   timeout: 10000,
   headers: {'Authorization': `Bearer ${auth.token}`}
 });

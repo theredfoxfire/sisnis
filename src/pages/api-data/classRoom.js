@@ -27,9 +27,10 @@ export function getClassRoomByID(id) {
     });
 }
 
-export function postClassRoom(name) {
+export function postClassRoom(name, teacherId) {
   axiosWorker.post(`api/class-room/add`, {
     name: name,
+    teacherId,
   })
   .then(function (response) {
     storeActions.setIsLoading(false);
@@ -41,9 +42,10 @@ export function postClassRoom(name) {
   });
 }
 
-export function putClassRoom(name, id) {
+export function putClassRoom(name, id, teacherId) {
   axiosWorker.put(`api/class-room/update/${id}`, {
     name: name,
+    teacherId,
   })
   .then(function (response) {
     storeActions.setIsLoading(false);
