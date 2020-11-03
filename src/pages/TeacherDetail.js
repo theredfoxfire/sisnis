@@ -21,6 +21,9 @@ export default class TeacherDetail extends Component {
         <Grid.Column stretched width={12}>
         <h1>Detail Guru: {selectedTeacher.name}</h1>
 
+      <h3>Walikelas: {selectedTeacher.guardianClass.map((classRoom, i) => {
+        return `${classRoom.name}; `;
+      })}</h3>
       <h3>Daftar Pelajaran untuk guru ini:</h3>
         <Link to={`/teacher-add-subject/${teacherID}`}>
           <Button color='green' size="small">

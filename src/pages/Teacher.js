@@ -40,6 +40,7 @@ export default class Teacher extends Component {
               <Table.HeaderCell>No</Table.HeaderCell>
               <Table.HeaderCell>No. Induk</Table.HeaderCell>
               <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Walikelas</Table.HeaderCell>
               <Table.HeaderCell>Actions</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
@@ -51,6 +52,9 @@ export default class Teacher extends Component {
                   <Table.Cell>{key + 1}</Table.Cell>
                 <Table.Cell width="3">{item.serial}</Table.Cell>
               <Table.Cell width="6"><Link to={`/teacher-detail/${item.id}`}>{item.name}</Link></Table.Cell>
+              <Table.Cell>{item.guardianClass.map((classRoom, i) => {
+                return `${classRoom.name}; `;
+              })}</Table.Cell>
                   <Table.Cell>
                   <Link to={`/teacher-form/${item.id}`}>
                   <Button color='green' basic onClick={() => {

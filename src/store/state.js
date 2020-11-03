@@ -10,7 +10,7 @@ let initialState = {
   studentList: {students: [], totals: 0},
   selectedStudent: {serial: '', name: ''},
   teacherList: [],
-  selectedTeacher: {serial: '', name: '', classToSubjects: []},
+  selectedTeacher: {serial: '', name: '', classToSubjects: [], guardianClass: []},
   subjectList: [],
   examTypeList: [],
   selectedSubject: {serial: '', name: ''},
