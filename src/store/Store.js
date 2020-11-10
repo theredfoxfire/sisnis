@@ -28,6 +28,9 @@ export const storeActions = {
   setSubjectList: async (subjectList) => {
     await stateContainer.setState({subjectList: subjectList});
   },
+  setAcademicYearsList: async (list) => {
+    await stateContainer.setState({academicYearsList: list});
+  },
   setIsLoading: async (isLoading) => {
     await stateContainer.setState({isLoading: isLoading});
   },
@@ -78,6 +81,9 @@ export const storeActions = {
   },
   setSelectedExam: async (selectedExam) => {
     await stateContainer.setState({selectedExam: selectedExam});
+  },
+  setSelectedAcademicYear: async (item) => {
+    await stateContainer.setState({selectedAcademicYear: item});
   },
   setAuth: async (auth) => {
     localStorage.setItem('storedAuth', JSON.stringify({token: auth}));

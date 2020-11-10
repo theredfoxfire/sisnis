@@ -48,6 +48,12 @@ const Header = (props) =>
         active={activeItem === 'exam-type'}
       />
     </Link>
+    <Link to="/academic-year" onClick={() => storeActions.setActiveItem("academic-year")}>
+      <Menu.Item
+        name='Tahun Ajaran'
+        active={activeItem === 'academic-year'}
+      />
+    </Link>
     <Link to="/users" onClick={() => storeActions.setActiveItem("users")}>
       <Menu.Item
         name='users'

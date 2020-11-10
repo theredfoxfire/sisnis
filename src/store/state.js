@@ -13,6 +13,7 @@ let initialState = {
   selectedTeacher: {serial: '', name: '', classToSubjects: [], guardianClass: []},
   subjectList: [],
   examTypeList: [],
+  academicYearsList: [],
   selectedSubject: {serial: '', name: ''},
   auth: JSON.parse(localStorage.getItem('storedAuth')) || {},
   errorMessage: "Gagal menampilkan data!",
@@ -23,6 +24,7 @@ let initialState = {
   teacherSubject: {id: '', name: '', className: '', exams: []},
   selectedExam: {id: '', name: '', students: [], examPoints: []},
   selectedExamType: {id: '', name: '', scale: ''},
+  selectedAcademicYear: {id: '', year: '', isActive: ''},
 };
 
 export default initialState;
