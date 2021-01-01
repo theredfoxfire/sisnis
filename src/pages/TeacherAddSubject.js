@@ -11,8 +11,10 @@ import {
 import {getTeacherByID, setTeacherClass} from './api-data/teacher';
 import {getClassRoomList} from './api-data/classRoom';
 import {getSubjectList} from './api-data/subject';
+import {getAcademicYearsList} from './api-data/academicYear';
 import { getAllState, storeActions } from '../store/Store.js';
 import DropdownSelect from '../uikit/Dropdown';
+import {getLatestChar, yearToString} from '../utils/stringUtils';
 
 export default class TeacherAddSubject extends Component {
   constructor(props) {
@@ -21,10 +23,11 @@ export default class TeacherAddSubject extends Component {
     this.state = {
       subject: "",
       classRoom: "",
+      year: "",
     };
   }
   render() {
-    let {classRoomList, subjectList} = getAllState();
+    let {classRoomList, subjectList, academicYearsList} = getAllState();
     let teacherID = this.props.match.params.id;
     let subjectOptions = [];
     subjectList.forEach((item, i) => {
@@ -32,6 +35,15 @@ export default class TeacherAddSubject extends Component {
         key: i,
         text: item.name,
         value: item.id,
+      });
+    });
+    let yearOptions = [];
+    academicYearsList.forEach((item, i) => {
+      let label = getLatestChar(item.year) == 1 ? "Ganjil" : "Genap";
+      yearOptions.push({
+        key: i,
+        text: yearToString(item.year),
+        value: item.yearId,
       });
     });
     let classRoomOptions = [];
@@ -53,6 +65,8 @@ export default class TeacherAddSubject extends Component {
           <DropdownSelect placeholder="Pilih Matapelajaran" onChange={(e, {value}) => this.setState({subject: value})} multiple={false} options={subjectOptions} />
             <h4>Pilih Kelas:</h4>
           <DropdownSelect placeholder="Pilih Kelas" onChange={(e, {value}) => this.setState({classRoom: value})} multiple={false} options={classRoomOptions} />
+            <h4>Pilih Tahun Ajaran:</h4>
+          <DropdownSelect placeholder="Pilih Tahun Ajaran" onChange={(e, {value}) => this.setState({year: value})} multiple={false} options={yearOptions} />
           <br/>
             <Link to={`/teacher-detail/${teacherID}`}>
               <Button color='olive' size='small'>
@@ -76,16 +90,17 @@ export default class TeacherAddSubject extends Component {
     storeActions.setIsLoading(true);
     getClassRoomList();
     getSubjectList();
+    getAcademicYearsList();
   }
 
   _handleSubmit = () => {
-    let {classRoom, subject} = this.state;
+    let {classRoom, subject, year} = this.state;
     let teacherID = this.props.match.params.id;
-    setTeacherClass({subject, classRoom, teacherID}).then(getTeacherByID(teacherID));
+    setTeacherClass({subject, classRoom, teacherID, year}).then(getTeacherByID(teacherID));
   }
 
   _validateForm = () => {
-    let {subject, classRoom} = this.state;
-    return subject === "" || classRoom === "";
+    let {subject, classRoom, year} = this.state;
+    return subject === "" || classRoom === "" || year === "";
   }
 }

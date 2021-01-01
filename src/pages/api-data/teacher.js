@@ -70,12 +70,14 @@ export function setTeacherClass(formData) {
   return axiosWorker.put(`api/teacher/add/class-room/${formData.teacherID}`, {
     classRoomId: formData.classRoom,
     subjectId: formData.subject,
+    year: formData.year,
   })
   .then(function (response) {
     storeActions.setIsLoading(false);
   })
   .catch(function (error) {
     storeActions.setIsLoading(false);
+    storeActions.setErrorMessage("Gagal menyimpan data!");
     storeActions.setIsError(true);
   });
 }

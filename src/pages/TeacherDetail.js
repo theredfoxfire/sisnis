@@ -10,6 +10,7 @@ import {
   Link
 } from "react-router-dom";
 import { getAllState, storeActions } from '../store/Store.js';
+import {yearToString} from '../utils/stringUtils';
 
 export default class TeacherDetail extends Component {
 
@@ -36,6 +37,7 @@ export default class TeacherDetail extends Component {
             <Table.Row>
               <Table.HeaderCell>No</Table.HeaderCell>
               <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Tahun Ajaran</Table.HeaderCell>
               <Table.HeaderCell>Actions</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
@@ -45,10 +47,13 @@ export default class TeacherDetail extends Component {
               return (
                 <Table.Row key={key}>
                   <Table.Cell>{key+1}</Table.Cell>
-                  <Table.Cell width="9">
+                  <Table.Cell width="5">
                     <Link to={`/teacher-subject-detail/${item.classToSubjectId}`}>
                       {item.subject.name} - {item.classRoom.name}
                     </Link>
+                  </Table.Cell>
+                  <Table.Cell width="4">
+                    {yearToString(item.year)}
                   </Table.Cell>
                   <Table.Cell>
                   <Button color='red' basic onClick={() => this._handleDelete(item.classToSubjectId)}>
