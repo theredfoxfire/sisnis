@@ -24,8 +24,12 @@ const StyledDiv = styled("div")`
   flex-direction: row;
   padding-top: 70px;
 `;
+const MenuBox = styled("div")`
+  width: 15em;
+`;
+
 const RightBox = styled("div")`
-  width: 100%;
+  width: 90%;
   padding-left: 20px;
   padding-right: 10px;
   padding-bottom: 15px;
@@ -39,9 +43,9 @@ export default class Routes extends Component {
       <div>
         <HeaderMenu />
       <StyledDiv>
-        <div>
+        <MenuBox>
           {auth.token && <Menus />}
-        </div>
+        </MenuBox>
         <RightBox>
             <Loader />
           <Switch>
