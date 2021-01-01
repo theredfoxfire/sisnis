@@ -14,7 +14,7 @@ import {getSubjectList} from './api-data/subject';
 import {getAcademicYearsList} from './api-data/academicYear';
 import { getAllState, storeActions } from '../store/Store.js';
 import DropdownSelect from '../uikit/Dropdown';
-import {getLatestChar, yearToString} from '../utils/stringUtils';
+import { yearToString} from '../utils/stringUtils';
 
 export default class TeacherAddSubject extends Component {
   constructor(props) {
@@ -39,7 +39,6 @@ export default class TeacherAddSubject extends Component {
     });
     let yearOptions = [];
     academicYearsList.forEach((item, i) => {
-      let label = getLatestChar(item.year) == 1 ? "Ganjil" : "Genap";
       yearOptions.push({
         key: i,
         text: yearToString(item.year),
