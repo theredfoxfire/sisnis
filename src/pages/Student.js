@@ -78,7 +78,7 @@ export default class Student extends Component {
                   <Table.Cell>{startNumbering + key + 1}</Table.Cell>
                 <Table.Cell width="3">{item.serial}</Table.Cell>
               <Table.Cell width="6">{item.name}</Table.Cell>
-              <Table.Cell width="3">{item.className}</Table.Cell>
+              <Table.Cell width="3">{item.className || "Tidak ada kelas"}</Table.Cell>
                   <Table.Cell>
                   <Link to={`/student-form/${item.id}`}>
                   <Button color='green' basic onClick={() => {
