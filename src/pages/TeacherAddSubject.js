@@ -14,7 +14,6 @@ import {getSubjectList} from './api-data/subject';
 import {getAcademicYearsList} from './api-data/academicYear';
 import { getAllState, storeActions } from '../store/Store.js';
 import DropdownSelect from '../uikit/Dropdown';
-import { yearToString} from '../utils/stringUtils';
 
 export default class TeacherAddSubject extends Component {
   constructor(props) {
@@ -41,7 +40,7 @@ export default class TeacherAddSubject extends Component {
     academicYearsList.forEach((item, i) => {
       yearOptions.push({
         key: i,
-        text: yearToString(item.year),
+        text: item.year,
         value: item.yearId,
       });
     });
