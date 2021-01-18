@@ -9,23 +9,36 @@ import {
   Link
 } from "react-router-dom";
 import {getStudentByID, postStudent, putStudent} from './api-data/student'
-import { getAllState, storeActions } from '../store/Store.js';
+import { getAllState, storeActions, chainToView } from '../store/Store.js';
+import {isEqual} from '../utils/objectUtils';
+import {getClassRoomList} from './api-data/classRoom';
+import DropdownSelect from '../uikit/Dropdown';
 
-export default class StudentForm extends Component {
+class StudentForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       name: "",
       serial: "",
+      classRoom: "",
     };
   }
   render() {
-    let {selectedStudent} = getAllState();
-    let {name, serial} = this.state;
+    let {selectedStudent, classRoomList} = getAllState();
+    let {name, serial, classRoom} = this.state;
     let serialValue = serial || selectedStudent.serial;
     let nameValue = name || selectedStudent.name;
+    let classRoomValue = classRoom || selectedStudent.classId;
     let studentID = this.props.match.params.id;
+    let classRoomOptions = [];
+    classRoomList.forEach((item, i) => {
+      classRoomOptions.push({
+        key: i,
+        text: item.name,
+        value: item.id,
+      });
+    });
     return (
       <div>
         <Grid.Column stretched width={12}>
@@ -36,6 +49,9 @@ export default class StudentForm extends Component {
           <Form.Input fluid placeholder='Nomer Induk Siswa' defaultValue={serialValue} onChange={(e) => this.setState({serial: e.target.value, name: name || selectedStudent.name})} />
             <h4>Nama Siswa:</h4>
           <Form.Input fluid placeholder='Nama Siswa'  defaultValue={nameValue} onChange={(e) => this.setState({name: e.target.value, serial: serial || selectedStudent.serial})} />
+            <h4>Pilih Kelas:</h4>
+          <DropdownSelect placeholder="Pilih Kelas" value={classRoomValue} onChange={(e, {value}) => this.setState({classRoom: value})} multiple={false} options={classRoomOptions} />
+          <br />
             <Link to={"/student"}>
               <Button color='olive' size='small'>
                  Back
@@ -56,16 +72,29 @@ export default class StudentForm extends Component {
     componentDidMount() {
       let studentID = this.props.match.params.id;
       storeActions.setIsError(false);
+      storeActions.setIsLoading(true);
+      getClassRoomList();
       if (studentID > 0) {
         getStudentByID(studentID);
-        storeActions.setIsLoading(true);
+        this._validate();
+      }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+      let {selectedStudent} = this.props;
+      if (!isEqual(prevProps.selectedStudent, selectedStudent)) {
+        this.setState({
+          name: selectedStudent.name,
+          serial: selectedStudent.serial,
+          classRoom: selectedStudent.classId,
+        });
       }
     }
 
     _handleSubmit = () => {
-      let {name, serial} = this.state;
+      let {name, serial, classRoom} = this.state;
       let studentID = this.props.match.params.id;
-      studentID > 0 ? putStudent({name: name, serial: serial}, studentID) : postStudent({name: name, serial: serial});
+      studentID > 0 ? putStudent({name: name, serial: serial, classRoom}, studentID) : postStudent({name: name, serial: serial, classRoom});
     }
 
     _validate = () => {
@@ -73,3 +102,5 @@ export default class StudentForm extends Component {
       return serial === "" || name === "";
     }
 }
+
+export default chainToView(StudentForm);

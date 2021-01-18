@@ -71,6 +71,7 @@ export function setTeacherClass(formData) {
     classRoomId: formData.classRoom,
     subjectId: formData.subject,
     year: formData.year,
+    kkm: formData.kkm,
   })
   .then(function (response) {
     storeActions.setIsLoading(false);

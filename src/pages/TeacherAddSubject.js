@@ -12,10 +12,11 @@ import {getTeacherByID, setTeacherClass} from './api-data/teacher';
 import {getClassRoomList} from './api-data/classRoom';
 import {getSubjectList} from './api-data/subject';
 import {getAcademicYearsList} from './api-data/academicYear';
-import { getAllState, storeActions } from '../store/Store.js';
+import { getAllState, storeActions, chainToView } from '../store/Store.js';
 import DropdownSelect from '../uikit/Dropdown';
+import {isEqual} from '../utils/objectUtils';
 
-export default class TeacherAddSubject extends Component {
+class TeacherAddSubject extends Component {
   constructor(props) {
     super(props);
 
@@ -23,11 +24,13 @@ export default class TeacherAddSubject extends Component {
       subject: "",
       classRoom: "",
       year: "",
+      kkm: "",
     };
   }
   render() {
     let {classRoomList, subjectList, academicYearsList} = getAllState();
     let teacherID = this.props.match.params.id;
+    let {kkm, year, classRoom, subject} = this.state;
     let subjectOptions = [];
     subjectList.forEach((item, i) => {
       subjectOptions.push({
@@ -61,6 +64,8 @@ export default class TeacherAddSubject extends Component {
           <Segment stacked>
             <h4>Pilih Matapelajaran:</h4>
           <DropdownSelect placeholder="Pilih Matapelajaran" onChange={(e, {value}) => this.setState({subject: value})} multiple={false} options={subjectOptions} />
+          <h4>Nilai KKM:</h4>
+        <Form.Input fluid placeholder='Nilai KKM' defaultValue={kkm} onChange={(e) => this.setState({kkm: e.target.value})} />
             <h4>Pilih Kelas:</h4>
           <DropdownSelect placeholder="Pilih Kelas" onChange={(e, {value}) => this.setState({classRoom: value})} multiple={false} options={classRoomOptions} />
             <h4>Pilih Tahun Ajaran:</h4>
@@ -91,10 +96,17 @@ export default class TeacherAddSubject extends Component {
     getAcademicYearsList();
   }
 
+  // componentDidUpdate(prevProps, prevState) {
+  //   let {selectedStudent} = this.props;
+  //   if (!isEqual(prevProps.selectedStudent, selectedStudent)) {
+  //
+  //   }
+  // }
+
   _handleSubmit = () => {
-    let {classRoom, subject, year} = this.state;
+    let {classRoom, subject, year, kkm} = this.state;
     let teacherID = this.props.match.params.id;
-    setTeacherClass({subject, classRoom, teacherID, year}).then(getTeacherByID(teacherID));
+    setTeacherClass({subject, classRoom, teacherID, year, kkm}).then(getTeacherByID(teacherID));
   }
 
   _validateForm = () => {
@@ -102,3 +114,5 @@ export default class TeacherAddSubject extends Component {
     return subject === "" || classRoom === "" || year === "";
   }
 }
+
+export default chainToView(TeacherAddSubject);
