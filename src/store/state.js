@@ -12,6 +12,7 @@ let initialState = {
   teacherList: [],
   selectedTeacher: {serial: '', name: '', classToSubjects: [], guardianClass: []},
   subjectList: [],
+  userList: [],
   examTypeList: [],
   schoolInfoList: [],
   academicYearsList: [],
@@ -25,6 +26,7 @@ let initialState = {
   teacherSubject: {id: '', name: '', className: '', exams: []},
   selectedExam: {id: '', name: '', students: [], examPoints: []},
   selectedExamType: {id: '', name: '', scale: ''},
+  selectedUser: {id: '', username: '', password: '', email: ''},
   selectedSchoolInfo: {id: '', name: '', phone: '', email: '', address: '', postalCode: '', province: '', city: '', subdistrict:''},
   selectedAcademicYear: {id: '', year: '', isActive: ''},
 };

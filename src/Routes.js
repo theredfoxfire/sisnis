@@ -10,7 +10,8 @@ import {
   TeacherScreen, TeacherFormScreen, SubjectScreen, SubjectFormScreen, ClassAddStudentScreen,
   TeacherDetailScreen, TeacherAddSubjectScreen, TeacherSubjectDetailScreen, ExamFormScreen,
   ExamTypeScreen, ExamTypeFormScreen, TeacherExamDetailScreen,
-  AcademicYearScreen, AcademicYearFormScreen, SchoolInfoScreen, SchoolInfoFormScreen
+  AcademicYearScreen, AcademicYearFormScreen, SchoolInfoScreen, SchoolInfoFormScreen,
+  UserFormScreen
 } from './pages';
 import { getAllState } from './store/Store.js';
 import HeaderMenu from './uikit/Header';
@@ -149,9 +150,14 @@ export default class Routes extends Component {
               path="/subject-form/:id"
               component={SubjectFormScreen}
             />
-            <Route path="/users">
+            <Route path="/user">
               <UsersScreen />
             </Route>
+            <Route
+              exact
+              path="/user-form/:id"
+              component={UserFormScreen}
+            />
             <Route path="/">
               <AuthScreen />
             </Route>

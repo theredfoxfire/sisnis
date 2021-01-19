@@ -1,6 +1,7 @@
 import Auth from './Auth';
 import About from './About';
 import Users from './Users';
+import UserForm from './UserForm';
 import Home from './Home';
 import ClassRoom from './ClassRoom';
 import ClassRoomForm from './ClassRoomForm';
@@ -26,6 +27,7 @@ import SchoolInfoForm from './SchoolInfoForm';
 export const AuthScreen = Auth;
 export const AboutScreen = About;
 export const UsersScreen = Users;
+export const UserFormScreen = UserForm;
 export const HomeScreen = Home;
 export const ClassScreen = ClassRoom;
 export const ClassFormScreen = ClassRoomForm;

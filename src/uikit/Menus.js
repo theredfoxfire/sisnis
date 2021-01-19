@@ -60,10 +60,10 @@ const Header = (props) =>
         active={activeItem === 'academic-year'}
       />
     </Link>
-    <Link to="/users" onClick={() => storeActions.setActiveItem("users")}>
+    <Link to="/user" onClick={() => storeActions.setActiveItem("user")}>
       <Menu.Item
-        name='users'
-        active={activeItem === 'users'}
+        name='Users Admin'
+        active={activeItem === 'user'}
       />
     </Link>
     <Link to="/" >

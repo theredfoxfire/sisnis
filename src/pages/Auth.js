@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import { Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react';
 import {postLogin} from './api-data/auth';
-import { getAllState } from '../store/Store.js';
+import { getAllState, chainToView } from '../store/Store.js';
 let { auth } = getAllState();
-export default class Auth extends Component {
+class Auth extends Component {
   constructor(props) {
     super(props);
 
@@ -51,6 +51,7 @@ export default class Auth extends Component {
   _handleSubmit = () => {
     let {username, password} = this.state;
     postLogin({username, password});
-    this.setState({username: "", password: ""});
   }
 }
+
+export default chainToView(Auth);

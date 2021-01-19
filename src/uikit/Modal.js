@@ -14,7 +14,7 @@ const ModalBox = () =>
     onClose={() => closeModalAction ? closeModalAction() : storeActions.setModalStatus(false)}
     onOpen={() => storeActions.setModalStatus(true)}
   >
-    <Header icon='trash' content={dialogTitle} />
+    <Header icon='question circle' content={dialogTitle} />
     <Modal.Content>
       <p>
         {dialogMessage}
