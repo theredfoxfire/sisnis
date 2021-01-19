@@ -13,6 +13,7 @@ let initialState = {
   selectedTeacher: {serial: '', name: '', classToSubjects: [], guardianClass: []},
   subjectList: [],
   examTypeList: [],
+  schoolInfoList: [],
   academicYearsList: [],
   selectedSubject: {serial: '', name: ''},
   auth: JSON.parse(localStorage.getItem('storedAuth')) || {},
@@ -24,6 +25,7 @@ let initialState = {
   teacherSubject: {id: '', name: '', className: '', exams: []},
   selectedExam: {id: '', name: '', students: [], examPoints: []},
   selectedExamType: {id: '', name: '', scale: ''},
+  selectedSchoolInfo: {id: '', name: '', phone: '', email: '', address: '', postalCode: '', province: '', city: '', subdistrict:''},
   selectedAcademicYear: {id: '', year: '', isActive: ''},
 };
 

@@ -8,11 +8,11 @@ import {
 import {
   Link
 } from "react-router-dom";
-import { getAllState, storeActions } from '../store/Store.js';
+import { getAllState, storeActions, chainToView } from '../store/Store.js';
 import {getExamTypeList, deleteExamType} from './api-data/examType';
 import initialState from '../store/state.js';
 
-export default class ExamType extends Component {
+class ExamType extends Component {
   render() {
     let {examTypeList} = getAllState();
     return (
@@ -84,3 +84,5 @@ export default class ExamType extends Component {
     });
   }
 }
+
+export default chainToView(ExamType);

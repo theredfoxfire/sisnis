@@ -76,8 +76,14 @@ export const storeActions = {
   setExamTypeList: async (examTypeList) => {
     await stateContainer.setState({examTypeList: examTypeList});
   },
+  setSchoolInfoList: async (schoolInfoList) => {
+    await stateContainer.setState({schoolInfoList: schoolInfoList});
+  },
   setSelectedExamType: async (selectedExamType) => {
     await stateContainer.setState({selectedExamType: selectedExamType});
+  },
+  setSelectedSchoolInfo: async (selectedSchoolInfo) => {
+    await stateContainer.setState({selectedSchoolInfo: selectedSchoolInfo});
   },
   setSelectedExam: async (selectedExam) => {
     await stateContainer.setState({selectedExam: selectedExam});

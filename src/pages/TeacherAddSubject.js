@@ -14,7 +14,7 @@ import {getSubjectList} from './api-data/subject';
 import {getAcademicYearsList} from './api-data/academicYear';
 import { getAllState, storeActions, chainToView } from '../store/Store.js';
 import DropdownSelect from '../uikit/Dropdown';
-import {isEqual} from '../utils/objectUtils';
+// import {isEqual} from '../utils/objectUtils';
 
 class TeacherAddSubject extends Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class TeacherAddSubject extends Component {
   render() {
     let {classRoomList, subjectList, academicYearsList} = getAllState();
     let teacherID = this.props.match.params.id;
-    let {kkm, year, classRoom, subject} = this.state;
+    let {kkm} = this.state;
     let subjectOptions = [];
     subjectList.forEach((item, i) => {
       subjectOptions.push({
