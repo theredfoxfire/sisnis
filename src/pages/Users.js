@@ -9,7 +9,7 @@ import {
   Link
 } from "react-router-dom";
 import { getAllState, storeActions, chainToView } from '../store/Store.js';
-import {getUserList, putUserActivate} from './api-data/user';
+import {getUserList, putUserActivate, deleteUser} from './api-data/user';
 import initialState from '../store/state.js';
 
 class User extends Component {
@@ -30,7 +30,8 @@ class User extends Component {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>No</Table.HeaderCell>
-              <Table.HeaderCell>Nama</Table.HeaderCell>
+              <Table.HeaderCell>Username</Table.HeaderCell>
+              <Table.HeaderCell>Email</Table.HeaderCell>
               <Table.HeaderCell>Status </Table.HeaderCell>
               <Table.HeaderCell>Actions</Table.HeaderCell>
             </Table.Row>
@@ -41,7 +42,8 @@ class User extends Component {
               return (
                 <Table.Row key={key}>
                   <Table.Cell>{key + 1}</Table.Cell>
-              <Table.Cell width="6">{item.email}</Table.Cell>
+              <Table.Cell width="3">{item.username}</Table.Cell>
+              <Table.Cell width="3">{item.email}</Table.Cell>
               <Table.Cell width="3">{item.isActive ? "Aktif" : "Tidak Aktif"}</Table.Cell>
                   <Table.Cell>
                   <Link to={`/user-form/${item.id}`}>
@@ -50,16 +52,19 @@ class User extends Component {
                     Edit
                   </Button>
                   </Link>
-                  {item.isActive ? <Button color='red' basic onClick={() => this._handleDelete(item.id, item.isActive)}>
+                  {item.isActive ? <Button color='yellow' basic onClick={() => this._handleAcivation(item.id, item.isActive)}>
                     <Icon name='delete' />
                     Non Aktifkan
                   </Button> :
-                  <Button color='green' basic onClick={() => this._handleDelete(item.id, item.isActive)}>
+                  <Button color='green' basic onClick={() => this._handleAcivation(item.id, item.isActive)}>
                     <Icon name='check' />
                     Aktifkan
                   </Button>
                   }
-
+                  <Button color='red' basic onClick={() => this._handleDelete(item.id)}>
+                    <Icon name='trash' />
+                    Hapus
+                  </Button>
                   </Table.Cell>
                 </Table.Row>
               )
@@ -71,16 +76,29 @@ class User extends Component {
     )
   }
 
-
-    _handleDelete = (id, isActive) => {
-      storeActions.setIsLoading(true);
-      storeActions.setModalStatus(true);
-      storeActions.setDialogTitle("Aktifasi User");
-      storeActions.setDialogMessage(`Anda yakin akan ${isActive ? "me-non aktikan" : "mengaktifkan"} user ini?`);
-      storeActions.setModalConfirmAction(() => {
-        putUserActivate(id);
+  _handleDelete = (id) => {
+    let { isError } = getAllState();
+    storeActions.setIsLoading(true);
+    storeActions.setModalStatus(true);
+    storeActions.setDialogTitle("Hapus Data");
+    storeActions.setDialogMessage("Anda yakin akan menghapus item ini?");
+    storeActions.setModalConfirmAction(() => {
+      deleteUser(id).then(() => {
+        isError && storeActions.setIsError(false);
+        storeActions.setModalStatus(false);
       });
-    }
+    });
+  }
+
+  _handleAcivation = (id, isActive) => {
+    storeActions.setIsLoading(true);
+    storeActions.setModalStatus(true);
+    storeActions.setDialogTitle("Aktifasi User");
+    storeActions.setDialogMessage(`Anda yakin akan ${isActive ? "me-non aktikan" : "mengaktifkan"} user ini?`);
+    storeActions.setModalConfirmAction(() => {
+      putUserActivate(id);
+    });
+  }
 
   componentDidMount() {
     storeActions.setIsLoading(true);

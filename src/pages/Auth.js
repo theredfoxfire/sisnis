@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react';
 import {postLogin} from './api-data/auth';
-import { getAllState, chainToView } from '../store/Store.js';
+import { getAllState, chainToView, storeActions } from '../store/Store.js';
 let { auth } = getAllState();
 class Auth extends Component {
   constructor(props) {
@@ -13,6 +13,7 @@ class Auth extends Component {
     };
   }
   render() {
+    let {isLoading} = getAllState();
     return (
   <Grid textAlign='center' style={{ height: '70vh' }} verticalAlign='middle'>
     <Grid.Column style={{ maxWidth: 450 }}>
@@ -31,8 +32,8 @@ class Auth extends Component {
             onChange={(e) => this.setState({password: e.target.value})}
           />
 
-        <Button color='teal' fluid size='large' disabled={this._validateForm()} onClick={() => !this._validateForm() && this._handleSubmit()}>
-             Login
+        <Button color='teal' fluid size='large' disabled={this._validateForm() || isLoading} onClick={() => !this._validateForm() && this._handleSubmit()}>
+             {isLoading ? "Processing..." : "Login"}
           </Button>
         </Segment>
       </Form>
@@ -50,6 +51,8 @@ class Auth extends Component {
 
   _handleSubmit = () => {
     let {username, password} = this.state;
+    storeActions.setIsLoading(true);
+    storeActions.setErrorMessage("");
     postLogin({username, password});
   }
 }

@@ -10,6 +10,7 @@ export const getDateByStringJSON = (jsonDate = '') => {
   const hour = timeArray[0];
   const minutes = timeArray[1];
   const seconds = timeArray[2];
+  const newDateObject = new Date(jsonDate);
 
   return {
     date,
@@ -21,5 +22,6 @@ export const getDateByStringJSON = (jsonDate = '') => {
     minutes,
     seconds,
     dateIDN: `${day}-${month}-${year}`,
+    newDateObject,
   };
 }
