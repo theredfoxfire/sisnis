@@ -28,6 +28,9 @@ export const storeActions = {
   setRoomList: async (roomList) => {
     await stateContainer.setState({roomList: roomList});
   },
+  setTimeSlotList: async (timeSlotList) => {
+    await stateContainer.setState({timeSlotList: timeSlotList});
+  },
   setUserList: async (userList) => {
     await stateContainer.setState({userList: userList});
   },
@@ -60,6 +63,9 @@ export const storeActions = {
   },
   setSelectedRoom: async (selectedRoom) => {
     await stateContainer.setState({selectedRoom: selectedRoom});
+  },
+  setSelectedTimeSlot: async (selectedTimeSlot) => {
+    await stateContainer.setState({selectedTimeSlot: selectedTimeSlot});
   },
   setSelectedSubject: async (selectedSubject) => {
     await stateContainer.setState({selectedSubject: selectedSubject});

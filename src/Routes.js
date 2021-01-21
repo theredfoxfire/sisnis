@@ -11,7 +11,7 @@ import {
   TeacherDetailScreen, TeacherAddSubjectScreen, TeacherSubjectDetailScreen, ExamFormScreen,
   ExamTypeScreen, ExamTypeFormScreen, TeacherExamDetailScreen,
   AcademicYearScreen, AcademicYearFormScreen, SchoolInfoScreen, SchoolInfoFormScreen,
-  UserFormScreen, RoomScreen, RoomFormScreen,
+  UserFormScreen, RoomScreen, RoomFormScreen, TimeSlotScreen, TimeSlotFormScreen,
 } from './pages';
 import { getAllState } from './store/Store.js';
 import HeaderMenu from './uikit/Header';
@@ -126,6 +126,16 @@ export default class Routes extends Component {
               exact
               path="/room-form/:id"
               component={RoomFormScreen}
+            />
+            <Route
+              exact
+              path="/timeSlot"
+              component={TimeSlotScreen}
+            />
+            <Route
+              exact
+              path="/timeSlot-form/:id"
+              component={TimeSlotFormScreen}
             />
             <Route
               exact

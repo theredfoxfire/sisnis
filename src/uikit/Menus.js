@@ -54,6 +54,12 @@ const Header = (props) =>
         active={activeItem === 'room'}
       />
     </Link>
+    <Link to="/timeSlot" onClick={() => storeActions.setActiveItem("timeSlot")}>
+      <Menu.Item
+        name='Slot Waktu'
+        active={activeItem === 'timeSlot'}
+      />
+    </Link>
     <Link to="/school-info" onClick={() => storeActions.setActiveItem("school-info")}>
       <Menu.Item
         name='Info Sekolah'
