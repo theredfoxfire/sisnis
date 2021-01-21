@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import {getExamTypeByID, postExamType, putExamType} from './api-data/examType';
 import {storeActions, chainToView } from '../store/Store.js';
+import {isEqual} from '../utils/objectUtils';
 
 class ExamTypeForm extends Component {
   constructor(props) {
@@ -63,7 +64,7 @@ class ExamTypeForm extends Component {
 
     componentDidUpdate(prevProps, prevState) {
       let {selectedExamType} = this.props;
-      if (JSON.stringify(prevProps.selectedExamType) !== JSON.stringify(selectedExamType)) {
+      if (!isEqual(prevProps.selectedExamType, selectedExamType)) {
         this.setState({selectedExamType});
       }
     }
