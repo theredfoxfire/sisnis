@@ -12,6 +12,18 @@ export function getTeacherList() {
       storeActions.setIsError(true);
     });
 }
+export function getTeacherSubjectList() {
+  axiosWorker.get(`api/teacher/get-all/subject`)
+    .then(res => {
+      const teacherSubject = res.data.teacherSubject;
+      storeActions.setIsLoading(false);
+      storeActions.setTeacherSubjectList(teacherSubject);
+    }).catch(function (error) {
+      errorHandler(error);
+      storeActions.setIsLoading(false);
+      storeActions.setIsError(true);
+    });
+}
 
 export function getTeacherByID(id) {
   axiosWorker.get(`api/teacher/get/${id}`)

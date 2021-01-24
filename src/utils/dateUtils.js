@@ -1,3 +1,5 @@
+import {DAY_LIST} from '../Constants';
+
 export const getDateByStringJSON = (jsonDate = '') => {
   const arrayDateTime = jsonDate.split('T');
   const date = arrayDateTime[0];
@@ -24,4 +26,8 @@ export const getDateByStringJSON = (jsonDate = '') => {
     dateIDN: `${day}-${month}-${year}`,
     newDateObject,
   };
+}
+
+export const getDayString = (key) => {
+  return DAY_LIST.find(item => item.id === key) || {day: "", id: ""};
 }

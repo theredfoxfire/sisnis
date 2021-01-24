@@ -52,7 +52,7 @@ export default class Student extends Component {
           ellipsisItem={null}
           firstItem={null}
           lastItem={null}
-          siblingRange={1}
+          siblingRange={3}
           onPageChange={(e, data) => this._onPageChange(data)}
           totalPages={Math.ceil(studentList.totals / maxItems)}
           disabled={isLoading}
