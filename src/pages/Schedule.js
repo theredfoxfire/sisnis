@@ -37,7 +37,7 @@ class Schedule extends Component {
     return (
       <div>
         <Grid.Column stretched width={12}>
-        <h1>Tabel Jadwal</h1>
+        <h1>Tabel Jadwal Pelajaran</h1>
 
         <Row>
         <Link to="/schedule-form/0">
@@ -65,7 +65,7 @@ class Schedule extends Component {
               <Table.HeaderCell>Matapelajaran</Table.HeaderCell>
               <Table.HeaderCell>Guru</Table.HeaderCell>
               <Table.HeaderCell>Hari</Table.HeaderCell>
-              <Table.HeaderCell>Kelas</Table.HeaderCell>
+              <Table.HeaderCell>Kelas / TA</Table.HeaderCell>
               <Table.HeaderCell>Ruangan</Table.HeaderCell>
               <Table.HeaderCell>Jam</Table.HeaderCell>
               <Table.HeaderCell>Actions</Table.HeaderCell>
@@ -81,7 +81,7 @@ class Schedule extends Component {
               <Table.Cell width="2">{item.subject.name}</Table.Cell>
               <Table.Cell width="2">{item.teacher.name}</Table.Cell>
               <Table.Cell width="1">{dayString.day}</Table.Cell>
-              <Table.Cell width="2">{item.classRoom.name}</Table.Cell>
+              <Table.Cell width="2">{item.classRoom.name} / {item.academicYear.year}</Table.Cell>
               <Table.Cell width="3">{item.room.name}</Table.Cell>
               <Table.Cell width="2">{item.time.time}</Table.Cell>
                   <Table.Cell>

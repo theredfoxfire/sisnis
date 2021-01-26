@@ -12,7 +12,7 @@ import {
   ExamTypeScreen, ExamTypeFormScreen, TeacherExamDetailScreen,
   AcademicYearScreen, AcademicYearFormScreen, SchoolInfoScreen, SchoolInfoFormScreen,
   UserFormScreen, RoomScreen, RoomFormScreen, TimeSlotScreen, TimeSlotFormScreen,
-  ScheduleFormScreen, ScheduleScreen,
+  ScheduleFormScreen, ScheduleScreen, StudentAttendanceScreen, StudentAttendanceFormScreen
 } from './pages';
 import { getAllState } from './store/Store.js';
 import HeaderMenu from './uikit/Header';
@@ -25,6 +25,7 @@ const StyledDiv = styled("div")`
   display: flex;
   flex-direction: row;
   padding-top: 70px;
+  justify-content: center;
 `;
 const MenuBox = styled("div")`
   width: 15em;
@@ -45,9 +46,11 @@ export default class Routes extends Component {
       <div>
         <HeaderMenu />
       <StyledDiv>
+      {auth.token &&
         <MenuBox>
-          {auth.token && <Menus />}
+          <Menus />
         </MenuBox>
+      }
         <RightBox>
             <Loader />
           <Switch>
@@ -147,6 +150,16 @@ export default class Routes extends Component {
               exact
               path="/timeSlot-form/:id"
               component={TimeSlotFormScreen}
+            />
+            <Route
+              exact
+              path="/studentAttendance"
+              component={StudentAttendanceScreen}
+            />
+            <Route
+              exact
+              path="/studentAttendance-form/:id"
+              component={StudentAttendanceFormScreen}
             />
             <Route
               exact

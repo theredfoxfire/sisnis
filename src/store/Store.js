@@ -22,6 +22,9 @@ export const storeActions = {
   setStudentList: async (studentList) => {
     await stateContainer.setState({studentList: studentList});
   },
+  setStudentAttendanceList: async (studentAttendanceList) => {
+    await stateContainer.setState({studentAttendanceList: studentAttendanceList});
+  },
   setScheduleList: async (scheduleList) => {
     await stateContainer.setState({scheduleList: scheduleList});
   },
@@ -60,6 +63,9 @@ export const storeActions = {
   },
   setSelectedStudent: async (selectedStudent) => {
     await stateContainer.setState({selectedStudent: selectedStudent});
+  },
+  setSelectedStudentAttendance: async (selectedStudentAttendance) => {
+    await stateContainer.setState({selectedStudentAttendance: selectedStudentAttendance});
   },
   setSelectedTeacher: async (selectedTeacher) => {
     await stateContainer.setState({selectedTeacher: selectedTeacher});
