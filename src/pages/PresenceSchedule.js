@@ -24,7 +24,7 @@ const Row = styled("div")`
   justify-content: space-between;
 `;
 
-class Schedule extends Component {
+class PresenceSchedule extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,12 +41,6 @@ class Schedule extends Component {
         <h1>Tabel Jadwal Pelajaran</h1>
 
         <Row>
-        <Link to="/schedule-form/0">
-          <Button color='green' size="small" onClick={() => storeActions.setSelectedSchedule(initialState.selectedSchedule)}>
-            <Icon name='plus' />
-            Tambah
-          </Button>
-        </Link>
           <Pagination
             boundaryRange={0}
             defaultActivePage={activePage}
@@ -86,16 +80,12 @@ class Schedule extends Component {
               <Table.Cell width="3">{item.room.name}</Table.Cell>
               <Table.Cell width="2">{item.time.time}</Table.Cell>
                   <Table.Cell>
-                  <Link to={`/schedule-form/${item.id}`}>
+                  <Link to={`/studentAttendance/${item.id}`}>
                   <Button color='green' basic onClick={() => storeActions.setSelectedSchedule(initialState.selectedSchedule)}>
                     <Icon name='pencil' />
-                    Edit
+                    Isi Absensi
                   </Button>
                   </Link>
-                  <Button color='red' basic onClick={() => this._handleDelete(item.id)}>
-                    <Icon name='trash' />
-                    Hapus
-                  </Button>
                   </Table.Cell>
                 </Table.Row>
               )
@@ -135,4 +125,4 @@ class Schedule extends Component {
   }
 }
 
-export default chainToView(Schedule);
+export default chainToView(PresenceSchedule);

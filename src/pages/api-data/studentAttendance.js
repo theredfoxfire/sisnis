@@ -1,7 +1,7 @@
 import { storeActions } from '../../store/Store.js';
 import {axiosWorker, errorHandler} from './config';
-export function getStudentAttendanceList() {
-  axiosWorker.get(`api/studentAttendance/get-all`)
+export function getStudentAttendanceList(scheduleId) {
+  axiosWorker.get(`api/studentAttendance/get-all/${scheduleId}`)
     .then(res => {
       const studentAttendances = res.data.studentAttendances;
       storeActions.setIsLoading(false);
@@ -32,11 +32,12 @@ export function postStudentAttendance(formData) {
   })
   .then(function (response) {
     storeActions.setIsLoading(false);
-    getStudentAttendanceList();
+    storeActions.setIsError(false);
+    window.location.replace("/studentAttendance");
   })
   .catch(function (error) {
-    storeActions.setIsLoading(false);
     storeActions.setIsError(true);
+    storeActions.setErrorMessage("Gagal menyimpan data");
   });
 }
 

@@ -34,7 +34,7 @@ let initialState = {
   selectedRoom: {id: '', name: ''},
   selectedStudentAttendance: {id: '', schedule: '', student: '', notes: '', presenceStatus: ''},
   selectedTimeSlot: {id: '', time: ''},
-  selectedSchedule: {id: '', time: '', subject: '', room: '', day: ''},
+  selectedSchedule: {id: '', time: '', subject: '', room: '', day: '', students: []},
   selectedUser: {id: '', username: '', password: '', email: ''},
   selectedSchoolInfo: {id: '', name: '', phone: '', email: '', address: '', postalCode: '', province: '', city: '', subdistrict:''},
   selectedAcademicYear: {id: '', year: '', isActive: ''},

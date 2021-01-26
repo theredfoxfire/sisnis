@@ -45,7 +45,6 @@ export default class ExamForm extends Component {
         <h1>Form Ujian/Ulangan/Tugas</h1>
         <Form size='large'>
           <Segment stacked>
-
           <h4>Nama Ujian/Ulangan/Tugas:</h4>
           <Form.Input fluid placeholder='Nama Ujian/Ulangan/Tugas'  defaultValue={nameValue} onChange={(e) => this.setState({name: e.target.value})} />
           <h4>Tanggal Exam</h4>

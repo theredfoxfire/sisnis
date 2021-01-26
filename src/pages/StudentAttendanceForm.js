@@ -9,13 +9,10 @@ import {
   Link
 } from "react-router-dom";
 import {getStudentAttendanceByID, postStudentAttendance, putStudentAttendance} from './api-data/studentAttendance';
-import {getTeacherSubjectList} from './api-data/teacher';
-import {getRoomList} from './api-data/room';
-import {getTimeSlotList} from './api-data/timeSlot';
 import {storeActions, chainToView, getAllState } from '../store/Store.js';
 import {isEqual} from '../utils/objectUtils';
 import DropdownSelect from '../uikit/Dropdown';
-import {DAY_LIST} from '../Constants';
+import {PRSENCE_STATUS} from '../Constants';
 
 class StudentAttendanceForm extends Component {
   constructor(props) {
@@ -23,47 +20,22 @@ class StudentAttendanceForm extends Component {
     this.state = {
       isSubmit: false,
       studentAttendance: {
-        time: "",
-        room: "",
-        subject: "",
-        day: "",
+        student: "",
+        schedule: "",
+        presenceStatus: "",
+        notes: "",
       },
       selectedStudentAttendance: {},
     };
   }
   render() {
     let {studentAttendance} = this.state;
-    let {roomList, timeSlotList, teacherSubjectList} = getAllState();
     let studentAttendanceID = this.props.match.params.id;
-    let teacherSubjectOptions = [];
-    let roomOptions = [];
-    let timeSlotOptions = [];
-    let dayOptions = [];
-    teacherSubjectList.forEach((item, i) => {
-      teacherSubjectOptions.push({
+    let presenceOptions = [];
+    PRSENCE_STATUS.forEach((item, i) => {
+      presenceOptions.push({
         key: i,
-        text: `${item.subject.name} - ${item.classRoom.name} - ${item.teacher.name}`,
-        value: item.id,
-      });
-    });
-    roomList.forEach((item, i) => {
-      roomOptions.push({
-        key: i,
-        text: `${item.name}`,
-        value: item.id,
-      });
-    });
-    timeSlotList.forEach((item, i) => {
-      timeSlotOptions.push({
-        key: i,
-        text: `${item.time}`,
-        value: item.id,
-      });
-    });
-    DAY_LIST.forEach((item, i) => {
-      dayOptions.push({
-        key: i,
-        text: item.day,
+        text: item.label,
         value: item.id,
       });
     });
@@ -74,13 +46,13 @@ class StudentAttendanceForm extends Component {
         <Form size='large'>
           <Segment stacked>
           <h4>Matapelajaran :</h4>
-          <DropdownSelect value={studentAttendance.subject} placeholder="Pilih Matapelajaran" onChange={(e, {value}) => this.setState({studentAttendance: {...studentAttendance, subject: value}})} multiple={false} options={teacherSubjectOptions} />
-          <h4>Ruangan :</h4>
-          <DropdownSelect value={studentAttendance.room} placeholder="Pilih Ruangan" onChange={(e, {value}) => this.setState({studentAttendance: {...studentAttendance, room: value}})} multiple={false} options={roomOptions} />
-          <h4>Slot waktu :</h4>
-          <DropdownSelect value={studentAttendance.time} placeholder="Pilih Slot Waktu" onChange={(e, {value}) => this.setState({studentAttendance: {...studentAttendance, time: value}})} multiple={false} options={timeSlotOptions} />
+          <Form.Input fluid placeholder='Matapelajaran ' defaultValue={studentAttendance.schedule.subjectName} disabled="disabled" />
+          <h4>Murid :</h4>
+          <Form.Input fluid placeholder='Murid ' defaultValue={studentAttendance.student.studentName} disabled="disabled" />
+          <h4>Catatan :</h4>
+          <Form.Input fluid placeholder='Catatan ' defaultValue={studentAttendance.notes} onChange={(e) => this.setState({studentAttendance: {...studentAttendance, notes: e.target.value}})} />
           <h4>Hari :</h4>
-          <DropdownSelect value={studentAttendance.day} placeholder="Pilih Hari" onChange={(e, {value}) => this.setState({studentAttendance: {...studentAttendance, day: value}})} multiple={false} options={dayOptions} />
+          <DropdownSelect value={studentAttendance.prsenceStatus} placeholder="Pilih Status Kehadiran" onChange={(e, {value}) => this.setState({studentAttendance: {...studentAttendance, presenceOptions: value}})} multiple={false} options={presenceOptions} />
           <br />
             <Link to={"/studentAttendance"}>
               <Button color='olive' size='small'>
@@ -102,10 +74,7 @@ class StudentAttendanceForm extends Component {
     componentDidMount() {
       let studentAttendanceID = this.props.match.params.id;
       storeActions.setIsError(false);
-      getTeacherSubjectList();
-      getTimeSlotList();
       storeActions.setIsLoading(true);
-      getRoomList();
       if (studentAttendanceID > 0) {
         getStudentAttendanceByID(studentAttendanceID);
         storeActions.setIsLoading(true);
@@ -133,8 +102,12 @@ class StudentAttendanceForm extends Component {
     }
 
     _validate = () => {
-      let {time, day, room, subject} = this.state.studentAttendance;
-      return time === "" || day === "" || room === "" || subject === "";
+      let {
+        student,
+        schedule,
+        presenceStatus,
+      } = this.state.studentAttendance;
+      return student === "" || schedule === "" || presenceStatus === "";
     }
 }
 

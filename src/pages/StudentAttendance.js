@@ -10,21 +10,34 @@ import {
 } from "react-router-dom";
 import { getAllState, storeActions, chainToView } from '../store/Store.js';
 import {getStudentAttendanceList, deleteStudentAttendance} from './api-data/studentAttendance';
+import {getScheduleByID} from './api-data/schedule';
 import initialState from '../store/state.js';
+import styled from 'styled-components';
+
+
+const Row = styled("div")`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Label = styled("div")`
+  width: 120px;
+`;
+
 
 class StudentAttendance extends Component {
   render() {
-    let {studentAttendanceList} = getAllState();
+    let {studentAttendanceList, selectedSchedule} = getAllState();
     return (
       <div>
         <Grid.Column stretched width={12}>
         <h1>Tabel Daftar Hadir Siswa</h1>
-        <Link to="/studentAttendance-form/0">
-          <Button color='green' size="small" onClick={() => storeActions.setSelectedStudentAttendance(initialState.selectedStudentAttendance)}>
-            <Icon name='plus' />
-            Tambah
-          </Button>
-        </Link>
+        <div>
+          <Row><Label>Kelas:</Label> <b>{selectedSchedule.classRoomName}</b></Row>
+          <Row><Label>Matapelajaran:</Label> <b>{selectedSchedule.subjectName}</b></Row>
+          <Row><Label>Guru:</Label> <b>{selectedSchedule.teacherName}</b></Row>
+          <Row><Label>Tanggal:</Label> <b></b></Row>
+        </div>
         <Table celled selectable>
           <Table.Header>
             <Table.Row>
@@ -35,11 +48,11 @@ class StudentAttendance extends Component {
           </Table.Header>
 
           <Table.Body>
-            {studentAttendanceList.map((item, key) => {
+            {selectedSchedule.students.map((item, key) => {
               return (
                 <Table.Row key={key}>
                   <Table.Cell>{key + 1}</Table.Cell>
-              <Table.Cell width="6">{item.time}</Table.Cell>
+              <Table.Cell width="6">{item.name}</Table.Cell>
                   <Table.Cell>
                   <Link to={`/studentAttendance-form/${item.id}`}>
                   <Button color='green' basic onClick={() => storeActions.setSelectedStudentAttendance(initialState.selectedStudentAttendance)}>
@@ -63,9 +76,11 @@ class StudentAttendance extends Component {
   }
 
   componentDidMount() {
+    let scheduleId = this.props.match.params.scheduleId;
     storeActions.setIsLoading(true);
     storeActions.setIsError(false);
-    getStudentAttendanceList();
+    getStudentAttendanceList(scheduleId);
+    getScheduleByID(scheduleId)
   }
 
   _handleDelete = (id) => {

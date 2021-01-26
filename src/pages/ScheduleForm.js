@@ -63,7 +63,7 @@ class ScheduleForm extends Component {
     DAY_LIST.forEach((item, i) => {
       dayOptions.push({
         key: i,
-        text: item.day,
+        text: item.label,
         value: item.id,
       });
     });

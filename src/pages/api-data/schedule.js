@@ -47,10 +47,11 @@ export function putSchedule(formData, id) {
   })
   .then(function (response) {
     storeActions.setIsLoading(false);
-    getScheduleList();
+    storeActions.setIsError(false);
+    window.location.replace("/schedule");
   })
   .catch(function (error) {
-    storeActions.setIsLoading(false);
+    storeActions.setErrorMessage("Jadwal digunakan oleh pelajaran lain, coba ubah hari/ruangan/jam");
     storeActions.setIsError(true);
   });
 }

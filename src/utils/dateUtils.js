@@ -1,5 +1,3 @@
-import {DAY_LIST} from '../Constants';
-
 export const getDateByStringJSON = (jsonDate = '') => {
   const arrayDateTime = jsonDate.split('T');
   const date = arrayDateTime[0];
@@ -28,6 +26,6 @@ export const getDateByStringJSON = (jsonDate = '') => {
   };
 }
 
-export const getDayString = (key) => {
-  return DAY_LIST.find(item => item.id === key) || {day: "", id: ""};
+export const getStringFromOptions = (key, options) => {
+  return options.find(item => item.id === key) || {label: "", id: ""};
 }
