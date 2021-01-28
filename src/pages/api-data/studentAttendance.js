@@ -28,30 +28,36 @@ export function getStudentAttendanceByID(id) {
 
 export function postStudentAttendance(formData) {
   axiosWorker.post(`api/studentAttendance/add`, {
-    ...formData
+    students: formData.studentAttendances,
+    date: formData.date,
   })
   .then(function (response) {
     storeActions.setIsLoading(false);
     storeActions.setIsError(false);
-    window.location.replace("/studentAttendance");
+    getStudentAttendanceList(formData.scheduleId);
+    storeActions.setDialogMessage("Data berhasil disimpan");
   })
   .catch(function (error) {
     storeActions.setIsError(true);
-    storeActions.setErrorMessage("Gagal menyimpan data");
+    storeActions.setIsLoading(false);
+    storeActions.setDialogMessage("Gagal menyimpan data");
   });
 }
 
-export function putStudentAttendance(formData, id) {
-  axiosWorker.put(`api/studentAttendance/update/${id}`, {
-    ...formData,
+export function putStudentAttendance(formData) {
+  axiosWorker.put(`api/studentAttendance/update`, {
+  students: formData.studentAttendances,
+  date: formData.date,
   })
   .then(function (response) {
     storeActions.setIsLoading(false);
-    getStudentAttendanceList();
+    storeActions.setIsError(false);
+    storeActions.setDialogMessage("Data berhasil disimpan");
   })
   .catch(function (error) {
-    storeActions.setIsLoading(false);
     storeActions.setIsError(true);
+    storeActions.setIsLoading(false);
+    storeActions.setDialogMessage("Gagal menyimpan data");
   });
 }
 

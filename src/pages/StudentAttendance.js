@@ -11,7 +11,7 @@ import {
   Link
 } from "react-router-dom";
 import { getAllState, storeActions, chainToView } from '../store/Store.js';
-import {getStudentAttendanceList, deleteStudentAttendance} from './api-data/studentAttendance';
+import {getStudentAttendanceList, putStudentAttendance, postStudentAttendance} from './api-data/studentAttendance';
 import {getScheduleByID} from './api-data/schedule';
 import initialState from '../store/state.js';
 import styled from 'styled-components';
@@ -42,11 +42,12 @@ class StudentAttendance extends Component {
     this.state = {
       date: "",
       studentAttendances: [],
+      dialogMessage: "",
     }
   }
   render() {
-    let {date, studentAttendances} = this.state;
-    let {studentAttendanceList, selectedSchedule} = getAllState();
+    let {date, studentAttendances, dialogMessage} = this.state;
+    let {studentAttendanceList, selectedSchedule, isLoading} = getAllState();
     return (
       <div>
         <Grid.Column stretched width={12}>
@@ -57,7 +58,7 @@ class StudentAttendance extends Component {
           <Row><Label>Guru:</Label> <b>{selectedSchedule.teacherName}</b></Row>
           <Row><Label>Tanggal:</Label>
           <SemanticDatepicker locale="en-US" onChange={(event, data) => this.setState({
-            examDate: data.value,
+            date: data.value,
           })} type="basic" /></Row>
         </div>
         <Table celled selectable>
@@ -119,6 +120,15 @@ class StudentAttendance extends Component {
             })}
           </Table.Body>
         </Table>
+        <Link to={`/studentAttendance`}>
+          <Button color='olive' size='small'>
+             Back
+          </Button>
+        </Link>
+        <Button disabled={date === ""} color='teal' size='small' onClick={() => this._handleSubmit()} >
+           {isLoading ? "Prosessing..." : "Simpan"}
+        </Button>
+        {dialogMessage}
         </Grid.Column>
       </div>
     )
@@ -133,7 +143,7 @@ class StudentAttendance extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    let {studentAttendanceList, selectedSchedule} = this.props;
+    let {studentAttendanceList, selectedSchedule, dialogMessage} = this.props;
     if (!isEqual(prevProps.studentAttendanceList, studentAttendanceList) || !isEqual(prevProps.selectedSchedule, selectedSchedule)) {
       if (studentAttendanceList.length < 1) {
         let presenceList = [];
@@ -144,7 +154,10 @@ class StudentAttendance extends Component {
       } else {
         this.setState({studentAttendances: studentAttendanceList});
       }
+    }
 
+    if (dialogMessage !== prevProps.dialogMessage) {
+      this.setState({dialogMessage: dialogMessage});
     }
   }
 
@@ -168,18 +181,14 @@ class StudentAttendance extends Component {
     return status ? status : {};
   }
 
-  _handleDelete = (id) => {
-    let { isError } = getAllState();
+  _handleSubmit = () => {
+    const {studentAttendances, date} = this.state;
+    const {studentAttendanceList} = this.props;
+    const scheduleId = this.props.match.params.scheduleId;
+    storeActions.setDialogMessage("");
     storeActions.setIsLoading(true);
-    storeActions.setModalStatus(true);
-    storeActions.setDialogTitle("Hapus Data");
-    storeActions.setDialogMessage("Anda yakin akan menghapus item ini?");
-    storeActions.setModalConfirmAction(() => {
-      storeActions.setModalStatus(false);
-      deleteStudentAttendance(id).then(() => {
-        isError && storeActions.setIsError(false);
-      });
-    });
+    const formData = {studentAttendances, date, scheduleId};
+    studentAttendanceList.length > 0 ? putStudentAttendance(formData) : postStudentAttendance(formData);
   }
 }
 
