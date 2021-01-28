@@ -28,18 +28,18 @@ export const DAY_LIST = [{
 ];
 export const PRSENCE_STATUS = [{
   label: "Hadir",
-  id: "HADIR",
+  id: "PRESENT",
   },
   {
     label: "Izin",
-    id: "IZIN",
+    id: "PERMIT",
   },
   {
     label: "Sakit",
-    id: "SAKIT",
+    id: "SICK",
   },
   {
     label: "Tanpa Keterangan",
-    id: "ALPHA",
+    id: "NO_NOTICE",
   }
 ];

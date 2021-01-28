@@ -119,13 +119,13 @@ class TeacherExamDetail extends Component {
 
   _handleChangePoint = (eValue, item, key) => {
     let {studentPoints: pointList} = this.state;
-    const itemVal = pointList.find((value) => value.id === item.studentId);
+    const itemVal = pointList.find((value) => value && value.id === item.studentId);
 
     const point = {id: item.studentId, point: eValue, key, pointId: itemVal && itemVal.pointId  };
     if (itemVal) {
       pointList[itemVal.key] = point;
     } else {
-      pointList.push(point);
+      pointList[key] = point;
     }
     this.setState({studentPoints: pointList});
   }
@@ -143,7 +143,7 @@ class TeacherExamDetail extends Component {
 
   _getCurrentPoint = (item) => {
     const {selectedExam} = this.state;
-    const itemPoint = selectedExam.examPoints.find((value) => value.id === item.studentId);
+    const itemPoint = selectedExam.examPoints.find((value) => value && value.id === item.studentId);
 
     return itemPoint ? itemPoint.point : 0;
   }
