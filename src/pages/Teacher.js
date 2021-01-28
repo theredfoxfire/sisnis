@@ -51,7 +51,9 @@ export default class Teacher extends Component {
                 <Table.Row key={key}>
                   <Table.Cell>{key + 1}</Table.Cell>
                 <Table.Cell width="3">{item.serial}</Table.Cell>
-              <Table.Cell width="6"><Link to={`/teacher-detail/${item.id}`}>{item.name}</Link></Table.Cell>
+              <Table.Cell width="6"><Link to={`/teacher-detail/${item.id}`} onClick={() => {
+                  storeActions.setSelectedTeacher(initialState.selectedTeacher);
+                }}>{item.name}</Link></Table.Cell>
               <Table.Cell>{item.guardianClass.map((classRoom, i) => {
                 return `${classRoom.name}; `;
               })}</Table.Cell>
