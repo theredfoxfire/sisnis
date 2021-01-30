@@ -52,6 +52,7 @@ export function putStudentAttendance(formData) {
   .then(function (response) {
     storeActions.setIsLoading(false);
     storeActions.setIsError(false);
+    getStudentAttendanceList(formData.scheduleId);
     storeActions.setDialogMessage("Data berhasil disimpan");
   })
   .catch(function (error) {

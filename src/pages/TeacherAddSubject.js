@@ -14,7 +14,6 @@ import {getSubjectList} from './api-data/subject';
 import {getAcademicYearsList} from './api-data/academicYear';
 import { getAllState, storeActions, chainToView } from '../store/Store.js';
 import DropdownSelect from '../uikit/Dropdown';
-// import {isEqual} from '../utils/objectUtils';
 
 class TeacherAddSubject extends Component {
   constructor(props) {

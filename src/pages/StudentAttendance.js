@@ -18,6 +18,7 @@ import styled from 'styled-components';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import {ensureString} from '../utils/stringUtils';
 import {isEqual} from '../utils/objectUtils';
+import {getDateByStringJSON} from '../utils/dateUtils';
 
 const Row = styled("div")`
   display: flex;
@@ -47,7 +48,7 @@ class StudentAttendance extends Component {
   }
   render() {
     let {date, studentAttendances, dialogMessage} = this.state;
-    let {studentAttendanceList, selectedSchedule, isLoading} = getAllState();
+    let {selectedSchedule, isLoading} = getAllState();
     return (
       <div>
         <Grid.Column stretched width={12}>
@@ -57,7 +58,7 @@ class StudentAttendance extends Component {
           <Row><Label>Matapelajaran:</Label> <b>{selectedSchedule.subjectName}</b></Row>
           <Row><Label>Guru:</Label> <b>{selectedSchedule.teacherName}</b></Row>
           <Row><Label>Tanggal:</Label>
-          <SemanticDatepicker locale="en-US" onChange={(event, data) => this.setState({
+          <SemanticDatepicker locale="en-US" value={date} onChange={(event, data) => this.setState({
             date: data.value,
           })} type="basic" /></Row>
         </div>
@@ -152,7 +153,8 @@ class StudentAttendance extends Component {
         });
         this.setState({studentAttendances: presenceList});
       } else {
-        this.setState({studentAttendances: studentAttendanceList});
+        let date = studentAttendanceList[0] ? studentAttendanceList[0].date : "";
+        this.setState({studentAttendances: studentAttendanceList, date: getDateByStringJSON(date).newDateObject});
       }
     }
 
@@ -188,7 +190,7 @@ class StudentAttendance extends Component {
     storeActions.setDialogMessage("");
     storeActions.setIsLoading(true);
     const formData = {studentAttendances, date, scheduleId};
-    studentAttendanceList.length > 0 ? putStudentAttendance(formData) : postStudentAttendance(formData);
+    postStudentAttendance(formData);
   }
 }
 
