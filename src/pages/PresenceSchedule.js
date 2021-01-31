@@ -81,7 +81,7 @@ class PresenceSchedule extends Component {
               <Table.Cell width="2">{item.time.time}</Table.Cell>
                   <Table.Cell>
                   <Link to={`/studentAttendance/${item.id}`}>
-                  <Button color='green' basic onClick={() => storeActions.setSelectedSchedule(initialState.selectedSchedule)}>
+                  <Button color='green' basic onClick={() => storeActions.setStudentAttendanceList(initialState.studentAttendanceList)}>
                     <Icon name='pencil' />
                     Isi Absensi
                   </Button>

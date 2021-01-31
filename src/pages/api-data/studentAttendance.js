@@ -1,11 +1,16 @@
 import { storeActions } from '../../store/Store.js';
 import {axiosWorker, errorHandler} from './config';
-export function getStudentAttendanceList(scheduleId) {
-  axiosWorker.get(`api/studentAttendance/get-all/${scheduleId}`)
+export function getStudentAttendanceList(scheduleId, date = 0) {
+  axiosWorker.get(`api/studentAttendance/get-all/${scheduleId}/${date}`)
     .then(res => {
       const studentAttendances = res.data.studentAttendances;
       storeActions.setIsLoading(false);
-      storeActions.setStudentAttendanceList(studentAttendances);
+      if (date === 'new') {
+        storeActions.setStudentAttendanceList([]);
+      } else {
+        storeActions.setStudentAttendanceList(studentAttendances);
+      }
+
     }).catch(function (error) {
       errorHandler(error);
       storeActions.setIsLoading(false);

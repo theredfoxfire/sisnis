@@ -26,6 +26,13 @@ export const getDateByStringJSON = (jsonDate = '') => {
   };
 }
 
+export const getDateStringFromObject = (dateObject) => {
+  const day = dateObject.getDate();
+  const month = dateObject.getMonth();
+  const year = dateObject.getFullYear();
+  return `${year}-${month+1}-${day}`;
+}
+
 export const getStringFromOptions = (key, options) => {
   return options.find(item => item.id === key) || {label: "", id: ""};
 }
