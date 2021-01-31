@@ -21,8 +21,8 @@ class StudentAttendanceDateList extends Component {
       <div>
         <Grid.Column stretched width={12}>
         <h1>Tabel Rekap Kehadiran</h1>
-        <Link to={`/studentAttendance/${scheduleId}/new`}>
-          <Button color='green' size="small" onClick={() => storeActions.setStudentAttendanceList(initialState.studentAttendanceList)}>
+        <Link onClick={() => window.location.assign(`/studentAttendance/${scheduleId}/new`)}>
+          <Button color='green' size="small">
             <Icon name='plus' />
             Tambah
           </Button>

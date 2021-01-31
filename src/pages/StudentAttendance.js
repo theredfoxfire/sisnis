@@ -3,7 +3,6 @@ import {
   Grid,
   Button,
   Table,
-  Icon,
   Radio,
   Form,
 } from 'semantic-ui-react';
@@ -11,14 +10,13 @@ import {
   Link
 } from "react-router-dom";
 import { getAllState, storeActions, chainToView } from '../store/Store.js';
-import {getStudentAttendanceList, putStudentAttendance, postStudentAttendance} from './api-data/studentAttendance';
+import {getStudentAttendanceList, postStudentAttendance} from './api-data/studentAttendance';
 import {getScheduleByID} from './api-data/schedule';
 import initialState from '../store/state.js';
 import styled from 'styled-components';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
-import {ensureString} from '../utils/stringUtils';
 import {isEqual} from '../utils/objectUtils';
-import {getDateByStringJSON, getDateStringFromObject} from '../utils/dateUtils';
+import {getDateByStringJSON} from '../utils/dateUtils';
 
 const Row = styled("div")`
   display: flex;
@@ -47,7 +45,7 @@ class StudentAttendance extends Component {
     }
   }
   render() {
-    let {date, studentAttendances, dialogMessage} = this.state;
+    let {date, dialogMessage} = this.state;
     let {selectedSchedule, isLoading} = getAllState();
     let scheduleId = this.props.match.params.scheduleId;
     return (
@@ -187,7 +185,6 @@ class StudentAttendance extends Component {
 
   _handleSubmit = () => {
     const {studentAttendances, date} = this.state;
-    const {studentAttendanceList} = this.props;
     const scheduleId = this.props.match.params.scheduleId;
     storeActions.setDialogMessage("");
     storeActions.setIsLoading(true);

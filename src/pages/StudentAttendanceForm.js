@@ -9,7 +9,7 @@ import {
   Link
 } from "react-router-dom";
 import {getStudentAttendanceByID, postStudentAttendance, putStudentAttendance} from './api-data/studentAttendance';
-import {storeActions, chainToView, getAllState } from '../store/Store.js';
+import {storeActions, chainToView } from '../store/Store.js';
 import {isEqual} from '../utils/objectUtils';
 import DropdownSelect from '../uikit/Dropdown';
 import {PRSENCE_STATUS} from '../Constants';

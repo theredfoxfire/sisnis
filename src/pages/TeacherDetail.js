@@ -48,7 +48,7 @@ export default class TeacherDetail extends Component {
                 <Table.Row key={key}>
                   <Table.Cell>{key+1}</Table.Cell>
                   <Table.Cell width="4">
-                    <Link to={`/teacher-subject-detail/${item.classToSubjectId}`}>
+                    <Link to={`/teacher-subject-detail/${item.classToSubjectId}`} onClick={() => storeActions.setTeacherSubjectList([])}>
                       {item.subject.name} - {item.classRoom.name}
                     </Link>
                   </Table.Cell>

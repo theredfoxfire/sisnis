@@ -39,12 +39,14 @@ export function postStudentAttendance(formData) {
   .then(function (response) {
     storeActions.setIsLoading(false);
     storeActions.setIsError(false);
-    getStudentAttendanceList(formData.scheduleId);
+    window.location.replace(`/studentAttendance/${formData.scheduleId}/${formData.date}`);
     storeActions.setDialogMessage("Data berhasil disimpan");
   })
   .catch(function (error) {
     storeActions.setIsError(true);
     storeActions.setIsLoading(false);
+    errorHandler(error);
+    storeActions.setErrorMessage("Tanggal tersebut sudah terekap, pilih tangal lain.");
     storeActions.setDialogMessage("Gagal menyimpan data");
   });
 }

@@ -1,5 +1,8 @@
 export const getDateByStringJSON = (jsonDate = '') => {
-  const arrayDateTime = jsonDate.split('T');
+  const newDate = new Date(jsonDate);
+  newDate.setDate(newDate.getDate() + 1);
+  const newJson = newDate.toJSON();
+  const arrayDateTime = newJson.split('T');
   const date = arrayDateTime[0];
   const time = arrayDateTime[1];
   const dateArray = date.split('-');
