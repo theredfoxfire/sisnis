@@ -6,11 +6,11 @@ export const setStoreContainer = (setter) => {
   stateContainer = setter;
 };
 
+export const getAllState = () => stateContainer.state;
+
 export const chainToView = (ViewComponent) => {
   return (props) => <ViewComponent {...props} {...stateContainer.state} />;
 }
-
-export const getAllState = () => stateContainer.state;
 
 export const storeActions = {
   setActiveItem: async (activeItem) => {

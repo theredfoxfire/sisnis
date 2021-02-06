@@ -31,7 +31,7 @@ const RadioOption = styled(Radio)`
   padding: 2px 4px;
   margin: 1px;
   border: solid 1px #bfbebe;
-  border-radius: 2px;
+  border-radius: 4px;
 `;
 
 
@@ -57,7 +57,7 @@ class StudentAttendance extends Component {
           <Row><Label>Matapelajaran:</Label> <b>{selectedSchedule.subjectName}</b></Row>
           <Row><Label>Guru:</Label> <b>{selectedSchedule.teacherName}</b></Row>
           <Row><Label>Tanggal:</Label>
-          <SemanticDatepicker locale="en-US" value={date} defaultValue={date} onChange={(event, data) => this.setState({
+          <SemanticDatepicker clearable={false} locale="en-US" value={date} defaultValue={date} onChange={(event, data) => this.setState({
             date: data.value,
           })} type="basic" /></Row>
         </div>
@@ -73,7 +73,7 @@ class StudentAttendance extends Component {
 
           <Table.Body>
             {selectedSchedule.students.map((item, key) => {
-              const status = this._getCurrentStatus(item);
+              const status = this._getCurrentStatus(item, key);
               return (
               <Table.Row key={key}>
               <Table.Cell width="1">{key + 1}</Table.Cell>
@@ -146,6 +146,7 @@ class StudentAttendance extends Component {
   componentDidUpdate(prevProps, prevState) {
     let {studentAttendanceList, selectedSchedule, dialogMessage} = this.props;
     if (!isEqual(prevProps.studentAttendanceList, studentAttendanceList) || !isEqual(prevProps.selectedSchedule, selectedSchedule)) {
+
       if (studentAttendanceList.length < 1) {
         let presenceList = [];
         selectedSchedule.students.forEach((item, key) => {
@@ -177,10 +178,11 @@ class StudentAttendance extends Component {
     this.setState({studentAttendances: studentAttendances});
   }
 
-  _getCurrentStatus(item) {
+  _getCurrentStatus(item, key) {
+    const {selectedSchedule} = getAllState();
     const {studentAttendances} = this.state;
     const status = studentAttendances.find((value) => value && value.student === item.id);
-    return status ? status : {};
+    return status ? status : {schedule: selectedSchedule.id, key, student: item.id, notes: '', presenceStatus: "PRESENT"};
   }
 
   _handleSubmit = () => {
@@ -189,7 +191,6 @@ class StudentAttendance extends Component {
     storeActions.setDialogMessage("");
     storeActions.setIsLoading(true);
     const formData = {studentAttendances, date: date.toJSON(), scheduleId};
-    console.log(formData);
     postStudentAttendance(formData);
   }
 }

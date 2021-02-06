@@ -12,16 +12,31 @@ import { getAllState, storeActions, chainToView } from '../store/Store.js';
 import {getStudentAttendanceList} from './api-data/studentAttendance';
 import initialState from '../store/state.js';
 import {getDateByStringJSON} from '../utils/dateUtils';
+import {getScheduleByID} from './api-data/schedule';
+import {getStringFromOptions} from '../utils/dateUtils';
+import {DAY_LIST} from '../Constants';
 
 class StudentAttendanceDateList extends Component {
   render() {
-    let {studentAttendanceList} = getAllState();
+    let {studentAttendanceList, selectedSchedule} = getAllState();
     let scheduleId = this.props.match.params.scheduleId;
+    const dayString = getStringFromOptions(selectedSchedule.day, DAY_LIST);
     return (
       <div>
         <Grid.Column stretched width={12}>
         <h1>Tabel Rekap Kehadiran</h1>
-        <Link onClick={() => window.location.assign(`/studentAttendance/${scheduleId}/new`)}>
+        {selectedSchedule.id !== '' ? <>
+        <h4>Kelas: {selectedSchedule.classRoomName}</h4>
+        <h4>Matapelajaran: {selectedSchedule.subjectName}</h4>
+        <h4>Guru: {selectedSchedule.teacherName}</h4>
+        <h4>Hari: {dayString.label}</h4>
+        <h4>Jam: {selectedSchedule.timeString}</h4>
+        <h4>Semester: {selectedSchedule.academicYear}</h4>
+        </> : null}
+        <Link to={`/studentAttendance/${scheduleId}/new`} onClick={() => {
+          storeActions.setStudentAttendanceList(initialState.studentAttendanceList);
+          storeActions.setSelectedSchedule(initialState.selectedSchedule);
+        }}>
           <Button color='green' size="small">
             <Icon name='plus' />
             Tambah
@@ -70,6 +85,7 @@ class StudentAttendanceDateList extends Component {
     storeActions.setIsLoading(true);
     storeActions.setIsError(false);
     getStudentAttendanceList(scheduleId);
+    getScheduleByID(scheduleId);
   }
 }
 

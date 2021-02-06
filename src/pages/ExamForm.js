@@ -48,7 +48,7 @@ export default class ExamForm extends Component {
           <h4>Nama Ujian/Ulangan/Tugas:</h4>
           <Form.Input fluid placeholder='Nama Ujian/Ulangan/Tugas'  defaultValue={nameValue} onChange={(e) => this.setState({name: e.target.value})} />
           <h4>Tanggal Exam</h4>
-          <SemanticDatepicker locale="en-US" onChange={(event, data) => this.setState({
+          <SemanticDatepicker clearable={false} locale="en-US" onChange={(event, data) => this.setState({
             examDate: data.value,
           })} type="basic" />
           <h4>Type Exam</h4>

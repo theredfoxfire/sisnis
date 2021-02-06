@@ -11,7 +11,6 @@ import {
 } from "react-router-dom";
 import { getAllState, storeActions, chainToView } from '../store/Store.js';
 import {getScheduleList, deleteSchedule} from './api-data/schedule';
-import initialState from '../store/state.js';
 import {getStringFromOptions} from '../utils/dateUtils';
 import {DAY_LIST} from '../Constants';
 import {maxItems} from './api-data/config';
@@ -81,7 +80,7 @@ class PresenceSchedule extends Component {
               <Table.Cell width="2">{item.time.time}</Table.Cell>
                   <Table.Cell>
                   <Link to={`/studentAttendance/${item.id}`}>
-                  <Button color='green' basic onClick={() => storeActions.setStudentAttendanceList(initialState.studentAttendanceList)}>
+                  <Button color='green' basic>
                     <Icon name='pencil' />
                     Isi Absensi
                   </Button>

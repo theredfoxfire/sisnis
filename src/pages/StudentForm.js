@@ -77,7 +77,7 @@ class StudentForm extends Component {
           />
             <h4>Tanggal Lahir</h4>
             * Tahun-bulan-tanggal<br/>
-            <SemanticDatepicker locale="en-US" onChange={(event, data) => this.setState({
+            <SemanticDatepicker clearable={false} locale="en-US" onChange={(event, data) => this.setState({
               birthDay: data.value,
             })} type="basic" value={birthDay} />
             <h4>Nama Orang Tua/Wali:</h4>
