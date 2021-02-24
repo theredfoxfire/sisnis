@@ -11,15 +11,18 @@ import {
 import { getAllState, storeActions, chainToView } from '../store/Store.js';
 import { getUserList, putUserActivate, deleteUser } from './api-data/user';
 import initialState from '../store/state.js';
-
+import { isEqual } from '../utils/objectUtils';
+import { USER_ROLE } from '../Constants';
 class User extends Component {
   render() {
     let { userList } = getAllState();
+    const role = this.props.match.params.role;
+
     return (
       <div>
         <Grid.Column stretched width={12}>
-          <h1>User Admin</h1>
-          <Link to="/user-form/0">
+          <h1>User {this._renderRole(role)}</h1>
+          <Link to={`/user-form/0/${role}`}>
             <Button color='green' size="small" onClick={() => storeActions.setSelectedUser(initialState.selectedUser)}>
               <Icon name='plus' />
             Tambah
@@ -75,15 +78,29 @@ class User extends Component {
       </div>
     )
   }
+  _renderRole(role) {
+    switch (role) {
+      case USER_ROLE.ROLE_ADMIN: {
+        return 'Admin';
+      }
+      case USER_ROLE.ROLE_STUDENT: {
+        return 'Siswa';
+      }
+      default: {
+        return 'NOT DEFINED';
+      }
+    };
+  }
 
   _handleDelete = (id) => {
     let { isError } = getAllState();
+    const role = this.props.match.params.role;
     storeActions.setIsLoading(true);
     storeActions.setModalStatus(true);
     storeActions.setDialogTitle("Hapus Data");
     storeActions.setDialogMessage("Anda yakin akan menghapus item ini?");
     storeActions.setModalConfirmAction(() => {
-      deleteUser(id).then(() => {
+      deleteUser(id, role).then(() => {
         isError && storeActions.setIsError(false);
         storeActions.setModalStatus(false);
       });
@@ -91,19 +108,28 @@ class User extends Component {
   }
 
   _handleAcivation = (id, isActive) => {
+    const role = this.props.match.params.role;
     storeActions.setIsLoading(true);
     storeActions.setModalStatus(true);
     storeActions.setDialogTitle("Aktifasi User");
     storeActions.setDialogMessage(`Anda yakin akan ${isActive ? "me-non aktikan" : "mengaktifkan"} user ini?`);
     storeActions.setModalConfirmAction(() => {
-      putUserActivate(id);
+      putUserActivate(id, role);
     });
   }
 
   componentDidMount() {
+    const role = this.props.match.params.role;
     storeActions.setIsLoading(true);
     storeActions.setIsError(false);
-    getUserList();
+    getUserList(role);
+  }
+  componentDidUpdate(prevProps) {
+    const role = this.props.match.params.role;
+    const prevRole = prevProps.match.params.role;
+    if (!isEqual(role, prevRole)) {
+      getUserList(role);
+    }
   }
 }
 

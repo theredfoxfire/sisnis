@@ -1,7 +1,7 @@
 import { storeActions } from '../../store/Store.js';
-import {axiosWorker, errorHandler} from './config';
-export function getUserList() {
-  axiosWorker.get(`api/user/get-all`)
+import { axiosWorker, errorHandler } from './config';
+export function getUserList(role) {
+  axiosWorker.get(`api/user/get-all/${role}`)
     .then(res => {
       const users = res.data.users;
       storeActions.setIsLoading(false);
@@ -26,53 +26,53 @@ export function getUserByID(id) {
     });
 }
 
-export function postUser(formData) {
+export function postUser(formData, role) {
   axiosWorker.post(`api/user/add`, {
     ...formData
   })
-  .then(function (response) {
-    storeActions.setIsLoading(false);
-    getUserList();
-  })
-  .catch(function (error) {
-    storeActions.setIsLoading(false);
-    storeActions.setIsError(true);
-  });
+    .then(function (response) {
+      storeActions.setIsLoading(false);
+      getUserList(role);
+    })
+    .catch(function (error) {
+      storeActions.setIsLoading(false);
+      storeActions.setIsError(true);
+    });
 }
 
-export function putUser(formData, id) {
+export function putUser(formData, id, role) {
   axiosWorker.put(`api/user/update/${id}`, {
     ...formData,
   })
-  .then(function (response) {
-    storeActions.setIsLoading(false);
-    getUserList();
-  })
-  .catch(function (error) {
-    storeActions.setIsLoading(false);
-    storeActions.setIsError(true);
-  });
+    .then(function (response) {
+      storeActions.setIsLoading(false);
+      getUserList(role);
+    })
+    .catch(function (error) {
+      storeActions.setIsLoading(false);
+      storeActions.setIsError(true);
+    });
 }
 
-export function putUserActivate(id) {
+export function putUserActivate(id, role) {
   storeActions.setModalStatus(false);
   axiosWorker.put(`api/user/update/${id}/activate`, {})
-  .then(function (response) {
-    storeActions.setIsLoading(false);
-    getUserList();
-  })
-  .catch(function (error) {
-    storeActions.setIsLoading(false);
-    storeActions.setIsError(true);
-  });
+    .then(function (response) {
+      storeActions.setIsLoading(false);
+      getUserList(role);
+    })
+    .catch(function (error) {
+      storeActions.setIsLoading(false);
+      storeActions.setIsError(true);
+    });
 }
 
 
-export function deleteUser(id) {
+export function deleteUser(id, role) {
   return axiosWorker.delete(`api/user/delete/${id}`)
     .then(res => {
       storeActions.setIsLoading(false);
-      getUserList();
+      getUserList(role);
     }).catch(function (error) {
       errorHandler(error);
       storeActions.setIsLoading(false);

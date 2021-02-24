@@ -22,26 +22,28 @@ class UserForm extends Component {
     };
   }
   render() {
-    let { username, password, email } = this.state;
+    let { username, email } = this.state;
     let userID = this.props.match.params.id;
+    const role = this.props.match.params.role;
     return (
       <div>
         <Grid.Column stretched width={12}>
           <h1>Form User</h1>
-          <Form size='large'>
+          <Form size='large' autoComplete="off">
             <Segment stacked>
               <h4>Username :</h4>
-              <Form.Input fluid placeholder='Username ' defaultValue={username} onChange={(e) => this.setState({ username: e.target.value })} />
+              <Form.Input fluid placeholder={userID > 0 ? username : 'Username '} onChange={(e) => this.setState({ username: e.target.value })} />
               <h4>Email :</h4>
-              <Form.Input fluid placeholder='Email ' defaultValue={email} onChange={(e) => this.setState({ email: e.target.value })} />
+              <Form.Input fluid placeholder={userID > 0 ? email : 'Email '} type="email" onChange={(e) => this.setState({ email: e.target.value })} />
               <h4>Password :</h4>
-              <Form.Input fluid placeholder='Password' type='password' defaultValue={password} onChange={(e) => this.setState({ password: e.target.value })} />
-              <Link to={"/user"}>
+              {userID > 0 && "(biarkan kosong jika password tidak ingin diubah)"}
+              <Form.Input autoComplete="new-password" fluid placeholder='Password' type='password' defaultValue={""} onChange={(e) => this.setState({ password: e.target.value })} />
+              <Link to={`/user/${role}`}>
                 <Button color='olive' size='small'>
                   Back
               </Button>
               </Link>
-              <Link to={username !== "" ? "/user" : `/user-form/${userID}`}>
+              <Link to={username !== "" ? `/user/${role}` : `/user-form/${userID}/${role}`}>
                 <Button color='teal' size='small' disabled={this._validate()} onClick={() => !this._validate() && this._handleSubmit()} >
                   Simpan
               </Button>
@@ -65,19 +67,21 @@ class UserForm extends Component {
   componentDidUpdate(prevProps, prevState) {
     let { selectedUser } = this.props;
     if (!isEqual(prevProps.selectedUser, selectedUser)) {
-      this.setState({ emai: selectedUser.email, username: selectedUser.username });
+      this.setState({ email: selectedUser.email, username: selectedUser.username });
     }
   }
 
   _handleSubmit = () => {
     let { username, password, email } = this.state;
+    const role = this.props.match.params.role;
     let userID = this.props.match.params.id;
-    userID > 0 ? putUser({ username, password, email }, userID) : postUser({ username, password, email });
+    userID > 0 ? putUser({ username, password: password === '' ? undefined : password, email }, userID, role) : postUser({ username, password, email, roles: `["${role}"]` }, role);
   }
 
   _validate = () => {
+    let userID = this.props.match.params.id;
     let { password, username, email } = this.state;
-    return password === "" || username === "" || email === "";
+    return (userID < 1 && password === "") || username === "" || email === "";
   }
 }
 
