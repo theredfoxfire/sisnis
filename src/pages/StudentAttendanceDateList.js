@@ -9,72 +9,72 @@ import {
   Link
 } from "react-router-dom";
 import { getAllState, storeActions, chainToView } from '../store/Store.js';
-import {getStudentAttendanceList} from './api-data/studentAttendance';
+import { getStudentAttendanceList } from './api-data/studentAttendance';
 import initialState from '../store/state.js';
-import {getDateByStringJSON} from '../utils/dateUtils';
-import {getScheduleByID} from './api-data/schedule';
-import {getStringFromOptions} from '../utils/dateUtils';
-import {DAY_LIST} from '../Constants';
+import { getDateByStringJSON } from '../utils/dateUtils';
+import { getScheduleByID } from './api-data/schedule';
+import { getStringFromOptions } from '../utils/dateUtils';
+import { DAY_LIST } from '../Constants';
 
 class StudentAttendanceDateList extends Component {
   render() {
-    let {studentAttendanceList, selectedSchedule} = getAllState();
+    let { studentAttendanceList, selectedSchedule } = getAllState();
     let scheduleId = this.props.match.params.scheduleId;
     const dayString = getStringFromOptions(selectedSchedule.day, DAY_LIST);
     return (
       <div>
         <Grid.Column stretched width={12}>
-        <h1>Tabel Rekap Kehadiran</h1>
-        {selectedSchedule.id !== '' ? <>
-        <h4>Kelas: {selectedSchedule.classRoomName}</h4>
-        <h4>Matapelajaran: {selectedSchedule.subjectName}</h4>
-        <h4>Guru: {selectedSchedule.teacherName}</h4>
-        <h4>Hari: {dayString.label}</h4>
-        <h4>Jam: {selectedSchedule.timeString}</h4>
-        <h4>Semester: {selectedSchedule.academicYear}</h4>
-        </> : null}
-        <Link to={`/studentAttendance/${scheduleId}/new`} onClick={() => {
-          storeActions.setStudentAttendanceList(initialState.studentAttendanceList);
-          storeActions.setSelectedSchedule(initialState.selectedSchedule);
-        }}>
-          <Button color='green' size="small">
-            <Icon name='plus' />
+          <h1>Tabel Rekap Kehadiran</h1>
+          {selectedSchedule.id !== '' ? <>
+            <h4>Kelas: {selectedSchedule.classRoomName}</h4>
+            <h4>Matapelajaran: {selectedSchedule.subjectName}</h4>
+            <h4>Guru: {selectedSchedule.teacherName}</h4>
+            <h4>Hari: {dayString.label}</h4>
+            <h4>Jam: {selectedSchedule.timeString}</h4>
+            <h4>Semester: {selectedSchedule.academicYear}</h4>
+          </> : null}
+          <Link to={`/studentAttendance/${scheduleId}/new`} onClick={() => {
+            storeActions.setStudentAttendanceList(initialState.studentAttendanceList);
+            storeActions.setSelectedSchedule(initialState.selectedSchedule);
+          }}>
+            <Button color='green' size="small">
+              <Icon name='plus' />
             Tambah
           </Button>
-        </Link>
-        <Table celled selectable>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>No</Table.HeaderCell>
-              <Table.HeaderCell>Tanggal Absensi</Table.HeaderCell>
-              <Table.HeaderCell>Actions</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
+          </Link>
+          <Table celled selectable>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>No</Table.HeaderCell>
+                <Table.HeaderCell>Tanggal Absensi</Table.HeaderCell>
+                <Table.HeaderCell>Actions</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
 
-          <Table.Body>
-            {studentAttendanceList.map((item, key) => {
-              return (
-                <Table.Row key={key}>
-                  <Table.Cell>{key + 1}</Table.Cell>
-              <Table.Cell width="6">{getDateByStringJSON(item.date).dateIDN}</Table.Cell>
-                  <Table.Cell>
-                  <Link to={`/studentAttendance/${item.schedule}/${item.date}`}>
-                  <Button color='green' basic onClick={() => storeActions.setStudentAttendanceList(initialState.studentAttendanceList)}>
-                    <Icon name='pencil' />
+            <Table.Body>
+              {studentAttendanceList.map((item, key) => {
+                return (
+                  <Table.Row key={key}>
+                    <Table.Cell>{key + 1}</Table.Cell>
+                    <Table.Cell width="6">{getDateByStringJSON(item.date).dateIDN}</Table.Cell>
+                    <Table.Cell>
+                      <Link to={`/studentAttendance/${item.schedule}/${item.date}`}>
+                        <Button color='green' basic onClick={() => storeActions.setStudentAttendanceList(initialState.studentAttendanceList)}>
+                          <Icon name='pencil' />
                     Edit
                   </Button>
-                  </Link>
-                  </Table.Cell>
-                </Table.Row>
-              )
-            })}
-          </Table.Body>
-        </Table>
-        <Link to={`/studentAttendance`}>
-          <Button color='olive' size='small' onClick={() => storeActions.setStudentAttendanceList(initialState.studentAttendanceList)}>
-             Back
+                      </Link>
+                    </Table.Cell>
+                  </Table.Row>
+                )
+              })}
+            </Table.Body>
+          </Table>
+          <Link to={`/studentAttendance`}>
+            <Button color='olive' size='small' onClick={() => storeActions.setStudentAttendanceList(initialState.studentAttendanceList)}>
+              Back
           </Button>
-        </Link>
+          </Link>
         </Grid.Column>
       </div>
     )

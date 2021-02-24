@@ -5,14 +5,14 @@ import {
   Table,
   Form,
 } from 'semantic-ui-react';
-import {getExamByID, postStudentsPoint, putStudentsPoint} from './api-data/exam';
+import { getExamByID, postStudentsPoint, putStudentsPoint } from './api-data/exam';
 import {
   Link
 } from "react-router-dom";
 import { storeActions, chainToView, getAllState } from '../store/Store.js';
 import initialState from '../store/state.js';
-import {isEqual} from '../utils/objectUtils';
-import {getDateByStringJSON} from '../utils/dateUtils';
+import { isEqual } from '../utils/objectUtils';
+import { getDateByStringJSON } from '../utils/dateUtils';
 import styled from 'styled-components';
 
 const Row = styled("div")`
@@ -28,66 +28,66 @@ class TeacherExamDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedExam: {students: []},
+      selectedExam: { students: [] },
       studentPoints: [],
       examPoints: [],
-      isEdit:false,
+      isEdit: false,
       dialogMessage: '',
     }
   }
 
   render() {
-    let {selectedExam, dialogMessage} = this.state;
-    let {isLoading} = getAllState();
+    let { selectedExam, dialogMessage } = this.state;
+    let { isLoading } = getAllState();
     return (
       <div>
         <Grid.Column stretched width={12}>
-        <h1>Detail Exam: {selectedExam.name}</h1>
-        <div>
-          <Row><Label>Kelas:</Label> <b>{selectedExam.classRoomName}</b></Row>
-          <Row><Label>Matapelajaran:</Label> <b>{selectedExam.subjectName}</b></Row>
-          <Row><Label>Guru:</Label> <b>{selectedExam.teacherName}</b></Row>
-          <Row><Label>Tanggal:</Label> <b>{getDateByStringJSON(selectedExam.date).dateIDN}</b></Row>
-        </div>
+          <h1>Detail Exam: {selectedExam.name}</h1>
+          <div>
+            <Row><Label>Kelas:</Label> <b>{selectedExam.classRoomName}</b></Row>
+            <Row><Label>Matapelajaran:</Label> <b>{selectedExam.subjectName}</b></Row>
+            <Row><Label>Guru:</Label> <b>{selectedExam.teacherName}</b></Row>
+            <Row><Label>Tanggal:</Label> <b>{getDateByStringJSON(selectedExam.date).dateIDN}</b></Row>
+          </div>
 
-        <h3>Daftar Siswa:</h3>
-        <Table celled selectable>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>No</Table.HeaderCell>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>Nilai</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
+          <h3>Daftar Siswa:</h3>
+          <Table celled selectable>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>No</Table.HeaderCell>
+                <Table.HeaderCell>Name</Table.HeaderCell>
+                <Table.HeaderCell>Nilai</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
 
-          <Table.Body>
-            {selectedExam.students.map((item, key) => {
-              return (
-                <Table.Row key={key}>
-                  <Table.Cell>{key+1}</Table.Cell>
-                  <Table.Cell width="5">{item.studentName}</Table.Cell>
-                  <Table.Cell>
-                    <Form.Input fluid placeholder='Nilai siswa'
-                      defaultValue={this._getCurrentPoint(item)}
-                      onChange={(e) => this._handleChangePoint(e.target.value, item, key)}
-                    />
-                  </Table.Cell>
-                </Table.Row>
-              )
-            })}
-          </Table.Body>
-        </Table>
-        {selectedExam.students.length < 1 && <h4>Data kosong.</h4> }
-        <Link to={`/teacher-subject-detail/${selectedExam.teacherSubjectId}`}>
-          <Button color='olive' size='small'>
-             Back
+            <Table.Body>
+              {selectedExam.students.map((item, key) => {
+                return (
+                  <Table.Row key={key}>
+                    <Table.Cell>{key + 1}</Table.Cell>
+                    <Table.Cell width="5">{item.studentName}</Table.Cell>
+                    <Table.Cell>
+                      <Form.Input fluid placeholder='Nilai siswa'
+                        defaultValue={this._getCurrentPoint(item)}
+                        onChange={(e) => this._handleChangePoint(e.target.value, item, key)}
+                      />
+                    </Table.Cell>
+                  </Table.Row>
+                )
+              })}
+            </Table.Body>
+          </Table>
+          {selectedExam.students.length < 1 && <h4>Data kosong.</h4>}
+          <Link to={`/teacher-subject-detail/${selectedExam.teacherSubjectId}`}>
+            <Button color='olive' size='small'>
+              Back
           </Button>
-        </Link>
-        <Button color='teal' size='small' onClick={() => this._handleSubmit()} >
-           {isLoading ? "Menyimpan..." : "Simpan"}
-        </Button>
-        {dialogMessage}
-      </Grid.Column>
+          </Link>
+          <Button color='teal' size='small' onClick={() => this._handleSubmit()} >
+            {isLoading ? "Menyimpan..." : "Simpan"}
+          </Button>
+          {dialogMessage}
+        </Grid.Column>
       </div>
     )
   }
@@ -103,46 +103,46 @@ class TeacherExamDetail extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    let {selectedExam, dialogMessage} = this.props;
+    let { selectedExam, dialogMessage } = this.props;
     if (!isEqual(prevProps.selectedExam, selectedExam)) {
       let studentPointList = [];
       selectedExam.examPoints.forEach((item, i) => {
-        studentPointList.push({id: item.id, point: item.point, key: i, pointId: item.pointId});
+        studentPointList.push({ id: item.id, point: item.point, key: i, pointId: item.pointId });
       });
 
-      this.setState({selectedExam, studentPoints: studentPointList, isEdit: studentPointList.length > 0});
+      this.setState({ selectedExam, studentPoints: studentPointList, isEdit: studentPointList.length > 0 });
     }
     if (dialogMessage !== prevProps.dialogMessage) {
-      this.setState({dialogMessage: dialogMessage});
+      this.setState({ dialogMessage: dialogMessage });
     }
   }
 
   _handleChangePoint = (eValue, item, key) => {
-    let {studentPoints: pointList} = this.state;
+    let { studentPoints: pointList } = this.state;
     const itemVal = pointList.find((value) => value && value.id === item.studentId);
 
-    const point = {id: item.studentId, point: eValue, key, pointId: itemVal && itemVal.pointId  };
+    const point = { id: item.studentId, point: eValue, key, pointId: itemVal && itemVal.pointId };
     if (itemVal) {
       pointList[itemVal.key] = point;
     } else {
       pointList[key] = point;
     }
-    this.setState({studentPoints: pointList});
+    this.setState({ studentPoints: pointList });
   }
 
   _handleSubmit = () => {
-    let {studentPoints, selectedExam, isEdit} = this.state;
+    let { studentPoints, selectedExam, isEdit } = this.state;
     storeActions.setDialogMessage("");
     storeActions.setIsLoading(true);
     if (isEdit) {
-      putStudentsPoint({examID: selectedExam.id, studentPoints});
+      putStudentsPoint({ examID: selectedExam.id, studentPoints });
     } else {
-      postStudentsPoint({examID: selectedExam.id, studentPoints});
+      postStudentsPoint({ examID: selectedExam.id, studentPoints });
     }
   }
 
   _getCurrentPoint = (item) => {
-    const {selectedExam} = this.state;
+    const { selectedExam } = this.state;
     const itemPoint = selectedExam.examPoints.find((value) => value && value.id === item.studentId);
 
     return itemPoint ? itemPoint.point : 0;
