@@ -1,5 +1,6 @@
 import { storeActions } from '../../store/Store.js';
 import { axiosWorker, errorHandler, maxItems } from './config';
+
 export function getUserList(role, activePage = 1) {
   axiosWorker.get(`api/user/get-all/${role}?page=${activePage}&pageItems=${maxItems}`)
     .then(res => {
@@ -19,6 +20,19 @@ export function getUserByID(id) {
       const selectedUser = res.data.user;
       storeActions.setIsLoading(false);
       storeActions.setSelectedUser(selectedUser);
+    }).catch(function (error) {
+      errorHandler(error);
+      storeActions.setIsLoading(false);
+      storeActions.setIsError(true);
+    });
+}
+
+export function getUserDetail() {
+  axiosWorker.get(`api/user/get-user/detail`)
+    .then(res => {
+      const selectedUser = res.data.user;
+      storeActions.setIsLoading(false);
+      console.log('selectedUser', selectedUser);
     }).catch(function (error) {
       errorHandler(error);
       storeActions.setIsLoading(false);

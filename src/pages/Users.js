@@ -119,6 +119,12 @@ class User extends Component {
       case USER_ROLE.ROLE_STUDENT: {
         return 'Siswa';
       }
+      case USER_ROLE.ROLE_PARENT: {
+        return 'Wali Murid';
+      }
+      case USER_ROLE.ROLE_TEACHER: {
+        return 'Guru';
+      }
       default: {
         return 'NOT DEFINED';
       }
