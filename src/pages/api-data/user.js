@@ -1,9 +1,9 @@
 import { storeActions } from '../../store/Store.js';
-import { axiosWorker, errorHandler } from './config';
-export function getUserList(role) {
-  axiosWorker.get(`api/user/get-all/${role}`)
+import { axiosWorker, errorHandler, maxItems } from './config';
+export function getUserList(role, activePage = 1) {
+  axiosWorker.get(`api/user/get-all/${role}?page=${activePage}&pageItems=${maxItems}`)
     .then(res => {
-      const users = res.data.users;
+      const users = res.data;
       storeActions.setIsLoading(false);
       storeActions.setUserList(users);
     }).catch(function (error) {

@@ -12,7 +12,7 @@ let initialState = {
   teacherList: [],
   selectedTeacher: { serial: '', name: '', classToSubjects: [], guardianClass: [] },
   subjectList: [],
-  userList: [],
+  userList: { users: [], totals: 0 },
   examTypeList: [],
   roomList: [],
   studentAttendanceList: [],
