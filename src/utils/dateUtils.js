@@ -1,8 +1,9 @@
+import { ensureString } from './stringUtils';
 export const getDateByStringJSON = (jsonDate = '') => {
   const newDate = new Date(jsonDate);
   newDate.setDate(newDate.getDate() + 1);
   const newJson = newDate.toJSON();
-  const arrayDateTime = newJson.split('T');
+  const arrayDateTime = ensureString(newJson).split('T');
   const date = arrayDateTime[0];
   const time = arrayDateTime[1];
   const dateArray = date.split('-');
@@ -33,9 +34,9 @@ export const getDateStringFromObject = (dateObject) => {
   const day = dateObject.getDate();
   const month = dateObject.getMonth();
   const year = dateObject.getFullYear();
-  return `${year}-${month+1}-${day}`;
+  return `${year}-${month + 1}-${day}`;
 }
 
 export const getStringFromOptions = (key, options) => {
-  return options.find(item => item.id === key) || {label: "", id: ""};
+  return options.find(item => item.id === key) || { label: "", id: "" };
 }

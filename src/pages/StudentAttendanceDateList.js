@@ -15,6 +15,17 @@ import { getDateByStringJSON } from '../utils/dateUtils';
 import { getScheduleByID } from './api-data/schedule';
 import { getStringFromOptions } from '../utils/dateUtils';
 import { DAY_LIST } from '../Constants';
+import styled from 'styled-components';
+
+const Row = styled("div")`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Label = styled("div")`
+  width: 120px;
+`;
+
 
 class StudentAttendanceDateList extends Component {
   render() {
@@ -25,14 +36,14 @@ class StudentAttendanceDateList extends Component {
       <div>
         <Grid.Column stretched width={12}>
           <h1>Tabel Rekap Kehadiran</h1>
-          {selectedSchedule.id !== '' ? <>
-            <h4>Kelas: {selectedSchedule.classRoomName}</h4>
-            <h4>Matapelajaran: {selectedSchedule.subjectName}</h4>
-            <h4>Guru: {selectedSchedule.teacherName}</h4>
-            <h4>Hari: {dayString.label}</h4>
-            <h4>Jam: {selectedSchedule.timeString}</h4>
-            <h4>Semester: {selectedSchedule.academicYear}</h4>
-          </> : null}
+          {selectedSchedule.id !== '' ? <div>
+            <Row><Label>Kelas:</Label> <b>{selectedSchedule.classRoomName}</b></Row>
+            <Row><Label>Matapelajaran:</Label> <b>{selectedSchedule.subjectName}</b></Row>
+            <Row><Label>Guru:</Label> <b>{selectedSchedule.teacherName}</b></Row>
+            <Row><Label>Hari:</Label> <b>{dayString.label}</b></Row>
+            <Row><Label>Jam:</Label> <b>{selectedSchedule.timeString}</b></Row>
+            <Row><Label>Semester:</Label> <b>{selectedSchedule.academicYear}</b></Row>
+          </div> : null}
           <Link to={`/studentAttendance/${scheduleId}/new`} onClick={() => {
             storeActions.setStudentAttendanceList(initialState.studentAttendanceList);
             storeActions.setSelectedSchedule(initialState.selectedSchedule);

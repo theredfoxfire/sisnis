@@ -44,6 +44,7 @@ let initialState = {
     roles: `[]`,
     username: ``,
   },
+  userAditionalInfo: { id: 0, email: "", "username": "", details: [] }
 };
 
 export default initialState;

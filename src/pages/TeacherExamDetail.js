@@ -28,7 +28,7 @@ class TeacherExamDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedExam: { students: [] },
+      selectedExam: { students: [], date: '2020-10-19T17:00:00.000Z' },
       studentPoints: [],
       examPoints: [],
       isEdit: false,

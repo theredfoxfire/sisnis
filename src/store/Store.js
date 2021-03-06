@@ -133,4 +133,7 @@ export const storeActions = {
     localStorage.setItem('storedUserDetail', JSON.stringify(userDetail));
     await stateContainer.setState({ userDetail: userDetail });
   },
+  setUserAditionalInfo: async (userAditionalInfo) => {
+    await stateContainer.setState({ userAditionalInfo: userAditionalInfo });
+  },
 };

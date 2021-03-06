@@ -32,7 +32,7 @@ export function getUserDetail() {
     .then(res => {
       const selectedUser = res.data.user;
       storeActions.setIsLoading(false);
-      console.log('selectedUser', selectedUser);
+      storeActions.setUserAditionalInfo(selectedUser);
     }).catch(function (error) {
       errorHandler(error);
       storeActions.setIsLoading(false);

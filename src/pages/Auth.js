@@ -22,7 +22,7 @@ class Auth extends Component {
       </Header>
           <Form size='large'>
             <Segment stacked>
-              <Form.Input fluid icon='user' onChange={(e) => this.setState({ username: e.target.value })} iconPosition='left' placeholder='E-mail address' />
+              <Form.Input fluid icon='user' onChange={(e) => this.setState({ username: e.target.value })} iconPosition='left' placeholder='Username' />
               <Form.Input
                 fluid
                 icon='lock'

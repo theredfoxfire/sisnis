@@ -12,7 +12,7 @@ class Home extends Component {
     return (
       <div>
         <Grid.Column stretched width={12}>
-          <h1>Hello {this._renderRole(userDetail.roles[0])}</h1>
+          <h1>Halo {this._renderRole(userDetail.roles[0])}</h1>
         </Grid.Column>
       </div>
     )
@@ -21,18 +21,20 @@ class Home extends Component {
     getUserDetail();
   }
   _renderRole(role) {
+    const { userAditionalInfo } = getAllState();
     switch (role) {
       case USER_ROLE.ROLE_ADMIN: {
+
         return 'Admin';
       }
       case USER_ROLE.ROLE_STUDENT: {
-        return 'Siswa';
+        return `${userAditionalInfo.details.name || ''}`;
       }
       case USER_ROLE.ROLE_PARENT: {
-        return 'Wali Murid';
+        return `Orang tua/Wali murid ${userAditionalInfo.details.name || ''}`;
       }
       case USER_ROLE.ROLE_TEACHER: {
-        return 'Guru';
+        return `${userAditionalInfo.details.name || ''}`;
       }
       default: {
         return 'NOT DEFINED';

@@ -7,5 +7,5 @@ export function yearToString(year) {
 }
 
 export function ensureString(stringValue) {
-  return typeof stringValue === "string" || stringValue instanceof String ? stringValue : "";
+  return typeof stringValue === "string" ? stringValue : "";
 }

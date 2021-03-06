@@ -2,15 +2,178 @@ import React from 'react'
 import {
   Container,
   Image,
+  Dropdown,
   Menu,
+  Grid,
 } from 'semantic-ui-react';
-const Menus = () =>
-<Menu fixed='top' inverted>
-<Container>
-  <Menu.Item as='a' header>
-    <Image size='mini' src='/images/logosemantic.png' style={{ marginRight: '1.5em' }} />
-    Sistem Informasi Hasil Belajar Siswa
-  </Menu.Item>
-</Container>
-</Menu>
+import {
+  useHistory,
+  Link,
+} from "react-router-dom";
+import { storeActions, getAllState } from '../store/Store.js';
+import { USER_ROLE } from '../Constants';
+import { getUserRole } from '../utils/arrayUtils';
+const Menus = () => {
+  let { activeItem, userDetail } = getAllState();
+  const history = useHistory();
+  const gotToRoute = (route) => history.push(route);
+  return (
+    <Menu fixed='top' inverted>
+      <Container>
+        <Menu.Menu onClick={() => {
+          gotToRoute('/home');
+          storeActions.setActiveItem("home");
+        }}>
+          <Menu.Item as='a' header
+          >
+            <Image size='mini' src='/images/logosemantic.png' style={{ marginRight: '1.5em' }} />
+                Sistem Informasi Hasil Belajar Siswa
+        </Menu.Item>
+        </Menu.Menu>
+        <Menu.Menu position="right">
+          <Dropdown text='Menu' pointing className='link item' scrolling>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => {
+                gotToRoute('/student-info');
+                storeActions.setActiveItem("student-info");
+              }}>
+                Info Siswa
+              </Dropdown.Item>
+              {
+                getUserRole(userDetail.roles, USER_ROLE.ROLE_ADMIN) && <>
+                  <Dropdown.Item onClick={() => {
+                    gotToRoute('/class');
+                    storeActions.setActiveItem("class");
+                  }}>
+                    Kelas
+                </Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    gotToRoute('/student');
+                    storeActions.setActiveItem("student");
+                  }}>
+                    Siswa
+              </Dropdown.Item>
+
+                  <Dropdown.Item onClick={() => {
+                    gotToRoute('/teacher');
+                    storeActions.setActiveItem("teacher");
+                  }}>
+                    Guru
+              </Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    gotToRoute('/subject');
+                    storeActions.setActiveItem("subject");
+                  }}>
+                    Matapelajaran
+              </Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    gotToRoute('/exam-type');
+                    storeActions.setActiveItem("exam-type");
+                  }}>
+                    Jenis Exam
+              </Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    gotToRoute('/room');
+                    storeActions.setActiveItem("room");
+                  }}>
+                    Ruangan
+              </Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    gotToRoute('/timeSlot');
+                    storeActions.setActiveItem("timeSlot");
+                  }}>
+                    Slot Waktu
+              </Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    gotToRoute('/schedule');
+                    storeActions.setActiveItem("schedule");
+                  }}>
+                    Jadwal
+              </Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    gotToRoute('/studentAttendance');
+                    storeActions.setActiveItem("studentAttendance");
+                  }}>
+                    Absesnsi Siswa
+              </Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    gotToRoute('/school-info');
+                    storeActions.setActiveItem("school-info");
+                  }}>
+                    Info Sekolah
+              </Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    gotToRoute('/academic-year');
+                    storeActions.setActiveItem("academic-year");
+                  }}>
+                    Tahun Ajaran
+              </Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    gotToRoute(`/user/${USER_ROLE.ROLE_ADMIN}`);
+                    storeActions.setActiveItem("user");
+                  }}>
+                    User Admin
+              </Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    gotToRoute(`/user/${USER_ROLE.ROLE_STUDENT}`);
+                    storeActions.setActiveItem("student-role");
+                  }}>
+                    User Siswa
+              </Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    gotToRoute(`/user/${USER_ROLE.ROLE_TEACHER}`);
+                    storeActions.setActiveItem("teacher-role");
+                  }}>
+                    User Guru
+              </Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    gotToRoute(`/user/${USER_ROLE.ROLE_PARENT}`);
+                    storeActions.setActiveItem("parent-role");
+                  }}>
+                    User Wali Murid
+              </Dropdown.Item>
+                </>}
+              {/* <Dropdown.Item onClick={() => {
+                gotToRoute('/');
+                storeActions.setActiveItem("");
+              }}>
+
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => {
+                gotToRoute('/');
+                storeActions.setActiveItem("");
+              }}>
+
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => {
+                gotToRoute('/');
+                storeActions.setActiveItem("");
+              }}>
+
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => {
+                gotToRoute('/');
+                storeActions.setActiveItem("");
+              }}>
+
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => {
+                gotToRoute('/');
+                storeActions.setActiveItem("");
+              }}>
+
+              </Dropdown.Item> 
+            */}
+              <Dropdown.Item onClick={() => {
+                gotToRoute('/');
+                storeActions.setActiveItem("auth");
+              }}>
+                Logout
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Menu>
+      </Container>
+    </Menu >)
+}
 export default Menus;
