@@ -4,18 +4,17 @@ import {
   Image,
   Dropdown,
   Menu,
-  Grid,
 } from 'semantic-ui-react';
 import {
   useHistory,
-  Link,
 } from "react-router-dom";
 import { storeActions, getAllState } from '../store/Store.js';
 import { USER_ROLE } from '../Constants';
 import { getUserRole } from '../utils/arrayUtils';
+
 const Menus = () => {
-  let { activeItem, userDetail } = getAllState();
   const history = useHistory();
+  const { userDetail, userAditionalInfo } = getAllState();
   const gotToRoute = (route) => history.push(route);
   return (
     <Menu fixed='top' inverted>
@@ -33,12 +32,30 @@ const Menus = () => {
         <Menu.Menu position="right">
           <Dropdown text='Menu' pointing className='link item' scrolling>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => {
-                gotToRoute('/student-info');
-                storeActions.setActiveItem("student-info");
-              }}>
-                Info Siswa
+              {getUserRole(userDetail.roles, USER_ROLE.ROLE_STUDENT) && <>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute('/student-info');
+                  storeActions.setActiveItem("student-info");
+                }}>
+                  Info Siswa
               </Dropdown.Item>
+              </>}
+              {getUserRole(userDetail.roles, USER_ROLE.ROLE_PARENT) && <>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute('/student-info');
+                  storeActions.setActiveItem("student-info");
+                }}>
+                  Info Anak
+              </Dropdown.Item>
+              </>}
+              {getUserRole(userDetail.roles, USER_ROLE.ROLE_TEACHER) && <>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute(`/teacher-detail/${userAditionalInfo.details.id}`);
+                  storeActions.setActiveItem("student-info");
+                }}>
+                  Info Guru
+              </Dropdown.Item>
+              </>}
               {
                 getUserRole(userDetail.roles, USER_ROLE.ROLE_ADMIN) && <>
                   <Dropdown.Item onClick={() => {

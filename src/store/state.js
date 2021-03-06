@@ -44,7 +44,7 @@ let initialState = {
     roles: `[]`,
     username: ``,
   },
-  userAditionalInfo: { id: 0, email: "", "username": "", details: [] }
+  userAditionalInfo: JSON.parse(localStorage.getItem('storedUserAditionalInfo')) || { id: 0, email: "", "username": "", details: [] }
 };
 
 export default initialState;

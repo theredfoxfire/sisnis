@@ -19,6 +19,7 @@ export function getUserByID(id) {
     .then(res => {
       const selectedUser = res.data.user;
       storeActions.setIsLoading(false);
+      storeActions.setIsError(false);
       storeActions.setSelectedUser(selectedUser);
     }).catch(function (error) {
       errorHandler(error);
@@ -32,6 +33,7 @@ export function getUserDetail() {
     .then(res => {
       const selectedUser = res.data.user;
       storeActions.setIsLoading(false);
+      storeActions.setIsError(false);
       storeActions.setUserAditionalInfo(selectedUser);
     }).catch(function (error) {
       errorHandler(error);

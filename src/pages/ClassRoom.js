@@ -4,7 +4,7 @@ import {
   Button,
   Table,
   Icon,
-  Header, Modal, GridColumn,
+  Header, Modal,
 } from 'semantic-ui-react';
 import { getClassRoomList, deleteClass } from './api-data/classRoom'
 import {

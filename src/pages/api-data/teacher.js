@@ -1,5 +1,5 @@
 import { storeActions } from '../../store/Store.js';
-import {axiosWorker, errorHandler} from './config';
+import { axiosWorker, errorHandler } from './config';
 export function getTeacherList() {
   axiosWorker.get(`api/teacher/get-all`)
     .then(res => {
@@ -30,6 +30,7 @@ export function getTeacherByID(id) {
     .then(res => {
       const selectedTeacher = res.data.teacher;
       storeActions.setIsLoading(false);
+      storeActions.setIsError(false);
       storeActions.setSelectedTeacher(selectedTeacher);
     }).catch(function (error) {
       errorHandler(error);
@@ -42,28 +43,28 @@ export function postTeacher(formData) {
   axiosWorker.post(`api/teacher/add`, {
     ...formData
   })
-  .then(function (response) {
-    storeActions.setIsLoading(false);
-    getTeacherList();
-  })
-  .catch(function (error) {
-    storeActions.setIsLoading(false);
-    storeActions.setIsError(true);
-  });
+    .then(function (response) {
+      storeActions.setIsLoading(false);
+      getTeacherList();
+    })
+    .catch(function (error) {
+      storeActions.setIsLoading(false);
+      storeActions.setIsError(true);
+    });
 }
 
 export function putTeacher(formData, id) {
   axiosWorker.put(`api/teacher/update/${id}`, {
     ...formData,
   })
-  .then(function (response) {
-    storeActions.setIsLoading(false);
-    getTeacherList();
-  })
-  .catch(function (error) {
-    storeActions.setIsLoading(false);
-    storeActions.setIsError(true);
-  });
+    .then(function (response) {
+      storeActions.setIsLoading(false);
+      getTeacherList();
+    })
+    .catch(function (error) {
+      storeActions.setIsLoading(false);
+      storeActions.setIsError(true);
+    });
 }
 
 export function deleteTeacher(id) {
@@ -85,14 +86,14 @@ export function setTeacherClass(formData) {
     year: formData.year,
     kkm: formData.kkm,
   })
-  .then(function (response) {
-    storeActions.setIsLoading(false);
-  })
-  .catch(function (error) {
-    storeActions.setIsLoading(false);
-    storeActions.setErrorMessage("Gagal menyimpan data!");
-    storeActions.setIsError(true);
-  });
+    .then(function (response) {
+      storeActions.setIsLoading(false);
+    })
+    .catch(function (error) {
+      storeActions.setIsLoading(false);
+      storeActions.setErrorMessage("Gagal menyimpan data!");
+      storeActions.setIsError(true);
+    });
 }
 
 export function deleteTeacherClass(classToSubjectId) {

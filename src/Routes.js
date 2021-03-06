@@ -34,7 +34,7 @@ export default class Routes extends Component {
       <Router>
         <HeaderMenu />
         <ContentBox>
-          <Container style={{ paddingTop: '4em' }}>
+          <Container style={{ paddingTop: '5em' }}>
             <Loader />
             <Switch>
               <Route path="/home">

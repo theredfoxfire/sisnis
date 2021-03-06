@@ -10,6 +10,16 @@ import {
   Link
 } from "react-router-dom";
 import { getAllState, storeActions } from '../store/Store.js';
+import styled from 'styled-components';
+
+const Row = styled("div")`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Label = styled("div")`
+  width: 120px;
+`;
 
 export default class TeacherDetail extends Component {
 
@@ -19,12 +29,14 @@ export default class TeacherDetail extends Component {
     return (
       <div>
         <Grid.Column stretched width={12}>
-          <h1>Detail Guru: {selectedTeacher.name}</h1>
+          <h3>Daftar Pelajaran:</h3>
+          <div>
+            <Row><Label>Nama:</Label> <b>{selectedTeacher.name}</b></Row>
+            <Row><Label>Walikelas:</Label> <b> {selectedTeacher.guardianClass.map((classRoom, i) => {
+              return `${classRoom.name}; `;
+            })}</b></Row>
+          </div>
 
-          <h3>Walikelas: {selectedTeacher.guardianClass.map((classRoom, i) => {
-            return `${classRoom.name}; `;
-          })}</h3>
-          <h3>Daftar Pelajaran untuk guru ini:</h3>
           <Link to={`/teacher-add-subject/${teacherID}`}>
             <Button color='green' size="small">
               <Icon name='plus' />

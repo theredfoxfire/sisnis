@@ -3,13 +3,11 @@ import {
     Grid,
     Image,
 } from 'semantic-ui-react';
-import { getAllState, chainToView } from '../store/Store.js';
-import { USER_ROLE } from '../Constants';
+import { chainToView } from '../store/Store.js';
 import { getUserDetail } from './api-data/user';
 
 class StudentInfo extends Component {
     render() {
-        const { userDetail } = getAllState();
         return (
             <Grid columns='four' divided>
                 <Grid.Row>
