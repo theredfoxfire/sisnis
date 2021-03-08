@@ -16,17 +16,17 @@ class StudentInfo extends Component {
             <Grid centered>
                 <Grid.Column mobile={16} tablet={12} computer={8}>
                     <Card fluid>
-                        <Image src='https://react.semantic-ui.com/images/avatar/large/daniel.jpg' wrapped ui={false} />
                         <Card.Content>
                             <Card.Header>{userAditionalInfo.details.name}</Card.Header>
                             <Card.Meta>{userAditionalInfo.details.classRoom.name}</Card.Meta>
                             <Card.Description>
+                                <b>Nomor Induk:</b> {userAditionalInfo.details.serial}
+                                <Divider clearing />
                                 <b>Tanggal Lahir:</b> {getDateByStringJSON(userAditionalInfo.details.birthDay).dateIDN}
                                 <Divider clearing />
                                 <b>Nama orang tua:</b> {userAditionalInfo.details.parentName}
                                 <Divider clearing />
                                 <b>Alamat orang tua:</b> {userAditionalInfo.details.parentAddress}
-                                <Divider clearing />
                             </Card.Description>
                         </Card.Content>
                     </Card>

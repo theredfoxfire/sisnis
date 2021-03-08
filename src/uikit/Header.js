@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Container,
-  Image,
   Dropdown,
   Menu,
 } from 'semantic-ui-react';
@@ -25,8 +24,7 @@ const Menus = () => {
         }}>
           <Menu.Item as='a' header
           >
-            <Image size='mini' src='/images/logosemantic.png' style={{ marginRight: '1.5em' }} />
-                Sistem Informasi Hasil Belajar Siswa
+            Sistem Informasi Hasil Belajar Siswa
         </Menu.Item>
         </Menu.Menu>
         <Menu.Menu position="right">
@@ -38,6 +36,30 @@ const Menus = () => {
                   storeActions.setActiveItem("student-info");
                 }}>
                   Info Siswa
+              </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute('/student-schedule');
+                  storeActions.setActiveItem("student-schedule");
+                }}>
+                  Jadwal Pelajaran
+              </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute('/student-exam');
+                  storeActions.setActiveItem("student-exam");
+                }}>
+                  Tugas Harian / Ulangan / PR
+              </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute('/student-presence');
+                  storeActions.setActiveItem("student-presence");
+                }}>
+                  Rekap Absesnsi
+              </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute('/student-result');
+                  storeActions.setActiveItem("student-result");
+                }}>
+                  Rekap Hasil Belajar
               </Dropdown.Item>
               </>}
               {getUserRole(userDetail.roles, USER_ROLE.ROLE_PARENT) && <>
