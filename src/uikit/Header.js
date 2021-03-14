@@ -15,7 +15,6 @@ const Menus = () => {
   const history = useHistory();
   const { userDetail, userAditionalInfo } = getAllState();
   const gotToRoute = (route) => history.push(route);
-  console.log('userAditionalInfo.details', userAditionalInfo.details);
   return (
     <Menu fixed='top' inverted>
       <Container>

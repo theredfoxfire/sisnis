@@ -5,15 +5,16 @@ import {
     Table,
 } from 'semantic-ui-react';
 import { chainToView, getAllState } from '../store/Store.js';
-import { getDateByStringJSON } from '../utils/dateUtils';
-import { getUserDetail } from './api-data/user';
+import { getStringFromOptions } from '../utils/dateUtils';
+import { getScheduleByStudent } from './api-data/schedule';
+import { DAY_LIST } from '../Constants';
 
 class StudentSchedule extends Component {
     render() {
-        const { userAditionalInfo } = getAllState();
+        const { userAditionalInfo, scheduleList } = getAllState();
         return (
             <Grid centered>
-                <Grid.Column mobile={16} tablet={12} computer={8}>
+                <Grid.Column>
                     <Card fluid>
                         <Card.Content>
                             <Card.Header>Jadwal Pelajaran</Card.Header>
@@ -25,6 +26,7 @@ class StudentSchedule extends Component {
                         <Table.Header>
                             <Table.Row>
                                 <Table.HeaderCell>No</Table.HeaderCell>
+                                <Table.HeaderCell>Tahun Ajaran</Table.HeaderCell>
                                 <Table.HeaderCell>Matapelajaran</Table.HeaderCell>
                                 <Table.HeaderCell>Guru</Table.HeaderCell>
                                 <Table.HeaderCell>Hari</Table.HeaderCell>
@@ -34,7 +36,20 @@ class StudentSchedule extends Component {
                         </Table.Header>
 
                         <Table.Body>
-
+                            {scheduleList.schedules.map((item, key) => {
+                                const dayString = getStringFromOptions(item.day, DAY_LIST);
+                                return (
+                                    <Table.Row key={key}>
+                                        <Table.Cell width="1">{key + 1}</Table.Cell>
+                                        <Table.Cell width="2">{item.academicYear.year}</Table.Cell>
+                                        <Table.Cell width="2">{item.subject.name}</Table.Cell>
+                                        <Table.Cell width="2">{item.teacher.name}</Table.Cell>
+                                        <Table.Cell width="1">{dayString.label}</Table.Cell>
+                                        <Table.Cell width="3">{item.room.name}</Table.Cell>
+                                        <Table.Cell width="2">{item.time.time}</Table.Cell>
+                                    </Table.Row>
+                                )
+                            })}
                         </Table.Body>
                     </Table>
                 </Grid.Column>
@@ -42,7 +57,8 @@ class StudentSchedule extends Component {
         )
     }
     componentDidMount() {
-        getUserDetail();
+        const { userAditionalInfo } = getAllState();
+        getScheduleByStudent(userAditionalInfo.details.id);
     }
 
 }

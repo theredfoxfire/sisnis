@@ -4,6 +4,7 @@ import axios from 'axios-proxy-fix';
 import { getAllState, storeActions } from '../../store/Store.js';
 import { USER_ROLE } from '../../Constants';
 import { UNAUTHORIZED_CODE, UNAUTHORIZED_MESSAGE } from '../../Constants';
+import { ensureObject } from '../../utils/objectUtils';
 let { auth, userDetail } = getAllState();
 
 export const axiosWorker = axios.create({
@@ -33,7 +34,7 @@ export function getRoleEndpoint() {
 }
 
 export const errorHandler = (error) => {
-  if (error.response.status === UNAUTHORIZED_CODE) {
+  if (ensureObject(error, { response: { status: '' } }).response.status === UNAUTHORIZED_CODE) {
     storeActions.setErrorMessage(UNAUTHORIZED_MESSAGE);
     storeActions.setModalStatus(true);
     storeActions.setDialogTitle("Sesi Anda habis");
