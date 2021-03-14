@@ -11,6 +11,7 @@ import {
 import { getUserByID, postUser, putUser } from './api-data/user';
 import { storeActions, chainToView } from '../store/Store.js';
 import { isEqual } from '../utils/objectUtils';
+import { USER_ROLE } from '../Constants';
 
 class UserForm extends Component {
   constructor(props) {
@@ -22,22 +23,25 @@ class UserForm extends Component {
     };
   }
   render() {
-    let { username, email } = this.state;
+    let { username, email } = this.props.selectedUser;
     let userID = this.props.match.params.id;
     const role = this.props.match.params.role;
+    const isNotAdmin = role !== USER_ROLE.ROLE_ADMIN;
     return (
-      <div>
-        <Grid.Column stretched width={12}>
-          <h1>Form User</h1>
-          <Form size='large' autoComplete="off">
-            <Segment stacked>
-              <h4>Username :</h4>
-              <Form.Input fluid placeholder={userID > 0 ? username : 'Username '} onChange={(e) => this.setState({ username: e.target.value })} />
-              <h4>Email :</h4>
-              <Form.Input fluid placeholder={userID > 0 ? email : 'Email '} type="email" onChange={(e) => this.setState({ email: e.target.value })} />
-              <h4>Password :</h4>
-              {userID > 0 && "(biarkan kosong jika password tidak ingin diubah)"}
-              <Form.Input autoComplete="new-password" fluid placeholder='Password' type='password' defaultValue={""} onChange={(e) => this.setState({ password: e.target.value })} />
+      <Grid.Column stretched width={12}>
+        <h1>Form User</h1>
+        <Form autoComplete="off">
+          <Segment stacked>
+            <h4>Username :</h4>
+            <Form.Input readOnly={isNotAdmin} fluid placeholder={userID > 0 ? username : 'Username '} onChange={(e) => this.setState({ username: e.target.value })} />
+            <h4>Email :</h4>
+            <Form.Input fluid placeholder={userID > 0 ? email : 'Email '} type="email" onChange={(e) => this.setState({ email: e.target.value })} />
+            <h4>Password :</h4>
+            {userID > 0 && "(biarkan kosong jika password tidak ingin diubah)"}
+            <Form.Input autoComplete="new-password" fluid placeholder='Password' type='password' defaultValue={""} onChange={(e) => this.setState({ password: e.target.value })} />
+            {isNotAdmin ? <Button color='teal' size='small' disabled={this._validate()} onClick={() => !this._validate() && this._handleSubmit()} >
+              Simpan
+              </Button> : <>
               <Link to={`/user/${role}`}>
                 <Button color='olive' size='small'>
                   Back
@@ -48,10 +52,11 @@ class UserForm extends Component {
                   Simpan
               </Button>
               </Link>
-            </Segment>
-          </Form>
-        </Grid.Column>
-      </div>
+            </>}
+
+          </Segment>
+        </Form>
+      </Grid.Column>
     )
   }
 

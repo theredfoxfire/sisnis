@@ -15,6 +15,7 @@ const Menus = () => {
   const history = useHistory();
   const { userDetail, userAditionalInfo } = getAllState();
   const gotToRoute = (route) => history.push(route);
+  console.log('userAditionalInfo.details', userAditionalInfo.details);
   return (
     <Menu fixed='top' inverted>
       <Container>
@@ -61,6 +62,12 @@ const Menus = () => {
                 }}>
                   Rekap Hasil Belajar
               </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute(`/user-update-password/${userAditionalInfo.id}/${USER_ROLE.ROLE_STUDENT}`);
+                  storeActions.setActiveItem("user-update-password");
+                }}>
+                  Ubah Password
+              </Dropdown.Item>
               </>}
               {getUserRole(userDetail.roles, USER_ROLE.ROLE_PARENT) && <>
                 <Dropdown.Item onClick={() => {
@@ -69,6 +76,42 @@ const Menus = () => {
                 }}>
                   Info Anak
               </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute('/student-schedule');
+                  storeActions.setActiveItem("student-schedule");
+                }}>
+                  Jadwal Pelajaran Anak
+              </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute('/student-exam');
+                  storeActions.setActiveItem("student-exam");
+                }}>
+                  Tugas Harian / Ulangan / PR Anak
+              </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute('/student-presence');
+                  storeActions.setActiveItem("student-presence");
+                }}>
+                  Rekap Absesnsi Anak
+              </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute('/student-result');
+                  storeActions.setActiveItem("student-result");
+                }}>
+                  Rekap Hasil Belajar Anak
+              </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute('/parent-bill');
+                  storeActions.setActiveItem("parent-bill");
+                }}>
+                  Riwayat Tagihan/Pembayaran SPP
+              </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute(`/user-update-password/${userAditionalInfo.id}/${USER_ROLE.ROLE_PARENT}`);
+                  storeActions.setActiveItem("user-update-password");
+                }}>
+                  Ubah Password
+              </Dropdown.Item>
               </>}
               {getUserRole(userDetail.roles, USER_ROLE.ROLE_TEACHER) && <>
                 <Dropdown.Item onClick={() => {
@@ -76,6 +119,36 @@ const Menus = () => {
                   storeActions.setActiveItem("student-info");
                 }}>
                   Info Guru
+              </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute(`/teacher-schedule`);
+                  storeActions.setActiveItem("teacher-schedule");
+                }}>
+                  Jadwal Mengajar
+              </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute(`/teacher-manage-exam`);
+                  storeActions.setActiveItem("teacher-manage-exam");
+                }}>
+                  Kelola Tugas/Ulangan/PR
+              </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute(`/teacher-attedance-report`);
+                  storeActions.setActiveItem("teacher-attedance-report");
+                }}>
+                  Rekap Absensi Siswa Kelas Anda
+              </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute(`/teacher-exam-report`);
+                  storeActions.setActiveItem("teacher-exam-report");
+                }}>
+                  Rekap Nilai Siswa Kelas Anda
+              </Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  gotToRoute(`/user-update-password/${userAditionalInfo.id}/${USER_ROLE.ROLE_TEACHER}`);
+                  storeActions.setActiveItem("user-update-password");
+                }}>
+                  Ubah Password
               </Dropdown.Item>
               </>}
               {

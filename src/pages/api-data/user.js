@@ -1,5 +1,6 @@
 import { storeActions } from '../../store/Store.js';
 import { axiosWorker, errorHandler, maxItems } from './config';
+import { USER_ROLE } from '../../Constants';
 
 export function getUserList(role, activePage = 1) {
   axiosWorker.get(`api/user/get-all/${role}?page=${activePage}&pageItems=${maxItems}`)
@@ -62,7 +63,7 @@ export function putUser(formData, id, role) {
   })
     .then(function (response) {
       storeActions.setIsLoading(false);
-      getUserList(role);
+      role === USER_ROLE.ROLE_ADMIN && getUserList(role);
     })
     .catch(function (error) {
       storeActions.setIsLoading(false);
