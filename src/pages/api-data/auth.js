@@ -1,12 +1,13 @@
-import { storeActions } from '../../store/Store.js';
-import { axiosWorker } from './config';
-import { AUTH_FAILED_MESSAGE } from '../../Constants';
+import { storeActions } from "../../store/Store.js";
+import { axiosWorker } from "./config";
+import { AUTH_FAILED_MESSAGE } from "../../Constants";
 import jwt_decode from "jwt-decode";
 
 export function postLogin(formData) {
-  axiosWorker.post(`api/login_check`, {
-    ...formData
-  })
+  axiosWorker
+    .post(`api/login_check`, {
+      ...formData,
+    })
     .then(function (response) {
       const token = response.data.token;
       storeActions.setIsLoading(false);

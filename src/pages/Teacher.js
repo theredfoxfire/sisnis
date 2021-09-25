@@ -1,17 +1,9 @@
-import React, { Component } from 'react'
-import {
-  Grid,
-  Button,
-  Table,
-  Icon,
-  Header, Modal,
-} from 'semantic-ui-react';
-import {
-  Link
-} from "react-router-dom";
-import { getAllState, storeActions } from '../store/Store.js';
-import { getTeacherList, deleteTeacher } from './api-data/teacher';
-import initialState from '../store/state.js';
+import React, { Component } from "react";
+import { Grid, Button, Table, Icon, Header, Modal } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { getAllState, storeActions } from "../store/Store.js";
+import { getTeacherList, deleteTeacher } from "./api-data/teacher";
+import initialState from "../store/state.js";
 
 export default class Teacher extends Component {
   constructor(props) {
@@ -19,7 +11,7 @@ export default class Teacher extends Component {
     this.state = {
       isModalOpen: false,
       selectedID: 0,
-    }
+    };
   }
   render() {
     let { teacherList } = getAllState();
@@ -28,11 +20,16 @@ export default class Teacher extends Component {
       <div>
         <Grid.Column stretched width={12}>
           <h1>Tabel Guru</h1>
-          <Link to="/teacher-form/0" onClick={() => storeActions.setSelectedTeacher(initialState.selectedTeacher)}>
-            <Button color='green' size="small">
-              <Icon name='plus' />
-          Tambah Guru
-        </Button>
+          <Link
+            to="/teacher-form/0"
+            onClick={() =>
+              storeActions.setSelectedTeacher(initialState.selectedTeacher)
+            }
+          >
+            <Button color="green" size="small">
+              <Icon name="plus" />
+              Tambah Guru
+            </Button>
           </Link>
           <Table celled selectable>
             <Table.Header>
@@ -51,28 +48,54 @@ export default class Teacher extends Component {
                   <Table.Row key={key}>
                     <Table.Cell>{key + 1}</Table.Cell>
                     <Table.Cell width="3">{item.serial}</Table.Cell>
-                    <Table.Cell width="6"><Link to={`/teacher-detail/${item.id}`} onClick={() => {
-                      storeActions.setSelectedTeacher(initialState.selectedTeacher);
-                    }}>{item.name}</Link></Table.Cell>
-                    <Table.Cell>{item.guardianClass.map((classRoom, i) => {
-                      return `${classRoom.name}; `;
-                    })}</Table.Cell>
+                    <Table.Cell width="6">
+                      <Link
+                        to={`/teacher-detail/${item.id}`}
+                        onClick={() => {
+                          storeActions.setSelectedTeacher(
+                            initialState.selectedTeacher
+                          );
+                        }}
+                      >
+                        {item.name}
+                      </Link>
+                    </Table.Cell>
+                    <Table.Cell>
+                      {item.guardianClass.map((classRoom, i) => {
+                        return `${classRoom.name}; `;
+                      })}
+                    </Table.Cell>
                     <Table.Cell>
                       <Link to={`/teacher-form/${item.id}`}>
-                        <Button color='green' basic onClick={() => {
-                          storeActions.setSelectedTeacher(initialState.selectedTeacher);
-                        }}>
-                          <Icon name='pencil' />
-                    Edit
-                  </Button>
+                        <Button
+                          color="green"
+                          basic
+                          onClick={() => {
+                            storeActions.setSelectedTeacher(
+                              initialState.selectedTeacher
+                            );
+                          }}
+                        >
+                          <Icon name="pencil" />
+                          Edit
+                        </Button>
                       </Link>
-                      <Button color='red' basic onClick={() => this.setState({ isModalOpen: true, selectedID: item.id })}>
-                        <Icon name='trash' />
-                    Hapus
-                  </Button>
+                      <Button
+                        color="red"
+                        basic
+                        onClick={() =>
+                          this.setState({
+                            isModalOpen: true,
+                            selectedID: item.id,
+                          })
+                        }
+                      >
+                        <Icon name="trash" />
+                        Hapus
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
-                )
+                );
               })}
             </Table.Body>
           </Table>
@@ -83,23 +106,24 @@ export default class Teacher extends Component {
           onClose={() => this.setState({ isModalOpen: false })}
           onOpen={() => this.setState({ isModalOpen: true })}
         >
-          <Header icon='trash' content='Hapus Data Guru' />
+          <Header icon="trash" content="Hapus Data Guru" />
           <Modal.Content>
-            <p>
-              Apakah Anda yakin ingin menghapus data ini?
-        </p>
+            <p>Apakah Anda yakin ingin menghapus data ini?</p>
           </Modal.Content>
           <Modal.Actions>
-            <Button color='red' onClick={() => this.setState({ isModalOpen: false })}>
-              <Icon name='remove' /> Tidak
-        </Button>
-            <Button color='green' onClick={() => this._onDeleteItem()}>
-              <Icon name='checkmark' /> Ya
-        </Button>
+            <Button
+              color="red"
+              onClick={() => this.setState({ isModalOpen: false })}
+            >
+              <Icon name="remove" /> Tidak
+            </Button>
+            <Button color="green" onClick={() => this._onDeleteItem()}>
+              <Icon name="checkmark" /> Ya
+            </Button>
           </Modal.Actions>
         </Modal>
       </div>
-    )
+    );
   }
 
   componentDidMount() {
@@ -113,5 +137,5 @@ export default class Teacher extends Component {
     this.setState({ isModalOpen: false });
     storeActions.setIsLoading(true);
     deleteTeacher(selectedID);
-  }
+  };
 }

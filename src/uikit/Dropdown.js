@@ -1,5 +1,5 @@
-import React from 'react';
-import { Dropdown } from 'semantic-ui-react';
+import React from "react";
+import { Dropdown } from "semantic-ui-react";
 
 const DropdownSelection = (props) => (
   <Dropdown
@@ -11,6 +11,6 @@ const DropdownSelection = (props) => (
     selection
     options={props.options}
   />
-)
+);
 
-export default DropdownSelection
+export default DropdownSelection;

@@ -1,18 +1,10 @@
-import React, { Component } from 'react'
-import {
-  Grid,
-  Button,
-  Table,
-  Icon,
-} from 'semantic-ui-react';
-import { getClassRoomByID, deleteStudentClass } from './api-data/classRoom'
-import {
-  Link
-} from "react-router-dom";
-import { getAllState, storeActions } from '../store/Store.js';
+import React, { Component } from "react";
+import { Grid, Button, Table, Icon } from "semantic-ui-react";
+import { getClassRoomByID, deleteStudentClass } from "./api-data/classRoom";
+import { Link } from "react-router-dom";
+import { getAllState, storeActions } from "../store/Store.js";
 
 export default class ClassDetail extends Component {
-
   render() {
     let { selectedClassRoom } = getAllState();
     let classID = this.props.match.params.id;
@@ -23,10 +15,10 @@ export default class ClassDetail extends Component {
 
           <h3>Daftar Siswa di kelas ini:</h3>
           <Link to={`/class-add-students/${classID}`}>
-            <Button color='green' size="small">
-              <Icon name='plus' />
-            Tambah Siswa Lagi
-          </Button>
+            <Button color="green" size="small">
+              <Icon name="plus" />
+              Tambah Siswa Lagi
+            </Button>
           </Link>
           <Table celled selectable>
             <Table.Header>
@@ -44,20 +36,24 @@ export default class ClassDetail extends Component {
                     <Table.Cell>{key + 1}</Table.Cell>
                     <Table.Cell width="9">{item.name}</Table.Cell>
                     <Table.Cell>
-                      <Button color='red' basic onClick={() => this._handleDelete(item.id)}>
-                        <Icon name='trash' />
-                    Hapus
-                  </Button>
+                      <Button
+                        color="red"
+                        basic
+                        onClick={() => this._handleDelete(item.id)}
+                      >
+                        <Icon name="trash" />
+                        Hapus
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
-                )
+                );
               })}
             </Table.Body>
           </Table>
           {selectedClassRoom.students.length < 1 && <h4>Data kosong.</h4>}
         </Grid.Column>
       </div>
-    )
+    );
   }
 
   componentDidMount() {
@@ -80,5 +76,5 @@ export default class ClassDetail extends Component {
         storeActions.setModalStatus(false);
       });
     });
-  }
+  };
 }

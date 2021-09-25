@@ -1,16 +1,9 @@
-import React, { Component } from 'react'
-import {
-  Grid,
-  Button,
-  Table,
-  Icon,
-} from 'semantic-ui-react';
-import { getTeacherByID, deleteTeacherClass } from './api-data/teacher';
-import {
-  Link
-} from "react-router-dom";
-import { getAllState, storeActions } from '../store/Store.js';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import { Grid, Button, Table, Icon } from "semantic-ui-react";
+import { getTeacherByID, deleteTeacherClass } from "./api-data/teacher";
+import { Link } from "react-router-dom";
+import { getAllState, storeActions } from "../store/Store.js";
+import styled from "styled-components";
 
 const Row = styled("div")`
   display: flex;
@@ -22,7 +15,6 @@ const Label = styled("div")`
 `;
 
 export default class TeacherDetail extends Component {
-
   render() {
     let { selectedTeacher } = getAllState();
     let teacherID = this.props.match.params.id;
@@ -31,17 +23,25 @@ export default class TeacherDetail extends Component {
         <Grid.Column stretched width={12}>
           <h3>Daftar Pelajaran:</h3>
           <div>
-            <Row><Label>Nama:</Label> <b>{selectedTeacher.name}</b></Row>
-            <Row><Label>Walikelas:</Label> <b> {selectedTeacher.guardianClass.map((classRoom, i) => {
-              return `${classRoom.name}; `;
-            })}</b></Row>
+            <Row>
+              <Label>Nama:</Label> <b>{selectedTeacher.name}</b>
+            </Row>
+            <Row>
+              <Label>Walikelas:</Label>{" "}
+              <b>
+                {" "}
+                {selectedTeacher.guardianClass.map((classRoom, i) => {
+                  return `${classRoom.name}; `;
+                })}
+              </b>
+            </Row>
           </div>
 
           <Link to={`/teacher-add-subject/${teacherID}`}>
-            <Button color='green' size="small">
-              <Icon name='plus' />
-          Tambah Pelajaran Lagi
-          </Button>
+            <Button color="green" size="small">
+              <Icon name="plus" />
+              Tambah Pelajaran Lagi
+            </Button>
           </Link>
           <Table celled selectable>
             <Table.Header>
@@ -60,36 +60,41 @@ export default class TeacherDetail extends Component {
                   <Table.Row key={key}>
                     <Table.Cell>{key + 1}</Table.Cell>
                     <Table.Cell width="4">
-                      <Link to={`/teacher-subject-detail/${item.classToSubjectId}`} onClick={() => storeActions.setTeacherSubjectList([])}>
+                      <Link
+                        to={`/teacher-subject-detail/${item.classToSubjectId}`}
+                        onClick={() => storeActions.setTeacherSubjectList([])}
+                      >
                         {item.subject.name} - {item.classRoom.name}
                       </Link>
                     </Table.Cell>
-                    <Table.Cell width="2">
-                      {item.kkm}
-                    </Table.Cell>
-                    <Table.Cell width="3">
-                      {item.year}
-                    </Table.Cell>
+                    <Table.Cell width="2">{item.kkm}</Table.Cell>
+                    <Table.Cell width="3">{item.year}</Table.Cell>
                     <Table.Cell>
-                      <Button color='red' basic onClick={() => this._handleDelete(item.classToSubjectId)}>
-                        <Icon name='trash' />
-                    Hapus
-                  </Button>
+                      <Button
+                        color="red"
+                        basic
+                        onClick={() =>
+                          this._handleDelete(item.classToSubjectId)
+                        }
+                      >
+                        <Icon name="trash" />
+                        Hapus
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
-                )
+                );
               })}
             </Table.Body>
           </Table>
           {selectedTeacher.classToSubjects.length < 1 && <h4>Data kosong.</h4>}
           <Link to={`/teacher`}>
-            <Button color='olive' size='small'>
+            <Button color="olive" size="small">
               Back
-          </Button>
+            </Button>
           </Link>
         </Grid.Column>
       </div>
-    )
+    );
   }
 
   componentDidMount() {
@@ -114,5 +119,5 @@ export default class TeacherDetail extends Component {
         storeActions.setModalStatus(false);
       });
     });
-  }
+  };
 }

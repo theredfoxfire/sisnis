@@ -1,14 +1,16 @@
-import { storeActions } from '../../store/Store.js';
-import { axiosWorker, errorHandler, maxItems } from './config';
-import { USER_ROLE } from '../../Constants';
+import { storeActions } from "../../store/Store.js";
+import { axiosWorker, errorHandler, maxItems } from "./config";
+import { USER_ROLE } from "../../Constants";
 
 export function getUserList(role, activePage = 1) {
-  axiosWorker.get(`api/user/get-all/${role}?page=${activePage}&pageItems=${maxItems}`)
-    .then(res => {
+  axiosWorker
+    .get(`api/user/get-all/${role}?page=${activePage}&pageItems=${maxItems}`)
+    .then((res) => {
       const users = res.data;
       storeActions.setIsLoading(false);
       storeActions.setUserList(users);
-    }).catch(function (error) {
+    })
+    .catch(function (error) {
       errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);
@@ -16,13 +18,15 @@ export function getUserList(role, activePage = 1) {
 }
 
 export function getUserByID(id) {
-  axiosWorker.get(`api/user/get/${id}`)
-    .then(res => {
+  axiosWorker
+    .get(`api/user/get/${id}`)
+    .then((res) => {
       const selectedUser = res.data.user;
       storeActions.setIsLoading(false);
       storeActions.setIsError(false);
       storeActions.setSelectedUser(selectedUser);
-    }).catch(function (error) {
+    })
+    .catch(function (error) {
       errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);
@@ -30,13 +34,15 @@ export function getUserByID(id) {
 }
 
 export function getUserDetail() {
-  axiosWorker.get(`api/user/get-user/detail`)
-    .then(res => {
+  axiosWorker
+    .get(`api/user/get-user/detail`)
+    .then((res) => {
       const selectedUser = res.data.user;
       storeActions.setIsLoading(false);
       storeActions.setIsError(false);
       storeActions.setUserAditionalInfo(selectedUser);
-    }).catch(function (error) {
+    })
+    .catch(function (error) {
       errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);
@@ -44,9 +50,10 @@ export function getUserDetail() {
 }
 
 export function postUser(formData, role) {
-  axiosWorker.post(`api/user/add`, {
-    ...formData
-  })
+  axiosWorker
+    .post(`api/user/add`, {
+      ...formData,
+    })
     .then(function (response) {
       storeActions.setIsLoading(false);
       getUserList(role);
@@ -58,9 +65,10 @@ export function postUser(formData, role) {
 }
 
 export function putUser(formData, id, role) {
-  axiosWorker.put(`api/user/update/${id}`, {
-    ...formData,
-  })
+  axiosWorker
+    .put(`api/user/update/${id}`, {
+      ...formData,
+    })
     .then(function (response) {
       storeActions.setIsLoading(false);
       role === USER_ROLE.ROLE_ADMIN && getUserList(role);
@@ -73,7 +81,8 @@ export function putUser(formData, id, role) {
 
 export function putUserActivate(id, role) {
   storeActions.setModalStatus(false);
-  axiosWorker.put(`api/user/update/${id}/activate`, {})
+  axiosWorker
+    .put(`api/user/update/${id}/activate`, {})
     .then(function (response) {
       storeActions.setIsLoading(false);
       getUserList(role);
@@ -84,13 +93,14 @@ export function putUserActivate(id, role) {
     });
 }
 
-
 export function deleteUser(id, role) {
-  return axiosWorker.delete(`api/user/delete/${id}`)
-    .then(res => {
+  return axiosWorker
+    .delete(`api/user/delete/${id}`)
+    .then((res) => {
       storeActions.setIsLoading(false);
       getUserList(role);
-    }).catch(function (error) {
+    })
+    .catch(function (error) {
       errorHandler(error);
       storeActions.setIsLoading(false);
       storeActions.setIsError(true);

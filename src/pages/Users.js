@@ -1,21 +1,13 @@
-import React, { Component } from 'react'
-import {
-  Grid,
-  Button,
-  Table,
-  Pagination,
-  Icon,
-} from 'semantic-ui-react';
-import {
-  Link
-} from "react-router-dom";
-import { getAllState, storeActions, chainToView } from '../store/Store.js';
-import { getUserList, putUserActivate, deleteUser } from './api-data/user';
-import initialState from '../store/state.js';
-import { isEqual } from '../utils/objectUtils';
-import { USER_ROLE } from '../Constants';
-import { maxItems } from './api-data/config';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import { Grid, Button, Table, Pagination, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { getAllState, storeActions, chainToView } from "../store/Store.js";
+import { getUserList, putUserActivate, deleteUser } from "./api-data/user";
+import initialState from "../store/state.js";
+import { isEqual } from "../utils/objectUtils";
+import { USER_ROLE } from "../Constants";
+import { maxItems } from "./api-data/config";
+import styled from "styled-components";
 
 const Row = styled("div")`
   display: flex;
@@ -29,7 +21,7 @@ class User extends Component {
     super(props);
     this.state = {
       activePage: 1,
-    }
+    };
   }
   render() {
     const { userList, isLoading } = getAllState();
@@ -43,8 +35,14 @@ class User extends Component {
 
           <Row>
             <Link to={`/user-form/0/${role}`}>
-              <Button color='green' size="small" onClick={() => storeActions.setSelectedUser(initialState.selectedUser)}>
-                <Icon name='plus' />
+              <Button
+                color="green"
+                size="small"
+                onClick={() =>
+                  storeActions.setSelectedUser(initialState.selectedUser)
+                }
+              >
+                <Icon name="plus" />
                 Tambah
               </Button>
             </Link>
@@ -80,55 +78,83 @@ class User extends Component {
                     <Table.Cell>{startNumbering + key + 1}</Table.Cell>
                     <Table.Cell width="3">{item.username}</Table.Cell>
                     <Table.Cell width="3">{item.email}</Table.Cell>
-                    <Table.Cell width="3">{item.isActive ? "Aktif" : "Tidak Aktif"}</Table.Cell>
+                    <Table.Cell width="3">
+                      {item.isActive ? "Aktif" : "Tidak Aktif"}
+                    </Table.Cell>
                     <Table.Cell>
                       <Link to={`/user-form/${item.id}/${role}`}>
-                        <Button color='green' basic onClick={() => storeActions.setSelectedUser(initialState.selectedUser)}>
-                          <Icon name='pencil' />
-                    Edit
-                  </Button>
+                        <Button
+                          color="green"
+                          basic
+                          onClick={() =>
+                            storeActions.setSelectedUser(
+                              initialState.selectedUser
+                            )
+                          }
+                        >
+                          <Icon name="pencil" />
+                          Edit
+                        </Button>
                       </Link>
-                      {item.isActive ? <Button color='yellow' basic onClick={() => this._handleAcivation(item.id, item.isActive)}>
-                        <Icon name='delete' />
-                    Non Aktifkan
-                  </Button> :
-                        <Button color='green' basic onClick={() => this._handleAcivation(item.id, item.isActive)}>
-                          <Icon name='check' />
-                    Aktifkan
-                  </Button>
-                      }
-                      <Button color='red' basic onClick={() => this._handleDelete(item.id)}>
-                        <Icon name='trash' />
-                    Hapus
-                  </Button>
+                      {item.isActive ? (
+                        <Button
+                          color="yellow"
+                          basic
+                          onClick={() =>
+                            this._handleAcivation(item.id, item.isActive)
+                          }
+                        >
+                          <Icon name="delete" />
+                          Non Aktifkan
+                        </Button>
+                      ) : (
+                        <Button
+                          color="green"
+                          basic
+                          onClick={() =>
+                            this._handleAcivation(item.id, item.isActive)
+                          }
+                        >
+                          <Icon name="check" />
+                          Aktifkan
+                        </Button>
+                      )}
+                      <Button
+                        color="red"
+                        basic
+                        onClick={() => this._handleDelete(item.id)}
+                      >
+                        <Icon name="trash" />
+                        Hapus
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
-                )
+                );
               })}
             </Table.Body>
           </Table>
         </Grid.Column>
       </div>
-    )
+    );
   }
   _renderRole(role) {
     switch (role) {
       case USER_ROLE.ROLE_ADMIN: {
-        return 'Admin';
+        return "Admin";
       }
       case USER_ROLE.ROLE_STUDENT: {
-        return 'Siswa';
+        return "Siswa";
       }
       case USER_ROLE.ROLE_PARENT: {
-        return 'Wali Murid';
+        return "Wali Murid";
       }
       case USER_ROLE.ROLE_TEACHER: {
-        return 'Guru';
+        return "Guru";
       }
       default: {
-        return 'NOT DEFINED';
+        return "NOT DEFINED";
       }
-    };
+    }
   }
 
   _handleDelete = (id) => {
@@ -144,18 +170,22 @@ class User extends Component {
         storeActions.setModalStatus(false);
       });
     });
-  }
+  };
 
   _handleAcivation = (id, isActive) => {
     const role = this.props.match.params.role;
     storeActions.setIsLoading(true);
     storeActions.setModalStatus(true);
     storeActions.setDialogTitle("Aktifasi User");
-    storeActions.setDialogMessage(`Anda yakin akan ${isActive ? "me-non aktikan" : "mengaktifkan"} user ini?`);
+    storeActions.setDialogMessage(
+      `Anda yakin akan ${
+        isActive ? "me-non aktikan" : "mengaktifkan"
+      } user ini?`
+    );
     storeActions.setModalConfirmAction(() => {
       putUserActivate(id, role);
     });
-  }
+  };
 
   componentDidMount() {
     const role = this.props.match.params.role;
@@ -175,7 +205,7 @@ class User extends Component {
     this.setState({ activePage: data.activePage });
     getUserList(role, data.activePage);
     storeActions.setIsLoading(true);
-  }
+  };
 }
 
 export default chainToView(User);

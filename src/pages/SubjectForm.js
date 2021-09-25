@@ -1,15 +1,8 @@
-import React, { Component } from 'react'
-import {
-  Grid,
-  Segment,
-  Form,
-  Button,
-} from 'semantic-ui-react';
-import {
-  Link
-} from "react-router-dom";
-import { getSubjectByID, postSubject, putSubject } from './api-data/subject'
-import { getAllState, storeActions } from '../store/Store.js';
+import React, { Component } from "react";
+import { Grid, Segment, Form, Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { getSubjectByID, postSubject, putSubject } from "./api-data/subject";
+import { getAllState, storeActions } from "../store/Store.js";
 
 export default class SubjectForm extends Component {
   constructor(props) {
@@ -30,27 +23,54 @@ export default class SubjectForm extends Component {
       <div>
         <Grid.Column stretched width={12}>
           <h1>Form Mata Pelajaran</h1>
-          <Form size='large'>
+          <Form size="large">
             <Segment stacked>
               <h4>Kode Mata Pelajaran:</h4>
-              <Form.Input fluid placeholder='Nomer Induk Pengajar' defaultValue={serialValue} onChange={(e) => this.setState({ serial: e.target.value, name: name || selectedSubject.name })} />
+              <Form.Input
+                fluid
+                placeholder="Nomer Induk Pengajar"
+                defaultValue={serialValue}
+                onChange={(e) =>
+                  this.setState({
+                    serial: e.target.value,
+                    name: name || selectedSubject.name,
+                  })
+                }
+              />
               <h4>Nama Mata Pelajaran:</h4>
-              <Form.Input fluid placeholder='Nama Mata Pelajaran' defaultValue={nameValue} onChange={(e) => this.setState({ name: e.target.value, serial: serial || selectedSubject.serial })} />
+              <Form.Input
+                fluid
+                placeholder="Nama Mata Pelajaran"
+                defaultValue={nameValue}
+                onChange={(e) =>
+                  this.setState({
+                    name: e.target.value,
+                    serial: serial || selectedSubject.serial,
+                  })
+                }
+              />
               <Link to={"/subject"}>
-                <Button color='olive' size='small'>
+                <Button color="olive" size="small">
                   Back
-              </Button>
+                </Button>
               </Link>
-              <Link to={name !== "" ? "/subject" : `/subject-form/${subjectID}`}>
-                <Button color='teal' size='small' disabled={this._validate()} onClick={() => !this._validate() && this._handleSubmit()} >
+              <Link
+                to={name !== "" ? "/subject" : `/subject-form/${subjectID}`}
+              >
+                <Button
+                  color="teal"
+                  size="small"
+                  disabled={this._validate()}
+                  onClick={() => !this._validate() && this._handleSubmit()}
+                >
                   Simpan
-              </Button>
+                </Button>
               </Link>
             </Segment>
           </Form>
         </Grid.Column>
       </div>
-    )
+    );
   }
 
   componentDidMount() {
@@ -65,11 +85,13 @@ export default class SubjectForm extends Component {
   _handleSubmit = () => {
     let { name, serial } = this.state;
     let subjectID = this.props.match.params.id;
-    subjectID > 0 ? putSubject({ name: name, serial: serial }, subjectID) : postSubject({ name: name, serial: serial });
-  }
+    subjectID > 0
+      ? putSubject({ name: name, serial: serial }, subjectID)
+      : postSubject({ name: name, serial: serial });
+  };
 
   _validate = () => {
     let { serial, name } = this.state;
     return serial === "" || name === "";
-  }
+  };
 }

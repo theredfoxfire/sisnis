@@ -1,41 +1,68 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
-import {
-  AuthScreen, HomeScreen, UsersScreen,
-  ClassScreen, ClassDetailScreen, ClassFormScreen, StudentScreen, StudentFormScreen,
-  TeacherScreen, TeacherFormScreen, SubjectScreen, SubjectFormScreen, ClassAddStudentScreen,
-  TeacherDetailScreen, TeacherAddSubjectScreen, TeacherSubjectDetailScreen, ExamFormScreen,
-  ExamTypeScreen, ExamTypeFormScreen, TeacherExamDetailScreen,
-  AcademicYearScreen, AcademicYearFormScreen, SchoolInfoScreen, SchoolInfoFormScreen,
-  UserFormScreen, RoomScreen, RoomFormScreen, TimeSlotScreen, TimeSlotFormScreen,
-  ScheduleFormScreen, ScheduleScreen, StudentAttendanceScreen, StudentAttendanceFormScreen, PresenceScheduleScreen,
-  StudentAttendanceDateListScreen, StudentInfoScreen, StudentScheduleScreen, StudentExamScreen,
-  StudentPresenceScreen, StudentResultScreen, ParentBillScreen,
-  TeacherAttendanceReportScreen, TeacherExamReportScreen, TeacherManageExamScreen, TeacherScheduleScreen
-} from './pages';
-import HeaderMenu from './uikit/Header';
-import Loader from './uikit/Loader';
-import ModalBox from './uikit/Modal';
-import styled from 'styled-components';
-import {
-  Container,
-} from 'semantic-ui-react';
+  AuthScreen,
+  HomeScreen,
+  UsersScreen,
+  ClassScreen,
+  ClassDetailScreen,
+  ClassFormScreen,
+  StudentScreen,
+  StudentFormScreen,
+  TeacherScreen,
+  TeacherFormScreen,
+  SubjectScreen,
+  SubjectFormScreen,
+  ClassAddStudentScreen,
+  TeacherDetailScreen,
+  TeacherAddSubjectScreen,
+  TeacherSubjectDetailScreen,
+  ExamFormScreen,
+  ExamTypeScreen,
+  ExamTypeFormScreen,
+  TeacherExamDetailScreen,
+  AcademicYearScreen,
+  AcademicYearFormScreen,
+  SchoolInfoScreen,
+  SchoolInfoFormScreen,
+  UserFormScreen,
+  RoomScreen,
+  RoomFormScreen,
+  TimeSlotScreen,
+  TimeSlotFormScreen,
+  ScheduleFormScreen,
+  ScheduleScreen,
+  StudentAttendanceScreen,
+  StudentAttendanceFormScreen,
+  PresenceScheduleScreen,
+  StudentAttendanceDateListScreen,
+  StudentInfoScreen,
+  StudentScheduleScreen,
+  StudentExamScreen,
+  StudentPresenceScreen,
+  StudentResultScreen,
+  ParentBillScreen,
+  TeacherAttendanceReportScreen,
+  TeacherExamReportScreen,
+  TeacherManageExamScreen,
+  TeacherScheduleScreen,
+} from "./pages";
+import HeaderMenu from "./uikit/Header";
+import Loader from "./uikit/Loader";
+import ModalBox from "./uikit/Modal";
+import styled from "styled-components";
+import { Container } from "semantic-ui-react";
 
 const ContentBox = styled("div")`
-  marginBottom: 20px;
+  marginbottom: 20px;
 `;
 
 export default class Routes extends Component {
-
   render() {
     return (
       <Router>
         <HeaderMenu />
-        <Container style={{ paddingTop: '5em' }}>
+        <Container style={{ paddingTop: "5em" }}>
           <Loader />
           <Switch>
             <Route path="/home">
@@ -44,11 +71,7 @@ export default class Routes extends Component {
             <Route path="/class">
               <ClassScreen />
             </Route>
-            <Route
-              exact
-              path="/class-form/:id"
-              component={ClassFormScreen}
-            />
+            <Route exact path="/class-form/:id" component={ClassFormScreen} />
             <Route
               exact
               path="/class-detail/:id"
@@ -95,41 +118,21 @@ export default class Routes extends Component {
               path="/teacher-add-subject-exam/:id/:teacherSubject"
               component={ExamFormScreen}
             />
-            <Route
-              exact
-              path="/exam-type"
-              component={ExamTypeScreen}
-            />
+            <Route exact path="/exam-type" component={ExamTypeScreen} />
             <Route
               exact
               path="/exam-type-form/:id"
               component={ExamTypeFormScreen}
             />
-            <Route
-              exact
-              path="/room"
-              component={RoomScreen}
-            />
-            <Route
-              exact
-              path="/room-form/:id"
-              component={RoomFormScreen}
-            />
-            <Route
-              exact
-              path="/schedule"
-              component={ScheduleScreen}
-            />
+            <Route exact path="/room" component={RoomScreen} />
+            <Route exact path="/room-form/:id" component={RoomFormScreen} />
+            <Route exact path="/schedule" component={ScheduleScreen} />
             <Route
               exact
               path="/schedule-form/:id"
               component={ScheduleFormScreen}
             />
-            <Route
-              exact
-              path="/timeSlot"
-              component={TimeSlotScreen}
-            />
+            <Route exact path="/timeSlot" component={TimeSlotScreen} />
             <Route
               exact
               path="/timeSlot-form/:id"
@@ -145,21 +148,13 @@ export default class Routes extends Component {
               path="/student-schedule"
               component={StudentScheduleScreen}
             />
-            <Route
-              exact
-              path="/student-exam"
-              component={StudentExamScreen}
-            />
+            <Route exact path="/student-exam" component={StudentExamScreen} />
             <Route
               exact
               path="/student-presence"
               component={StudentPresenceScreen}
             />
-            <Route
-              exact
-              path="/parent-bill"
-              component={ParentBillScreen}
-            />
+            <Route exact path="/parent-bill" component={ParentBillScreen} />
             <Route
               exact
               path="/student-result"
@@ -180,26 +175,14 @@ export default class Routes extends Component {
               path="/studentAttendance-form/:id"
               component={StudentAttendanceFormScreen}
             />
-            <Route
-              exact
-              path="/school-info"
-              component={SchoolInfoScreen}
-            />
+            <Route exact path="/school-info" component={SchoolInfoScreen} />
             <Route
               exact
               path="/school-info-form/:id"
               component={SchoolInfoFormScreen}
             />
-            <Route
-              exact
-              path="/academic-year"
-              component={AcademicYearScreen}
-            />
-            <Route
-              exact
-              path="/student-info"
-              component={StudentInfoScreen}
-            />
+            <Route exact path="/academic-year" component={AcademicYearScreen} />
+            <Route exact path="/student-info" component={StudentInfoScreen} />
             <Route
               exact
               path="/academic-year-form/:id"
@@ -254,9 +237,9 @@ export default class Routes extends Component {
             </Route>
           </Switch>
         </Container>
-        <Container style={{ paddingTop: '1em' }} />
+        <Container style={{ paddingTop: "1em" }} />
         <ModalBox />
       </Router>
-    )
+    );
   }
 }

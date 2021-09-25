@@ -1,16 +1,9 @@
-import React, { Component } from 'react'
-import {
-  Grid,
-  Button,
-  Table,
-  Icon,
-} from 'semantic-ui-react';
-import {
-  Link
-} from "react-router-dom";
-import { getAllState, storeActions, chainToView } from '../store/Store.js';
-import { getExamTypeList, deleteExamType } from './api-data/examType';
-import initialState from '../store/state.js';
+import React, { Component } from "react";
+import { Grid, Button, Table, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { getAllState, storeActions, chainToView } from "../store/Store.js";
+import { getExamTypeList, deleteExamType } from "./api-data/examType";
+import initialState from "../store/state.js";
 
 class ExamType extends Component {
   render() {
@@ -20,10 +13,16 @@ class ExamType extends Component {
         <Grid.Column stretched width={12}>
           <h1>Tabel Tipe Exam</h1>
           <Link to="/exam-type-form/0">
-            <Button color='green' size="small" onClick={() => storeActions.setSelectedExamType(initialState.selectedExamType)}>
-              <Icon name='plus' />
-            Tambah
-          </Button>
+            <Button
+              color="green"
+              size="small"
+              onClick={() =>
+                storeActions.setSelectedExamType(initialState.selectedExamType)
+              }
+            >
+              <Icon name="plus" />
+              Tambah
+            </Button>
           </Link>
           <Table celled selectable>
             <Table.Header>
@@ -44,24 +43,36 @@ class ExamType extends Component {
                     <Table.Cell width="3">{item.scale}</Table.Cell>
                     <Table.Cell>
                       <Link to={`/exam-type-form/${item.id}`}>
-                        <Button color='green' basic onClick={() => storeActions.setSelectedExamType(initialState.selectedExamType)}>
-                          <Icon name='pencil' />
-                    Edit
-                  </Button>
+                        <Button
+                          color="green"
+                          basic
+                          onClick={() =>
+                            storeActions.setSelectedExamType(
+                              initialState.selectedExamType
+                            )
+                          }
+                        >
+                          <Icon name="pencil" />
+                          Edit
+                        </Button>
                       </Link>
-                      <Button color='red' basic onClick={() => this._handleDelete(item.id)}>
-                        <Icon name='trash' />
-                    Hapus
-                  </Button>
+                      <Button
+                        color="red"
+                        basic
+                        onClick={() => this._handleDelete(item.id)}
+                      >
+                        <Icon name="trash" />
+                        Hapus
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
-                )
+                );
               })}
             </Table.Body>
           </Table>
         </Grid.Column>
       </div>
-    )
+    );
   }
 
   componentDidMount() {
@@ -82,7 +93,7 @@ class ExamType extends Component {
         storeActions.setModalStatus(false);
       });
     });
-  }
+  };
 }
 
 export default chainToView(ExamType);

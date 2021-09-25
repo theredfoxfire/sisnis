@@ -1,21 +1,13 @@
-import React, { Component } from 'react'
-import {
-  Grid,
-  Button,
-  Table,
-  Pagination,
-  Icon,
-} from 'semantic-ui-react';
-import {
-  Link
-} from "react-router-dom";
-import { getAllState, storeActions, chainToView } from '../store/Store.js';
-import { getScheduleList, deleteSchedule } from './api-data/schedule';
-import initialState from '../store/state.js';
-import { getStringFromOptions } from '../utils/dateUtils';
-import { DAY_LIST } from '../Constants';
-import { maxItems } from './api-data/config';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import { Grid, Button, Table, Pagination, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { getAllState, storeActions, chainToView } from "../store/Store.js";
+import { getScheduleList, deleteSchedule } from "./api-data/schedule";
+import initialState from "../store/state.js";
+import { getStringFromOptions } from "../utils/dateUtils";
+import { DAY_LIST } from "../Constants";
+import { maxItems } from "./api-data/config";
+import styled from "styled-components";
 
 const Row = styled("div")`
   display: flex;
@@ -29,7 +21,7 @@ class Schedule extends Component {
     super(props);
     this.state = {
       activePage: 1,
-    }
+    };
   }
   render() {
     let { scheduleList, isLoading } = getAllState();
@@ -42,10 +34,18 @@ class Schedule extends Component {
 
           <Row>
             <Link to="/schedule-form/0">
-              <Button color='green' size="small" onClick={() => storeActions.setSelectedSchedule(initialState.selectedSchedule)}>
-                <Icon name='plus' />
-            Tambah
-          </Button>
+              <Button
+                color="green"
+                size="small"
+                onClick={() =>
+                  storeActions.setSelectedSchedule(
+                    initialState.selectedSchedule
+                  )
+                }
+              >
+                <Icon name="plus" />
+                Tambah
+              </Button>
             </Link>
             <Pagination
               boundaryRange={0}
@@ -82,29 +82,43 @@ class Schedule extends Component {
                     <Table.Cell width="2">{item.subject.name}</Table.Cell>
                     <Table.Cell width="2">{item.teacher.name}</Table.Cell>
                     <Table.Cell width="1">{dayString.label}</Table.Cell>
-                    <Table.Cell width="2">{item.classRoom.name} / {item.academicYear.year}</Table.Cell>
+                    <Table.Cell width="2">
+                      {item.classRoom.name} / {item.academicYear.year}
+                    </Table.Cell>
                     <Table.Cell width="3">{item.room.name}</Table.Cell>
                     <Table.Cell width="2">{item.time.time}</Table.Cell>
                     <Table.Cell>
                       <Link to={`/schedule-form/${item.id}`}>
-                        <Button color='green' basic onClick={() => storeActions.setSelectedSchedule(initialState.selectedSchedule)}>
-                          <Icon name='pencil' />
-                    Edit
-                  </Button>
+                        <Button
+                          color="green"
+                          basic
+                          onClick={() =>
+                            storeActions.setSelectedSchedule(
+                              initialState.selectedSchedule
+                            )
+                          }
+                        >
+                          <Icon name="pencil" />
+                          Edit
+                        </Button>
                       </Link>
-                      <Button color='red' basic onClick={() => this._handleDelete(item.id)}>
-                        <Icon name='trash' />
-                    Hapus
-                  </Button>
+                      <Button
+                        color="red"
+                        basic
+                        onClick={() => this._handleDelete(item.id)}
+                      >
+                        <Icon name="trash" />
+                        Hapus
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
-                )
+                );
               })}
             </Table.Body>
           </Table>
         </Grid.Column>
       </div>
-    )
+    );
   }
 
   componentDidMount() {
@@ -126,13 +140,13 @@ class Schedule extends Component {
         isError && storeActions.setIsError(false);
       });
     });
-  }
+  };
 
   _onPageChange = (data) => {
     this.setState({ activePage: data.activePage });
     getScheduleList(data.activePage);
     storeActions.setIsLoading(true);
-  }
+  };
 }
 
 export default chainToView(Schedule);

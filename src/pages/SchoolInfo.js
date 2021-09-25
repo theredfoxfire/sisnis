@@ -1,16 +1,9 @@
-import React, { Component } from 'react'
-import {
-  Grid,
-  Button,
-  Table,
-  Icon,
-} from 'semantic-ui-react';
-import {
-  Link
-} from "react-router-dom";
-import { getAllState, storeActions, chainToView } from '../store/Store.js';
-import { getSchoolInfoList } from './api-data/schoolInfo';
-import initialState from '../store/state.js';
+import React, { Component } from "react";
+import { Grid, Button, Table, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { getAllState, storeActions, chainToView } from "../store/Store.js";
+import { getSchoolInfoList } from "./api-data/schoolInfo";
+import initialState from "../store/state.js";
 
 class SchoolInfo extends Component {
   render() {
@@ -19,12 +12,22 @@ class SchoolInfo extends Component {
       <div>
         <Grid.Column stretched width={12}>
           <h1>Informasi Sekolah</h1>
-          {schoolInfoList.length > 0 ? null : <Link to="/school-info-form/0">
-            <Button color='green' size="small" onClick={() => storeActions.setSelectedSchoolInfo(initialState.selectedSchoolInfo)}>
-              <Icon name='plus' />
-            Tambah
-          </Button>
-          </Link>}
+          {schoolInfoList.length > 0 ? null : (
+            <Link to="/school-info-form/0">
+              <Button
+                color="green"
+                size="small"
+                onClick={() =>
+                  storeActions.setSelectedSchoolInfo(
+                    initialState.selectedSchoolInfo
+                  )
+                }
+              >
+                <Icon name="plus" />
+                Tambah
+              </Button>
+            </Link>
+          )}
 
           <Table celled selectable>
             <Table.Header>
@@ -45,20 +48,28 @@ class SchoolInfo extends Component {
                     <Table.Cell width="3">{item.address}</Table.Cell>
                     <Table.Cell>
                       <Link to={`/school-info-form/${item.id}`}>
-                        <Button color='green' basic onClick={() => storeActions.setSelectedSchoolInfo(initialState.selectedSchoolInfo)}>
-                          <Icon name='pencil' />
-                    Edit
-                  </Button>
+                        <Button
+                          color="green"
+                          basic
+                          onClick={() =>
+                            storeActions.setSelectedSchoolInfo(
+                              initialState.selectedSchoolInfo
+                            )
+                          }
+                        >
+                          <Icon name="pencil" />
+                          Edit
+                        </Button>
                       </Link>
                     </Table.Cell>
                   </Table.Row>
-                )
+                );
               })}
             </Table.Body>
           </Table>
         </Grid.Column>
       </div>
-    )
+    );
   }
 
   componentDidMount() {

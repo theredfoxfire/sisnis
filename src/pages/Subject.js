@@ -1,17 +1,9 @@
-import React, { Component } from 'react'
-import {
-  Grid,
-  Button,
-  Table,
-  Icon,
-  Header, Modal,
-} from 'semantic-ui-react';
-import {
-  Link
-} from "react-router-dom";
-import { getAllState, storeActions } from '../store/Store.js';
-import { getSubjectList, deleteSubject } from './api-data/subject';
-import initialState from '../store/state.js';
+import React, { Component } from "react";
+import { Grid, Button, Table, Icon, Header, Modal } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { getAllState, storeActions } from "../store/Store.js";
+import { getSubjectList, deleteSubject } from "./api-data/subject";
+import initialState from "../store/state.js";
 
 export default class Subject extends Component {
   constructor(props) {
@@ -19,7 +11,7 @@ export default class Subject extends Component {
     this.state = {
       isModalOpen: false,
       selectedID: 0,
-    }
+    };
   }
   render() {
     let { subjectList } = getAllState();
@@ -28,11 +20,16 @@ export default class Subject extends Component {
       <div>
         <Grid.Column stretched width={12}>
           <h1>Tabel Mata Pelajaran</h1>
-          <Link to="/subject-form/0" onClick={() => storeActions.setSelectedSubject(initialState.selectedSubject)}>
-            <Button color='green' size="small">
-              <Icon name='plus' />
-          Tambah Mata Pelajaran
-        </Button>
+          <Link
+            to="/subject-form/0"
+            onClick={() =>
+              storeActions.setSelectedSubject(initialState.selectedSubject)
+            }
+          >
+            <Button color="green" size="small">
+              <Icon name="plus" />
+              Tambah Mata Pelajaran
+            </Button>
           </Link>
           <Table celled selectable>
             <Table.Header>
@@ -53,20 +50,35 @@ export default class Subject extends Component {
                     <Table.Cell width="6">{item.name}</Table.Cell>
                     <Table.Cell>
                       <Link to={`/subject-form/${item.id}`}>
-                        <Button color='green' basic onClick={() => {
-                          storeActions.setSelectedSubject(initialState.selectedSubject);
-                        }}>
-                          <Icon name='pencil' />
-                    Edit
-                  </Button>
+                        <Button
+                          color="green"
+                          basic
+                          onClick={() => {
+                            storeActions.setSelectedSubject(
+                              initialState.selectedSubject
+                            );
+                          }}
+                        >
+                          <Icon name="pencil" />
+                          Edit
+                        </Button>
                       </Link>
-                      <Button color='red' basic onClick={() => this.setState({ isModalOpen: true, selectedID: item.id })}>
-                        <Icon name='trash' />
-                    Hapus
-                  </Button>
+                      <Button
+                        color="red"
+                        basic
+                        onClick={() =>
+                          this.setState({
+                            isModalOpen: true,
+                            selectedID: item.id,
+                          })
+                        }
+                      >
+                        <Icon name="trash" />
+                        Hapus
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
-                )
+                );
               })}
             </Table.Body>
           </Table>
@@ -77,23 +89,24 @@ export default class Subject extends Component {
           onClose={() => this.setState({ isModalOpen: false })}
           onOpen={() => this.setState({ isModalOpen: true })}
         >
-          <Header icon='trash' content='Hapus Data Mata Pelajaran' />
+          <Header icon="trash" content="Hapus Data Mata Pelajaran" />
           <Modal.Content>
-            <p>
-              Apakah Anda yakin ingin menghapus data ini?
-        </p>
+            <p>Apakah Anda yakin ingin menghapus data ini?</p>
           </Modal.Content>
           <Modal.Actions>
-            <Button color='red' onClick={() => this.setState({ isModalOpen: false })}>
-              <Icon name='remove' /> Tidak
-        </Button>
-            <Button color='green' onClick={() => this._onDeleteItem()}>
-              <Icon name='checkmark' /> Ya
-        </Button>
+            <Button
+              color="red"
+              onClick={() => this.setState({ isModalOpen: false })}
+            >
+              <Icon name="remove" /> Tidak
+            </Button>
+            <Button color="green" onClick={() => this._onDeleteItem()}>
+              <Icon name="checkmark" /> Ya
+            </Button>
           </Modal.Actions>
         </Modal>
       </div>
-    )
+    );
   }
 
   componentDidMount() {
@@ -107,5 +120,5 @@ export default class Subject extends Component {
     this.setState({ isModalOpen: false });
     storeActions.setIsLoading(true);
     deleteSubject(selectedID);
-  }
+  };
 }

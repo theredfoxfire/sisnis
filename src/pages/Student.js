@@ -1,21 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import {
   Grid,
   Button,
   Table,
   Icon,
-  Header, Modal,
+  Header,
+  Modal,
   Pagination,
   Form,
-} from 'semantic-ui-react';
-import {
-  Link
-} from "react-router-dom";
-import { getAllState, storeActions } from '../store/Store.js';
-import initialState from '../store/state';
-import { getStudentList, deleteStudent } from './api-data/student';
-import { maxItems } from './api-data/config';
-import styled from 'styled-components';
+} from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { getAllState, storeActions } from "../store/Store.js";
+import initialState from "../store/state";
+import { getStudentList, deleteStudent } from "./api-data/student";
+import { maxItems } from "./api-data/config";
+import styled from "styled-components";
 
 const Row = styled("div")`
   display: flex;
@@ -30,7 +29,7 @@ export default class Student extends Component {
       isModalOpen: false,
       selectedID: 0,
       activePage: 1,
-    }
+    };
   }
   render() {
     let { studentList, isLoading } = getAllState();
@@ -40,12 +39,18 @@ export default class Student extends Component {
       <div>
         <Grid.Column stretched width={12}>
           <h1>Tabel Siswa</h1>
-          <Row><Link to="/student-form/0" onClick={() => storeActions.setSelectedStudent(initialState.selectedStudent)}>
-            <Button color='green' size="small">
-              <Icon name='plus' />
-          Tambah Siswa
-        </Button>
-          </Link>
+          <Row>
+            <Link
+              to="/student-form/0"
+              onClick={() =>
+                storeActions.setSelectedStudent(initialState.selectedStudent)
+              }
+            >
+              <Button color="green" size="small">
+                <Icon name="plus" />
+                Tambah Siswa
+              </Button>
+            </Link>
             <Pagination
               boundaryRange={0}
               defaultActivePage={activePage}
@@ -58,8 +63,10 @@ export default class Student extends Component {
               disabled={isLoading}
             />
           </Row>
-          <Form.Input placeholder='Filter nama'
-            onChange={(e) => this._handleFilter(e.target.value)} />
+          <Form.Input
+            placeholder="Filter nama"
+            onChange={(e) => this._handleFilter(e.target.value)}
+          />
           <Table celled selectable>
             <Table.Header>
               <Table.Row>
@@ -78,27 +85,43 @@ export default class Student extends Component {
                     <Table.Cell>{startNumbering + key + 1}</Table.Cell>
                     <Table.Cell width="3">{item.serial}</Table.Cell>
                     <Table.Cell width="6">{item.name}</Table.Cell>
-                    <Table.Cell width="3">{item.className || "Tidak ada kelas"}</Table.Cell>
+                    <Table.Cell width="3">
+                      {item.className || "Tidak ada kelas"}
+                    </Table.Cell>
                     <Table.Cell>
                       <Link to={`/student-form/${item.id}`}>
-                        <Button color='green' basic onClick={() => {
-                          storeActions.setSelectedStudent(initialState.selectedStudent);
-                        }}>
-                          <Icon name='pencil' />
-                    Edit
-                  </Button>
+                        <Button
+                          color="green"
+                          basic
+                          onClick={() => {
+                            storeActions.setSelectedStudent(
+                              initialState.selectedStudent
+                            );
+                          }}
+                        >
+                          <Icon name="pencil" />
+                          Edit
+                        </Button>
                       </Link>
-                      <Button color='red' basic onClick={() => this.setState({ isModalOpen: true, selectedID: item.id })}>
-                        <Icon name='trash' />
-                    Hapus
-                  </Button>
+                      <Button
+                        color="red"
+                        basic
+                        onClick={() =>
+                          this.setState({
+                            isModalOpen: true,
+                            selectedID: item.id,
+                          })
+                        }
+                      >
+                        <Icon name="trash" />
+                        Hapus
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
-                )
+                );
               })}
             </Table.Body>
           </Table>
-
         </Grid.Column>
         <Modal
           closeIcon
@@ -106,23 +129,24 @@ export default class Student extends Component {
           onClose={() => this.setState({ isModalOpen: false })}
           onOpen={() => this.setState({ isModalOpen: true })}
         >
-          <Header icon='trash' content='Hapus Data Siswa' />
+          <Header icon="trash" content="Hapus Data Siswa" />
           <Modal.Content>
-            <p>
-              Apakah Anda yakin ingin menghapus data ini?
-        </p>
+            <p>Apakah Anda yakin ingin menghapus data ini?</p>
           </Modal.Content>
           <Modal.Actions>
-            <Button color='red' onClick={() => this.setState({ isModalOpen: false })}>
-              <Icon name='remove' /> Tidak
-        </Button>
-            <Button color='green' onClick={() => this._onDeleteItem()}>
-              <Icon name='checkmark' /> Ya
-        </Button>
+            <Button
+              color="red"
+              onClick={() => this.setState({ isModalOpen: false })}
+            >
+              <Icon name="remove" /> Tidak
+            </Button>
+            <Button color="green" onClick={() => this._onDeleteItem()}>
+              <Icon name="checkmark" /> Ya
+            </Button>
           </Modal.Actions>
         </Modal>
       </div>
-    )
+    );
   }
 
   componentDidMount() {
@@ -137,13 +161,13 @@ export default class Student extends Component {
     this.setState({ isModalOpen: false });
     storeActions.setIsLoading(true);
     deleteStudent(selectedID);
-  }
+  };
 
   _onPageChange = (data) => {
     this.setState({ activePage: data.activePage });
     getStudentList(data.activePage);
     storeActions.setIsLoading(true);
-  }
+  };
 
   _handleFilter = (val) => {
     const { activePage } = this.state;
@@ -152,5 +176,5 @@ export default class Student extends Component {
     storeActions.setIsLoading(true);
     storeActions.setIsError(false);
     getStudentList(activePage, val, "");
-  }
+  };
 }

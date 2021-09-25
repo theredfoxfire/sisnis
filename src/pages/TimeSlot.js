@@ -1,16 +1,9 @@
-import React, { Component } from 'react'
-import {
-  Grid,
-  Button,
-  Table,
-  Icon,
-} from 'semantic-ui-react';
-import {
-  Link
-} from "react-router-dom";
-import { getAllState, storeActions, chainToView } from '../store/Store.js';
-import { getTimeSlotList, deleteTimeSlot } from './api-data/timeSlot';
-import initialState from '../store/state.js';
+import React, { Component } from "react";
+import { Grid, Button, Table, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { getAllState, storeActions, chainToView } from "../store/Store.js";
+import { getTimeSlotList, deleteTimeSlot } from "./api-data/timeSlot";
+import initialState from "../store/state.js";
 
 class TimeSlot extends Component {
   render() {
@@ -20,10 +13,16 @@ class TimeSlot extends Component {
         <Grid.Column stretched width={12}>
           <h1>Tabel Slot Waktu</h1>
           <Link to="/timeSlot-form/0">
-            <Button color='green' size="small" onClick={() => storeActions.setSelectedTimeSlot(initialState.selectedTimeSlot)}>
-              <Icon name='plus' />
-            Tambah
-          </Button>
+            <Button
+              color="green"
+              size="small"
+              onClick={() =>
+                storeActions.setSelectedTimeSlot(initialState.selectedTimeSlot)
+              }
+            >
+              <Icon name="plus" />
+              Tambah
+            </Button>
           </Link>
           <Table celled selectable>
             <Table.Header>
@@ -42,24 +41,36 @@ class TimeSlot extends Component {
                     <Table.Cell width="6">{item.time}</Table.Cell>
                     <Table.Cell>
                       <Link to={`/timeSlot-form/${item.id}`}>
-                        <Button color='green' basic onClick={() => storeActions.setSelectedTimeSlot(initialState.selectedTimeSlot)}>
-                          <Icon name='pencil' />
-                    Edit
-                  </Button>
+                        <Button
+                          color="green"
+                          basic
+                          onClick={() =>
+                            storeActions.setSelectedTimeSlot(
+                              initialState.selectedTimeSlot
+                            )
+                          }
+                        >
+                          <Icon name="pencil" />
+                          Edit
+                        </Button>
                       </Link>
-                      <Button color='red' basic onClick={() => this._handleDelete(item.id)}>
-                        <Icon name='trash' />
-                    Hapus
-                  </Button>
+                      <Button
+                        color="red"
+                        basic
+                        onClick={() => this._handleDelete(item.id)}
+                      >
+                        <Icon name="trash" />
+                        Hapus
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
-                )
+                );
               })}
             </Table.Body>
           </Table>
         </Grid.Column>
       </div>
-    )
+    );
   }
 
   componentDidMount() {
@@ -80,7 +91,7 @@ class TimeSlot extends Component {
         isError && storeActions.setIsError(false);
       });
     });
-  }
+  };
 }
 
 export default chainToView(TimeSlot);

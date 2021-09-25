@@ -1,5 +1,5 @@
 import React from "react";
-import initialState from './state';
+import initialState from "./state";
 let stateContainer = { state: initialState };
 
 export const setStoreContainer = (setter) => {
@@ -10,11 +10,11 @@ export const getAllState = () => stateContainer.state;
 
 export const chainToView = (ViewComponent) => {
   return (props) => <ViewComponent {...props} {...stateContainer.state} />;
-}
+};
 
 export const storeActions = {
   setActiveItem: async (activeItem) => {
-    localStorage.setItem('activeItem', JSON.stringify(activeItem));
+    localStorage.setItem("activeItem", JSON.stringify(activeItem));
     await stateContainer.setState({ activeItem: activeItem });
   },
   setClassRoomList: async (classRoomList) => {
@@ -24,7 +24,9 @@ export const storeActions = {
     await stateContainer.setState({ studentList: studentList });
   },
   setStudentAttendanceList: async (studentAttendanceList) => {
-    await stateContainer.setState({ studentAttendanceList: studentAttendanceList });
+    await stateContainer.setState({
+      studentAttendanceList: studentAttendanceList,
+    });
   },
   setScheduleList: async (scheduleList) => {
     await stateContainer.setState({ scheduleList: scheduleList });
@@ -66,7 +68,9 @@ export const storeActions = {
     await stateContainer.setState({ selectedStudent: selectedStudent });
   },
   setSelectedStudentAttendance: async (selectedStudentAttendance) => {
-    await stateContainer.setState({ selectedStudentAttendance: selectedStudentAttendance });
+    await stateContainer.setState({
+      selectedStudentAttendance: selectedStudentAttendance,
+    });
   },
   setSelectedTeacher: async (selectedTeacher) => {
     await stateContainer.setState({ selectedTeacher: selectedTeacher });
@@ -126,15 +130,18 @@ export const storeActions = {
     await stateContainer.setState({ selectedAcademicYear: item });
   },
   setAuth: async (auth) => {
-    localStorage.setItem('storedAuth', JSON.stringify({ token: auth }));
+    localStorage.setItem("storedAuth", JSON.stringify({ token: auth }));
     await stateContainer.setState({ auth: { token: auth } });
   },
   setUserDetail: async (userDetail) => {
-    localStorage.setItem('storedUserDetail', JSON.stringify(userDetail));
+    localStorage.setItem("storedUserDetail", JSON.stringify(userDetail));
     await stateContainer.setState({ userDetail: userDetail });
   },
   setUserAditionalInfo: async (userAditionalInfo) => {
-    localStorage.setItem('storedUserAditionalInfo', JSON.stringify(userAditionalInfo));
+    localStorage.setItem(
+      "storedUserAditionalInfo",
+      JSON.stringify(userAditionalInfo)
+    );
     await stateContainer.setState({ userAditionalInfo: userAditionalInfo });
   },
 };

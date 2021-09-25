@@ -1,17 +1,10 @@
-import React, { Component } from 'react'
-import {
-  Grid,
-  Button,
-  Table,
-  Icon,
-} from 'semantic-ui-react';
-import { getTeacherSubject, deleteExam } from './api-data/exam';
-import {
-  Link
-} from "react-router-dom";
-import { getAllState, storeActions } from '../store/Store.js';
-import { getDateByStringJSON } from '../utils/dateUtils';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import { Grid, Button, Table, Icon } from "semantic-ui-react";
+import { getTeacherSubject, deleteExam } from "./api-data/exam";
+import { Link } from "react-router-dom";
+import { getAllState, storeActions } from "../store/Store.js";
+import { getDateByStringJSON } from "../utils/dateUtils";
+import styled from "styled-components";
 
 const Row = styled("div")`
   display: flex;
@@ -23,7 +16,6 @@ const Label = styled("div")`
 `;
 
 export default class TeacherSubjectDetail extends Component {
-
   render() {
     let { teacherSubject } = getAllState();
     let teacherSubjectID = this.props.match.params.id;
@@ -32,16 +24,20 @@ export default class TeacherSubjectDetail extends Component {
         <Grid.Column stretched width={12}>
           <h1>Detail Matapelajaran: {teacherSubject.name}</h1>
           <div>
-            <Row><Label>Kelas:</Label> <b>{teacherSubject.className}</b></Row>
-            <Row><Label>Guru:</Label> <b>{teacherSubject.teacherName}</b></Row>
+            <Row>
+              <Label>Kelas:</Label> <b>{teacherSubject.className}</b>
+            </Row>
+            <Row>
+              <Label>Guru:</Label> <b>{teacherSubject.teacherName}</b>
+            </Row>
           </div>
 
           <h3>Daftar tugas/ulangan/ujian untuk matapelajaran ini:</h3>
           <Link to={`/teacher-add-subject-exam/0/${teacherSubjectID}`}>
-            <Button color='green' size="small">
-              <Icon name='plus' />
-          Tambah Ujian/Tugas/Ulangan Lagi
-          </Button>
+            <Button color="green" size="small">
+              <Icon name="plus" />
+              Tambah Ujian/Tugas/Ulangan Lagi
+            </Button>
           </Link>
           <Table celled selectable>
             <Table.Header>
@@ -67,25 +63,29 @@ export default class TeacherSubjectDetail extends Component {
                       {getDateByStringJSON(item.date).dateIDN}
                     </Table.Cell>
                     <Table.Cell>
-                      <Button color='red' basic onClick={() => this._handleDelete(item.id)}>
-                        <Icon name='trash' />
-                    Hapus
-                  </Button>
+                      <Button
+                        color="red"
+                        basic
+                        onClick={() => this._handleDelete(item.id)}
+                      >
+                        <Icon name="trash" />
+                        Hapus
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
-                )
+                );
               })}
             </Table.Body>
           </Table>
           {teacherSubject.exams.length < 1 && <h4>Data kosong.</h4>}
           <Link to={`/teacher-detail/${teacherSubject.teacherId}`}>
-            <Button color='olive' size='small'>
+            <Button color="olive" size="small">
               Back
-          </Button>
+            </Button>
           </Link>
         </Grid.Column>
       </div>
-    )
+    );
   }
 
   componentDidMount() {
@@ -110,5 +110,5 @@ export default class TeacherSubjectDetail extends Component {
         storeActions.setModalStatus(false);
       });
     });
-  }
+  };
 }

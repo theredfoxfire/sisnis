@@ -1,16 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import { Grid, Segment, Form, Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import {
-  Grid,
-  Segment,
-  Form,
-  Button,
-} from 'semantic-ui-react';
-import {
-  Link
-} from "react-router-dom";
-import { getTimeSlotByID, postTimeSlot, putTimeSlot } from './api-data/timeSlot';
-import { storeActions, chainToView } from '../store/Store.js';
-import { isEqual } from '../utils/objectUtils';
+  getTimeSlotByID,
+  postTimeSlot,
+  putTimeSlot,
+} from "./api-data/timeSlot";
+import { storeActions, chainToView } from "../store/Store.js";
+import { isEqual } from "../utils/objectUtils";
 
 class TimeSlotForm extends Component {
   constructor(props) {
@@ -27,25 +24,37 @@ class TimeSlotForm extends Component {
       <div>
         <Grid.Column stretched width={12}>
           <h1>Form Slot Waktu</h1>
-          <Form size='large'>
+          <Form size="large">
             <Segment stacked>
               <h4>Waktu :</h4>
-              <Form.Input fluid placeholder='Waktu ' defaultValue={time} onChange={(e) => this.setState({ time: e.target.value })} />
+              <Form.Input
+                fluid
+                placeholder="Waktu "
+                defaultValue={time}
+                onChange={(e) => this.setState({ time: e.target.value })}
+              />
               <Link to={"/timeSlot"}>
-                <Button color='olive' size='small'>
+                <Button color="olive" size="small">
                   Back
-              </Button>
+                </Button>
               </Link>
-              <Link to={time !== "" ? "/timeSlot" : `/timeSlot-form/${timeSlotID}`}>
-                <Button color='teal' size='small' disabled={this._validate()} onClick={() => !this._validate() && this._handleSubmit()} >
+              <Link
+                to={time !== "" ? "/timeSlot" : `/timeSlot-form/${timeSlotID}`}
+              >
+                <Button
+                  color="teal"
+                  size="small"
+                  disabled={this._validate()}
+                  onClick={() => !this._validate() && this._handleSubmit()}
+                >
                   Simpan
-              </Button>
+                </Button>
               </Link>
             </Segment>
           </Form>
         </Grid.Column>
       </div>
-    )
+    );
   }
 
   componentDidMount() {
@@ -68,12 +77,12 @@ class TimeSlotForm extends Component {
     let { time } = this.state;
     let timeSlotID = this.props.match.params.id;
     timeSlotID > 0 ? putTimeSlot({ time }, timeSlotID) : postTimeSlot({ time });
-  }
+  };
 
   _validate = () => {
     let { time } = this.state;
     return time === "";
-  }
+  };
 }
 
 export default chainToView(TimeSlotForm);

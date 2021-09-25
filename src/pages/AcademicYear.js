@@ -1,16 +1,12 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import { Grid, Button, Table, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { getAllState, storeActions, chainToView } from "../store/Store.js";
 import {
-  Grid,
-  Button,
-  Table,
-  Icon,
-} from 'semantic-ui-react';
-import {
-  Link
-} from "react-router-dom";
-import { getAllState, storeActions, chainToView } from '../store/Store.js';
-import { getAcademicYearsList, deleteAcademicYear } from './api-data/academicYear';
-import initialState from '../store/state.js';
+  getAcademicYearsList,
+  deleteAcademicYear,
+} from "./api-data/academicYear";
+import initialState from "../store/state.js";
 
 class AcademicYear extends Component {
   render() {
@@ -20,10 +16,18 @@ class AcademicYear extends Component {
         <Grid.Column stretched width={12}>
           <h1>Tabel Tahun Ajaran</h1>
           <Link to="/academic-year-form/0">
-            <Button color='green' size="small" onClick={() => storeActions.setSelectedAcademicYear(initialState.selectedAcademicYear)}>
-              <Icon name='plus' />
-            Tambah
-          </Button>
+            <Button
+              color="green"
+              size="small"
+              onClick={() =>
+                storeActions.setSelectedAcademicYear(
+                  initialState.selectedAcademicYear
+                )
+              }
+            >
+              <Icon name="plus" />
+              Tambah
+            </Button>
           </Link>
           <Table celled selectable>
             <Table.Header>
@@ -41,27 +45,41 @@ class AcademicYear extends Component {
                   <Table.Row key={key}>
                     <Table.Cell>{key + 1}</Table.Cell>
                     <Table.Cell width="6">{item.year}</Table.Cell>
-                    <Table.Cell width="3">{item.isActive === "TRUE" ? "Aktif" : "Tidak Aktif"}</Table.Cell>
+                    <Table.Cell width="3">
+                      {item.isActive === "TRUE" ? "Aktif" : "Tidak Aktif"}
+                    </Table.Cell>
                     <Table.Cell>
                       <Link to={`/academic-year-form/${item.yearId}`}>
-                        <Button color='green' basic onClick={() => storeActions.setSelectedAcademicYear(initialState.selectedAcademicYear)}>
-                          <Icon name='pencil' />
-                    Edit
-                  </Button>
+                        <Button
+                          color="green"
+                          basic
+                          onClick={() =>
+                            storeActions.setSelectedAcademicYear(
+                              initialState.selectedAcademicYear
+                            )
+                          }
+                        >
+                          <Icon name="pencil" />
+                          Edit
+                        </Button>
                       </Link>
-                      <Button color='red' basic onClick={() => this._handleDelete(item.yearId)}>
-                        <Icon name='trash' />
-                    Hapus
-                  </Button>
+                      <Button
+                        color="red"
+                        basic
+                        onClick={() => this._handleDelete(item.yearId)}
+                      >
+                        <Icon name="trash" />
+                        Hapus
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
-                )
+                );
               })}
             </Table.Body>
           </Table>
         </Grid.Column>
       </div>
-    )
+    );
   }
 
   componentDidMount() {
@@ -82,6 +100,6 @@ class AcademicYear extends Component {
         storeActions.setModalStatus(false);
       });
     });
-  }
+  };
 }
 export default chainToView(AcademicYear);

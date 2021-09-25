@@ -1,21 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import { Grid, Segment, Form, Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import {
-  Grid,
-  Segment,
-  Form,
-  Button,
-} from 'semantic-ui-react';
-import {
-  Link
-} from "react-router-dom";
-import { getScheduleByID, postSchedule, putSchedule } from './api-data/schedule';
-import { getTeacherSubjectList } from './api-data/teacher';
-import { getRoomList } from './api-data/room';
-import { getTimeSlotList } from './api-data/timeSlot';
-import { storeActions, chainToView, getAllState } from '../store/Store.js';
-import { isEqual } from '../utils/objectUtils';
-import DropdownSelect from '../uikit/Dropdown';
-import { DAY_LIST } from '../Constants';
+  getScheduleByID,
+  postSchedule,
+  putSchedule,
+} from "./api-data/schedule";
+import { getTeacherSubjectList } from "./api-data/teacher";
+import { getRoomList } from "./api-data/room";
+import { getTimeSlotList } from "./api-data/timeSlot";
+import { storeActions, chainToView, getAllState } from "../store/Store.js";
+import { isEqual } from "../utils/objectUtils";
+import DropdownSelect from "../uikit/Dropdown";
+import { DAY_LIST } from "../Constants";
 
 class ScheduleForm extends Component {
   constructor(props) {
@@ -71,32 +68,69 @@ class ScheduleForm extends Component {
       <div>
         <Grid.Column stretched width={12}>
           <h1>Form Jadwal</h1>
-          <Form size='large'>
+          <Form size="large">
             <Segment stacked>
               <h4>Matapelajaran :</h4>
-              <DropdownSelect value={schedule.subject} placeholder="Pilih Matapelajaran" onChange={(e, { value }) => this.setState({ schedule: { ...schedule, subject: value } })} multiple={false} options={teacherSubjectOptions} />
+              <DropdownSelect
+                value={schedule.subject}
+                placeholder="Pilih Matapelajaran"
+                onChange={(e, { value }) =>
+                  this.setState({ schedule: { ...schedule, subject: value } })
+                }
+                multiple={false}
+                options={teacherSubjectOptions}
+              />
               <h4>Ruangan :</h4>
-              <DropdownSelect value={schedule.room} placeholder="Pilih Ruangan" onChange={(e, { value }) => this.setState({ schedule: { ...schedule, room: value } })} multiple={false} options={roomOptions} />
+              <DropdownSelect
+                value={schedule.room}
+                placeholder="Pilih Ruangan"
+                onChange={(e, { value }) =>
+                  this.setState({ schedule: { ...schedule, room: value } })
+                }
+                multiple={false}
+                options={roomOptions}
+              />
               <h4>Slot waktu :</h4>
-              <DropdownSelect value={schedule.time} placeholder="Pilih Slot Waktu" onChange={(e, { value }) => this.setState({ schedule: { ...schedule, time: value } })} multiple={false} options={timeSlotOptions} />
+              <DropdownSelect
+                value={schedule.time}
+                placeholder="Pilih Slot Waktu"
+                onChange={(e, { value }) =>
+                  this.setState({ schedule: { ...schedule, time: value } })
+                }
+                multiple={false}
+                options={timeSlotOptions}
+              />
               <h4>Hari :</h4>
-              <DropdownSelect value={schedule.day} placeholder="Pilih Hari" onChange={(e, { value }) => this.setState({ schedule: { ...schedule, day: value } })} multiple={false} options={dayOptions} />
+              <DropdownSelect
+                value={schedule.day}
+                placeholder="Pilih Hari"
+                onChange={(e, { value }) =>
+                  this.setState({ schedule: { ...schedule, day: value } })
+                }
+                multiple={false}
+                options={dayOptions}
+              />
               <br />
               <Link to={"/schedule"}>
-                <Button color='olive' size='small'>
+                <Button color="olive" size="small">
                   Back
-              </Button>
+                </Button>
               </Link>
               <Link to={`/schedule-form/${scheduleID}`}>
-                <Button color='teal' size='small' disabled={this._validate()} onClick={() => !this._validate() && this._handleSubmit()} >
+                <Button
+                  color="teal"
+                  size="small"
+                  disabled={this._validate()}
+                  onClick={() => !this._validate() && this._handleSubmit()}
+                >
                   Simpan
-              </Button>
+                </Button>
               </Link>
             </Segment>
           </Form>
         </Grid.Column>
       </div>
-    )
+    );
   }
 
   componentDidMount() {
@@ -129,13 +163,15 @@ class ScheduleForm extends Component {
     let scheduleID = this.props.match.params.id;
     storeActions.setIsLoading(true);
     this.setState({ isSubmit: true });
-    scheduleID > 0 ? putSchedule({ ...schedule }, scheduleID) : postSchedule({ ...schedule });
-  }
+    scheduleID > 0
+      ? putSchedule({ ...schedule }, scheduleID)
+      : postSchedule({ ...schedule });
+  };
 
   _validate = () => {
     let { time, day, room, subject } = this.state.schedule;
     return time === "" || day === "" || room === "" || subject === "";
-  }
+  };
 }
 
 export default chainToView(ScheduleForm);

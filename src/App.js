@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { setStoreContainer, getAllState } from './store/Store.js';
-import Routes from './Routes';
+import { setStoreContainer, getAllState } from "./store/Store.js";
+import Routes from "./Routes";
 
 export default class App extends Component {
   constructor(props) {
@@ -11,9 +11,7 @@ export default class App extends Component {
   }
 
   render() {
-    return (
-      <Routes />
-    )
+    return <Routes />;
   }
 
   componentDidUpdate(prevState) {
