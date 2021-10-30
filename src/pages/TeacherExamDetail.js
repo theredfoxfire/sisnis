@@ -63,6 +63,7 @@ class TeacherExamDetail extends Component {
                 <Table.HeaderCell>No</Table.HeaderCell>
                 <Table.HeaderCell>Name</Table.HeaderCell>
                 <Table.HeaderCell>Nilai</Table.HeaderCell>
+                <Table.HeaderCell>Catatan</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
 
@@ -79,6 +80,16 @@ class TeacherExamDetail extends Component {
                         defaultValue={this._getCurrentPoint(item)}
                         onChange={(e) =>
                           this._handleChangePoint(e.target.value, item, key)
+                        }
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        placeholder="Catatan"
+                        defaultValue={this._getCurrentComment(item)}
+                        onChange={(e) =>
+                          this._handleChangeComment(e.target.value, item, key)
                         }
                       />
                     </Table.Cell>
@@ -160,6 +171,27 @@ class TeacherExamDetail extends Component {
     this.setState({ studentPoints: pointList });
   };
 
+  _handleChangeComment = (eValue, item, key) => {
+    let { studentPoints: pointList } = this.state;
+    const itemVal = pointList.find(
+      (value) => value && value.id === item.studentId
+    );
+
+    const point = {
+      id: item.studentId,
+      point: itemVal.point ?? 0,
+      comment: eValue,
+      key,
+      pointId: itemVal && itemVal.pointId,
+    };
+    if (itemVal) {
+      pointList[itemVal.key] = point;
+    } else {
+      pointList[key] = point;
+    }
+    this.setState({ studentPoints: pointList });
+  };
+
   _handleSubmit = () => {
     let { studentPoints, selectedExam, isEdit } = this.state;
     storeActions.setDialogMessage("");
@@ -178,6 +210,15 @@ class TeacherExamDetail extends Component {
     );
 
     return itemPoint ? itemPoint.point : 0;
+  };
+
+  _getCurrentComment = (item) => {
+    const { selectedExam } = this.state;
+    const itemPoint = selectedExam.examPoints.find(
+      (value) => value && value.id === item.studentId
+    );
+
+    return itemPoint ? itemPoint.comment : "";
   };
 }
 

@@ -107,6 +107,27 @@ export function setTeacherClass(formData) {
     });
 }
 
+export function updateTeacherClass(formData) {
+  return axiosWorker
+    .put(
+      `api/teacher/update/class-room/${formData.teacherID}/${formData.teacherSubjectID}`,
+      {
+        classRoomId: formData.classRoom,
+        subjectId: formData.subject,
+        year: formData.year,
+        kkm: formData.kkm,
+      }
+    )
+    .then(function (response) {
+      storeActions.setIsLoading(false);
+    })
+    .catch(function (error) {
+      storeActions.setIsLoading(false);
+      storeActions.setErrorMessage("Gagal menyimpan data!");
+      storeActions.setIsError(true);
+    });
+}
+
 export function deleteTeacherClass(classToSubjectId) {
   return axiosWorker
     .delete(`api/teacher/delete/class/${classToSubjectId}`)

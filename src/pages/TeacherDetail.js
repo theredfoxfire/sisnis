@@ -3,6 +3,7 @@ import { Grid, Button, Table, Icon } from "semantic-ui-react";
 import { getTeacherByID, deleteTeacherClass } from "./api-data/teacher";
 import { Link } from "react-router-dom";
 import { getAllState, storeActions } from "../store/Store.js";
+import initialState from "../store/state.js";
 import styled from "styled-components";
 
 const Row = styled("div")`
@@ -11,7 +12,7 @@ const Row = styled("div")`
 `;
 
 const Label = styled("div")`
-  width: 120px;
+  width: 160px;
 `;
 
 export default class TeacherDetail extends Component {
@@ -27,9 +28,9 @@ export default class TeacherDetail extends Component {
               <Label>Nama:</Label> <b>{selectedTeacher.name}</b>
             </Row>
             <Row>
-              <Label>Walikelas:</Label>{" "}
+              <Label>Guru Wali untuk Kelas:</Label>{" "}
               <b>
-                {" "}
+                {selectedTeacher.guardianClass.length === 0 && "Belum tersedia"}
                 {selectedTeacher.guardianClass.map((classRoom, i) => {
                   return `${classRoom.name}; `;
                 })}
@@ -37,7 +38,7 @@ export default class TeacherDetail extends Component {
             </Row>
           </div>
 
-          <Link to={`/teacher-add-subject/${teacherID}`}>
+          <Link to={`/teacher-add-subject/${teacherID}/0`}>
             <Button color="green" size="small">
               <Icon name="plus" />
               Tambah Pelajaran Lagi
@@ -70,6 +71,14 @@ export default class TeacherDetail extends Component {
                     <Table.Cell width="2">{item.kkm}</Table.Cell>
                     <Table.Cell width="3">{item.year}</Table.Cell>
                     <Table.Cell>
+                      <Link
+                        to={`/teacher-add-subject/${teacherID}/${item.classToSubjectId}`}
+                      >
+                        <Button color="green" basic onClick={() => {}}>
+                          <Icon name="pencil" />
+                          Edit
+                        </Button>
+                      </Link>
                       <Button
                         color="red"
                         basic
@@ -100,6 +109,7 @@ export default class TeacherDetail extends Component {
   componentDidMount() {
     let teacherID = this.props.match.params.id;
     storeActions.setIsError(false);
+    storeActions.setTeacherSubject(initialState.teacherSubject);
     if (teacherID > 0) {
       getTeacherByID(teacherID);
       storeActions.setIsLoading(true);

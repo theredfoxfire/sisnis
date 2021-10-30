@@ -9,7 +9,7 @@ import { ensureObject } from "../../utils/objectUtils";
 let { auth, userDetail } = getAllState();
 
 export const axiosWorker = axios.create({
-  baseURL: `http://103.150.113.100:3200/public/${getRoleEndpoint()}`,
+  baseURL: `http://localhost/nilai-sekolah-be/public/${getRoleEndpoint()}`,
   timeout: 10000,
   headers: { Authorization: `Bearer ${auth.token}` },
 });

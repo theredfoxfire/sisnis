@@ -1,12 +1,18 @@
 import React, { Component } from "react";
 import { Grid, Segment, Form, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { getTeacherByID, setTeacherClass } from "./api-data/teacher";
+import {
+  getTeacherByID,
+  setTeacherClass,
+  updateTeacherClass,
+} from "./api-data/teacher";
 import { getClassRoomList } from "./api-data/classRoom";
 import { getSubjectList } from "./api-data/subject";
 import { getAcademicYearsList } from "./api-data/academicYear";
 import { getAllState, storeActions, chainToView } from "../store/Store.js";
 import DropdownSelect from "../uikit/Dropdown";
+import { getTeacherSubject } from "./api-data/exam";
+import { isEqual } from "../utils/objectUtils";
 
 class TeacherAddSubject extends Component {
   constructor(props) {
@@ -47,7 +53,6 @@ class TeacherAddSubject extends Component {
         value: item.id,
       });
     });
-
     return (
       <div>
         <Grid.Column stretched width={12}>
@@ -58,6 +63,7 @@ class TeacherAddSubject extends Component {
               <DropdownSelect
                 placeholder="Pilih Matapelajaran"
                 onChange={(e, { value }) => this.setState({ subject: value })}
+                value={this.state.subject}
                 multiple={false}
                 options={subjectOptions}
               />
@@ -71,6 +77,7 @@ class TeacherAddSubject extends Component {
               <h4>Pilih Kelas:</h4>
               <DropdownSelect
                 placeholder="Pilih Kelas"
+                value={this.state.classRoom}
                 onChange={(e, { value }) => this.setState({ classRoom: value })}
                 multiple={false}
                 options={classRoomOptions}
@@ -78,6 +85,7 @@ class TeacherAddSubject extends Component {
               <h4>Pilih Tahun Ajaran:</h4>
               <DropdownSelect
                 placeholder="Pilih Tahun Ajaran"
+                value={this.state.year}
                 onChange={(e, { value }) => this.setState({ year: value })}
                 multiple={false}
                 options={yearOptions}
@@ -112,26 +120,51 @@ class TeacherAddSubject extends Component {
   }
 
   componentDidMount() {
+    let teacherSubjectID = this.props.match.params.subjectId;
+    if (teacherSubjectID > 0) {
+      getTeacherSubject(teacherSubjectID);
+    } else {
+      getClassRoomList();
+      getSubjectList();
+      getAcademicYearsList();
+    }
     storeActions.setIsError(false);
     storeActions.setIsLoading(true);
-    getClassRoomList();
-    getSubjectList();
-    getAcademicYearsList();
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   let {selectedStudent} = this.props;
-  //   if (!isEqual(prevProps.selectedStudent, selectedStudent)) {
-  //
-  //   }
-  // }
+  componentDidUpdate(prevProps) {
+    let { teacherSubject } = this.props;
+    if (!isEqual(prevProps.teacherSubject, teacherSubject)) {
+      getClassRoomList();
+      getSubjectList();
+      getAcademicYearsList();
+      this.setState({
+        ...this.state,
+        subject: teacherSubject.teacherSubjectId,
+        classRoom: teacherSubject.classId,
+        year: teacherSubject.academicYear,
+        kkm: teacherSubject.passingPoint,
+      });
+    }
+  }
 
   _handleSubmit = () => {
     let { classRoom, subject, year, kkm } = this.state;
     let teacherID = this.props.match.params.id;
-    setTeacherClass({ subject, classRoom, teacherID, year, kkm }).then(
-      getTeacherByID(teacherID)
-    );
+    let teacherSubjectID = this.props.match.params.subjectId;
+    if (teacherSubjectID > 0) {
+      updateTeacherClass({
+        subject,
+        classRoom,
+        teacherID,
+        year,
+        kkm,
+        teacherSubjectID,
+      }).then(getTeacherByID(teacherID));
+    } else {
+      setTeacherClass({ subject, classRoom, teacherID, year, kkm }).then(
+        getTeacherByID(teacherID)
+      );
+    }
   };
 
   _validateForm = () => {
