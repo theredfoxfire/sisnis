@@ -160,6 +160,7 @@ class TeacherExamDetail extends Component {
     const point = {
       id: item.studentId,
       point: eValue,
+      comment: item.comment ?? '',
       key,
       pointId: itemVal && itemVal.pointId,
     };

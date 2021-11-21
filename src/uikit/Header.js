@@ -4,6 +4,11 @@ import { useHistory } from "react-router-dom";
 import { storeActions, getAllState } from "../store/Store.js";
 import { USER_ROLE } from "../Constants";
 import { getUserRole } from "../utils/arrayUtils";
+import styled from "styled-components";
+
+const DropdownStyled = styled(Dropdown.Menu)`
+  max-height: 100vh!important;
+`;
 
 const Menus = () => {
   const history = useHistory();
@@ -24,7 +29,7 @@ const Menus = () => {
         </Menu.Menu>
         <Menu.Menu position="right">
           <Dropdown text="Menu" pointing className="link item" scrolling>
-            <Dropdown.Menu>
+            <DropdownStyled>
               {getUserRole(userDetail.roles, USER_ROLE.ROLE_STUDENT) && (
                 <>
                   <Dropdown.Item
@@ -361,7 +366,7 @@ const Menus = () => {
               >
                 Logout
               </Dropdown.Item>
-            </Dropdown.Menu>
+            </DropdownStyled>
           </Dropdown>
         </Menu.Menu>
       </Container>
